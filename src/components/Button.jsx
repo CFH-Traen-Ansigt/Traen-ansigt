@@ -1,0 +1,55 @@
+function getConfiguration(type) {
+  let configuration = {
+    textColor: "text-main-color",
+    backgroundColor: "bg-secondary",
+    borderColor: "border-secondary",
+    hoverTextColor: "hover:text-secondary",
+    hoverBackground: "hover:bg-main-color",
+    hoverBorder: "hover:border-main-color",
+  };
+  switch (type) {
+    case "Primary":
+      configuration.textColor = "text-main-color";
+      configuration.backgroundColor = "bg-secondary";
+      configuration.borderColor = "border-secondary";
+      configuration.hoverTextColor = "hover:text-secondary";
+      configuration.hoverBackground = "hover:bg-main-color";
+      configuration.hoverBorder = "hover:border-secondary";
+      break;
+    case "Inverted":
+      configuration.textColor = "text-secondary";
+      configuration.backgroundColor = "bg-main-color";
+      configuration.borderColor = "border-secondary";
+      configuration.hoverTextColor = "hover:text-main-color";
+      configuration.hoverBackground = "hover:bg-secondary";
+      configuration.hoverBorder = "hover:border-secondary-color";
+      break;
+    case "Cancel":
+      configuration.textColor = "text-main-color";
+      configuration.backgroundColor = "bg-primary";
+      configuration.borderColor = "border-primary";
+      break;
+    default:
+  }
+  return configuration;
+}
+
+export default function Button({ text, href, variant, styling, type = "button", onClick }) {
+  const configuration = getConfiguration(variant);
+
+  return (
+    <button
+      onClick={() => {
+        if (href) {
+          window.location.href = `${href}`;
+        } else {
+          onClick();
+        }
+      }}
+      className={`flex justify-center h-12 w-full py-2 font-manjari ${configuration.textColor} ${configuration.backgroundColor}  border-[2px] rounded-lg ${configuration.borderColor} ${configuration.hoverTextColor} ${configuration.hoverBackground} ${configuration.hoverBorder} ${styling}`}
+      type={type}
+    >
+      {text}
+    </button>
+  );
+}
