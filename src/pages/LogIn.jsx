@@ -1,10 +1,12 @@
 import React from "react";
+import { useState } from "react";
 import LandingPageLayout from "../components/LandingPageLayout";
 import BackgroundImage from "../components/BackgroundImage";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
 
 const LogIn = () => {
+  const [errorDisplayed, setErrorDisplayed] = useState(false);
   return (
     <LandingPageLayout>
       <BackgroundImage />
@@ -15,12 +17,14 @@ const LogIn = () => {
           <InputField label="Adgangskode" id="log-in-password" type="password" variant="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />
           <div>
             <input type="checkbox" id="auto-log-in" name="auto-log-in" />
-            <label for="auto-log-in">Forbliv logget ind</label>
+            <label for="auto-log-in" className="ml-2 text-lg">
+              Forbliv logget ind
+            </label>
           </div>
-          <h2 id="error">Forkert brugernavn og/eller adgangskode</h2>
+          {errorDisplayed && <h2 id="error">Forkert brugernavn og/eller adgangskode</h2>}
           <div className="flex w-full gap-5 mt-8">
-            <Button type="button" text="Afbryd" variant="Cancel" href=".." styling="text-2xl pt-[10px]" />
-            <Button type="submit" text="Log ind" variant="Primary" styling="text-2xl pt-[10px]" />
+            <Button type="button" text="Afbryd" variant="Cancel" href=".." styling="text-2xl pt-[10px] h-10" />
+            <Button type="submit" text="Log ind" variant="Primary" styling="text-2xl pt-[10px] h-10" />
           </div>
         </form>
       </div>

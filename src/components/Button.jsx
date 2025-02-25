@@ -28,6 +28,9 @@ function getConfiguration(type) {
       configuration.textColor = "text-main-color";
       configuration.backgroundColor = "bg-primary";
       configuration.borderColor = "border-primary";
+      configuration.hoverTextColor = "hover:text-primary";
+      configuration.hoverBackground = "hover:bg-main-color";
+      configuration.hoverBorder = "hover:border-primary";
       break;
     default:
   }

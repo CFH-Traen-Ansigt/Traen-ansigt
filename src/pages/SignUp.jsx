@@ -1,11 +1,12 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import LandingPageLayout from "../components/LandingPageLayout";
 import Button from "../components/Button";
 import InputField from "../components/InputField";
 import BackgroundImage from "../components/BackgroundImage";
 
 const SignUp = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [errorDisplayed, setErrorDisplayed] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [password, setPassword] = useState("");
@@ -13,6 +14,8 @@ const SignUp = () => {
   const lowerCaseLetters = /[a-z]/g;
   const upperCaseLetters = /[A-Z]/g;
   const numbers = /[0-9]/g;
+
+  const modalItem = useRef();
 
   function displayErrorMessage() {
     if (password !== passwordRepeat) {
@@ -31,14 +34,29 @@ const SignUp = () => {
       setErrorDisplayed(false);
     }
   }
+  useEffect(() => {
+    const handler = (event) => {
+      if (!modalItem.current) {
+        return;
+      }
+      if (!modalItem.current.contains(event.target)) {
+        setIsModalOpen(false);
+      }
+    };
+    document.addEventListener("click", handler, true);
+    return () => {
+      document.removeEventListener("click", handler);
+    };
+  }, []);
+
   return (
     <LandingPageLayout>
-      <dialog className="w-3xs rounded-xl">
-        <div onClick={() => document.querySelector(".password-dialog").close()}>
-          <img src="/assets/x-red.svg" alt="red x" className="w-8 cursor-pointer" />
+      <dialog open={isModalOpen} ref={modalItem} className="w-80 rounded-xl border-2 border-solid border-black fixed  top-1/2 -translate-y-1/2  p-4 z-50">
+        <div onClick={() => setIsModalOpen(false)} className="flex justify-end w-full mb-3">
+          <img src="/assets/x-red.svg" alt="red x" className="w-6 cursor-pointer" />
         </div>
-        <p>Din adgangskode skal bestå af:</p>
-        <ul className="text-sm">
+        <p className="text-lg mb-2">Din adgangskode skal bestå af:</p>
+        <ul className="text-lg list-disc ml-6">
           <li>Mindst 8 tegn</li>
           <li>Mindst et lille bogstav</li>
           <li>Mindst et stort bogstav</li>
@@ -60,6 +78,9 @@ const SignUp = () => {
             required
             value={password}
             setValue={setPassword}
+            onIconMouseOver={() => {
+              setIsModalOpen(true);
+            }}
           />
           <InputField
             label="Gentag adgangskode"
@@ -73,11 +94,11 @@ const SignUp = () => {
           />
           <div>{errorDisplayed && <h2 className="mt-2 text-lg text-primary max-w-64 font-bold">{errorMessage}</h2>}</div>
           <div className="flex w-full gap-5 mt-8">
-            <Button variant="Cancel" text="Afbryd" href=".." styling="text-2xl pt-[10px]" />
+            <Button variant="Cancel" text="Afbryd" href=".." styling="text-2xl pt-[10px] h-10" />
             <Button
               text="Fortsæt"
               variant="Primary"
-              styling="text-2xl pt-[10px]"
+              styling="text-2xl pt-[10px] h-10"
               onClick={() => {
                 displayErrorMessage();
               }}
