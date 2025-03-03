@@ -1,12 +1,16 @@
+import React from "react";
+import { useState } from "react";
+
+let configuration = {
+  textColor: "text-main-color",
+  backgroundColor: "bg-secondary",
+  borderColor: "border-secondary",
+  hoverTextColor: "hover:text-secondary",
+  hoverBackground: "hover:bg-main-color",
+  hoverBorder: "hover:border-main-color",
+};
+
 function getConfiguration(type) {
-  let configuration = {
-    textColor: "text-main-color",
-    backgroundColor: "bg-secondary",
-    borderColor: "border-secondary",
-    hoverTextColor: "hover:text-secondary",
-    hoverBackground: "hover:bg-main-color",
-    hoverBorder: "hover:border-main-color",
-  };
   switch (type) {
     case "Primary":
       configuration.textColor = "text-main-color";
@@ -36,10 +40,22 @@ function getConfiguration(type) {
   }
   return configuration;
 }
+function getIcon(icon) {
+  switch (icon) {
+    case "Trashcan":
+      return { default: "/assets/trashcan-white.svg", hover: "/assets/trashcan-red.svg" };
+    case "PlayIcon":
+      return { default: "/assets/play-icon-white.svg", hover: "/assets/play-icon-green.svg" };
+    case "EditIcon":
+      return { default: "/assets/edit-green.svg", hover: "/assets/edit-white.svg" };
+    default:
+  }
+}
 
-export default function Button({ text, href, variant, styling, type = "button", onClick }) {
+export default function Button({ text, href, variant, styling, type = "button", onClick, icon, iconStyling }) {
+  const iconType = getIcon(icon);
+  const [displayedIcon, setDisplayedIcon] = useState(icon && iconType.default);
   const configuration = getConfiguration(variant);
-
   return (
     <button
       onClick={() => {
@@ -49,10 +65,13 @@ export default function Button({ text, href, variant, styling, type = "button", 
           onClick();
         }
       }}
+      onMouseOver={() => icon && setDisplayedIcon(iconType.hover)}
+      onMouseOut={() => icon && setDisplayedIcon(iconType.default)}
       className={`flex justify-center h-12 w-full py-2 font-manjari ${configuration.textColor} ${configuration.backgroundColor}  border-[2px] rounded-lg ${configuration.borderColor} ${configuration.hoverTextColor} ${configuration.hoverBackground} ${configuration.hoverBorder} ${styling}`}
       type={type}
     >
-      {text}
+      <p>{text}</p>
+      {icon && <img src={displayedIcon} alt={icon} className={`${iconStyling} ml-1`} />}
     </button>
   );
 }

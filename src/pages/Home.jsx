@@ -1,7 +1,7 @@
 import React from "react";
-
+import ProgramCard from "../components/ProgramCard";
 const Home = () => {
-  return <div>Home</div>;
+  return <ProgramCard addShadow />;
 };
 
 export default Home;

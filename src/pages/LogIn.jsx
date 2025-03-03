@@ -10,7 +10,7 @@ const LogIn = () => {
   return (
     <LandingPageLayout>
       <BackgroundImage />
-      <div className="w-80 mt-20">
+      <div className="w-80 mt-16">
         <h1 className="text-2xl font-manjari mb-3 text-primary font-bold">Log ind:</h1>
         <form>
           <InputField label="Email" id="user-email" type="email" required />
