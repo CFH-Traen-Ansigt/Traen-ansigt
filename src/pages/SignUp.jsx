@@ -67,12 +67,12 @@ const SignUp = () => {
       <div className="w-80 mt-20">
         <h1 className="text-2xl mb-3 text-primary font-bold">Opret bruger:</h1>
         <form>
-          <InputField label="Brugernavn" id="username" type="text" required />
+          <InputField label="Fulde navn" id="user-full-name" type="text" required />
+          <InputField label="Email" id="user-email" type="email" required />
           <InputField
             label="Adgangskode"
-            id="password"
+            id="user-password"
             type="password"
-            variant="password"
             icon="info-icon"
             pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
             required
@@ -86,7 +86,6 @@ const SignUp = () => {
             label="Gentag adgangskode"
             id="repeatPassword"
             type="password"
-            variant="password"
             pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
             required
             value={passwordRepeat}

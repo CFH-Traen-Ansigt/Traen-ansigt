@@ -13,8 +13,8 @@ const LogIn = () => {
       <div className="w-80 mt-20">
         <h1 className="text-2xl font-manjari mb-3 text-primary font-bold">Log ind:</h1>
         <form>
-          <InputField label="Brugernavn" id="log-in-username" type="text" required />
-          <InputField label="Adgangskode" id="log-in-password" type="password" variant="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />
+          <InputField label="Email" id="user-email" type="email" required />
+          <InputField label="Adgangskode" id="user-password" type="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />
           <div>
             <input type="checkbox" id="auto-log-in" name="auto-log-in" />
             <label for="auto-log-in" className="ml-2 text-lg">

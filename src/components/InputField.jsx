@@ -3,7 +3,7 @@ import { useState } from "react";
 import EyeOpen from "../assets/eye-on.svg";
 import EyeClosed from "../assets/eye-off.svg";
 
-export default function InputField({ id, label, type, variant, icon, required = false, setValue, value, onIconMouseOver }) {
+export default function InputField({ id, label, type, icon, required = false, setValue, value, onIconMouseOver }) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   return (
     <div className="mb-2">
