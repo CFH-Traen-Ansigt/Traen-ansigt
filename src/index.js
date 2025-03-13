@@ -7,12 +7,14 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
+import BuildProgram from "./pages/BuildProgram";
 
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
   { path: "/log-ind", element: <LogIn /> },
   { path: "/opret-bruger", element: <SignUp /> },
   { path: "/forside", element: <Home /> },
+  { path: "/opsæt-program", element: <BuildProgram /> },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

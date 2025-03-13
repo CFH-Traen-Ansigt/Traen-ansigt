@@ -48,11 +48,13 @@ function getIcon(icon) {
       return { default: "/assets/play-icon-white.svg", hover: "/assets/play-icon-green.svg" };
     case "EditIcon":
       return { default: "/assets/edit-green.svg", hover: "/assets/edit-white.svg" };
+    case "PlusIcon":
+      return { default: "/assets/plus-icon-white.svg", hover: "/assets/plus-icon-green.svg" };
     default:
   }
 }
 
-export default function Button({ text, href, variant, styling, type = "button", onClick, icon, iconStyling }) {
+export default function Button({ text, href, variant, styling, type = "button", onClick, icon, iconStyling, disabled = false }) {
   const iconType = getIcon(icon);
   const [displayedIcon, setDisplayedIcon] = useState(icon && iconType.default);
   const configuration = getConfiguration(variant);
@@ -65,9 +67,11 @@ export default function Button({ text, href, variant, styling, type = "button", 
           onClick();
         }
       }}
-      onMouseOver={() => icon && setDisplayedIcon(iconType.hover)}
-      onMouseOut={() => icon && setDisplayedIcon(iconType.default)}
-      className={`flex justify-center h-12 w-full py-2 font-manjari ${configuration.textColor} ${configuration.backgroundColor}  border-[2px] rounded-lg ${configuration.borderColor} ${configuration.hoverTextColor} ${configuration.hoverBackground} ${configuration.hoverBorder} ${styling}`}
+      onMouseOver={() => icon && !disabled && setDisplayedIcon(iconType.hover)}
+      onMouseOut={() => icon && !disabled && setDisplayedIcon(iconType.default)}
+      className={`flex justify-center h-12 w-full py-2 font-manjari  ${configuration.textColor} ${configuration.backgroundColor}  border-[2px] rounded-lg ${
+        configuration.borderColor
+      } ${!disabled && configuration.hoverTextColor} ${!disabled && configuration.hoverBackground} ${!disabled && configuration.hoverBorder} ${styling}`}
       type={type}
     >
       <p>{text}</p>
