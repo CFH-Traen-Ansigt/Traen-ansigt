@@ -11,7 +11,7 @@ export default function ProgramCard({
     <article
       className={`relative w-[264px] h-[480px] ${
         addShadow && "border-dashed border-[3px] border-secondary rounded-lg backdrop-brightness-[0.4] cursor-pointer"
-      } p-3 flex flex-col align-center`}
+      } p-3 flex flex-col items-center`}
     >
       {addShadow && (
         <div className="absolute z-10 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
@@ -26,10 +26,10 @@ export default function ProgramCard({
         <h3 className="text-xl font-bold pt-4">{title}</h3>
         <p className="font-light">{description}</p>
         <div className="flex justify-between w-full mt-4 mb-4">
-          <div className="flex gap-2 align-baseline w-1/2 ">
+          <div className="flex gap-2 items-center w-1/2 ">
             <img src="/assets/black-clock.svg" alt="clock icon" className="w-6" /> <p className="font-light pt-2">{duration} min.</p>
           </div>
-          <div className="flex gap-2 align-baseline w-1/2">
+          <div className="flex gap-2 items-center w-1/2">
             <img src="/assets/dumbbell.svg" alt="dumbbell icon" className="w-6" /> <p className="font-light pt-2">{totalExercises} Øvelser</p>
           </div>
         </div>

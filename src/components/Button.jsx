@@ -69,13 +69,13 @@ export default function Button({ text, href, variant, styling, type = "button", 
       }}
       onMouseOver={() => icon && !disabled && setDisplayedIcon(iconType.hover)}
       onMouseOut={() => icon && !disabled && setDisplayedIcon(iconType.default)}
-      className={`flex justify-center h-12 w-full py-2 font-manjari  ${configuration.textColor} ${configuration.backgroundColor}  border-[2px] rounded-lg ${
+      className={`flex justify-center  h-12 w-full py-2 font-manjari  ${configuration.textColor} ${configuration.backgroundColor}  border-[2px] rounded-lg ${
         configuration.borderColor
       } ${!disabled && configuration.hoverTextColor} ${!disabled && configuration.hoverBackground} ${!disabled && configuration.hoverBorder} ${styling}`}
       type={type}
     >
       <p>{text}</p>
-      {icon && <img src={displayedIcon} alt={icon} className={`${iconStyling} ml-1`} />}
+      {icon && <img src={displayedIcon} alt={icon} className={`${iconStyling} ml-1 mt-[1.3px]`} />}
     </button>
   );
 }
