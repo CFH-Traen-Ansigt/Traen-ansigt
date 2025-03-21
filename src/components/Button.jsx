@@ -50,6 +50,8 @@ function getIcon(icon) {
       return { default: "/assets/edit-green.svg", hover: "/assets/edit-white.svg" };
     case "PlusIcon":
       return { default: "/assets/plus-icon-white.svg", hover: "/assets/plus-icon-green.svg" };
+    case "Bookmark":
+      return { default: "/assets/bookmark-filled-icon.svg", hover: "/assets/bookmark-green.svg" };
     default:
   }
 }
