@@ -24,6 +24,7 @@ const LogIn = () => {
       console.error("Login error:", error.message);
       setErrorDisplayed(true);
       setErrorDisplayed(error.message);
+      console.log(message)
     } else {
       console.log("Login successful:", data);
       localStorage.setItem("token", data.session.access_token); // Store session token
