@@ -65,7 +65,7 @@ export default function Button({ text, href, variant, styling, type = "button", 
       onClick={() => {
         if (href) {
           window.location.href = `${href}`;
-        } else {
+        } else if (onClick) {
           onClick();
         }
       }}

@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
+import { supabase } from "../DB/supabaseClient"; // Import Supabase client
 import LandingPageLayout from "../components/LandingPageLayout";
 import Button from "../components/Button";
 import InputField from "../components/InputField";
@@ -14,6 +15,39 @@ const SignUp = () => {
   const lowerCaseLetters = /[a-z]/g;
   const upperCaseLetters = /[A-Z]/g;
   const numbers = /[0-9]/g;
+
+  const [email, setEmail] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setMessage("");
+
+    const { data, error } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+      options:{
+        data: { display_name: fullName },
+      },
+    });
+
+    if (error) {
+      console.error("Error signing up:", error.message);
+      setMessage("Fejl ved oprettelse af bruger: " + error.message);
+    }
+
+    if (data) {
+      console.log("User signed up successfully:", data);
+      setMessage("Bruger oprettet. Tjek din email for at bekræfte din konto.");
+    }
+
+    console.log(message);
+    setEmail("");
+    setPassword("");
+    setPasswordRepeat("");
+    setFullName("");
+  }
 
   const modalItem = useRef();
 
@@ -66,9 +100,9 @@ const SignUp = () => {
       <BackgroundImage />
       <div className="w-80 mt-16">
         <h1 className="text-2xl mb-3 text-primary font-bold">Opret bruger:</h1>
-        <form>
-          <InputField label="Fulde navn" id="user-full-name" type="text" required />
-          <InputField label="Email" id="user-email" type="email" required />
+        <form onSubmit={handleSubmit}>
+          <InputField label="Fulde navn" value={fullName} setValue={setFullName} id="user-full-name" type="text" required/>
+          <InputField label="Email" value={email} setValue={setEmail} id="user-email" type="email" required/>
           <InputField
             label="Adgangskode"
             id="user-password"
@@ -95,6 +129,7 @@ const SignUp = () => {
           <div className="flex w-full gap-5 mt-8">
             <Button variant="Cancel" text="Afbryd" href=".." styling="text-2xl pt-[10px] h-10" />
             <Button
+              type="submit"
               text="Fortsæt"
               variant="Primary"
               styling="text-2xl pt-[10px] h-10"
