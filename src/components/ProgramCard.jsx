@@ -42,6 +42,7 @@ export default function ProgramCard({
             styling={`pt-[2px] h-8 text-[20px] rounded-md ${addShadow && "brightness-[0.4]"}`}
             iconStyling="w-[20px] h-[20px] pl-1"
             disabled={addShadow}
+            fullWidth
           />
           <div className="flex gap-2 ">
             <Button
@@ -52,6 +53,7 @@ export default function ProgramCard({
               styling={`pt-[2px] h-8 text-[20px] rounded-md ${addShadow && "brightness-[0.4]"}`}
               iconStyling="w-[20px] h-[20px]"
               disabled={addShadow}
+              fullWidth
             />
             <Button
               type="button"
@@ -61,6 +63,7 @@ export default function ProgramCard({
               styling={`pt-[2px] h-8 text-[20px] rounded-md ${addShadow && "brightness-[0.4]"}`}
               iconStyling="w-[20px] h-[20px]"
               disabled={addShadow}
+              fullWidth
             />
           </div>
         </div>

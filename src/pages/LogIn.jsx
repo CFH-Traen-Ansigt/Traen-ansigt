@@ -23,8 +23,8 @@ const LogIn = () => {
           </div>
           {errorDisplayed && <h2 id="error">Forkert brugernavn og/eller adgangskode</h2>}
           <div className="flex w-full gap-5 mt-8">
-            <Button type="button" text="Afbryd" variant="Cancel" href=".." styling="text-2xl pt-[10px] h-10" />
-            <Button type="submit" text="Log ind" variant="Primary" styling="text-2xl pt-[10px] h-10" />
+            <Button type="button" text="Afbryd" variant="Cancel" href=".." styling="text-2xl pt-[10px] h-12" fullWidth />
+            <Button type="submit" text="Log ind" variant="Primary" styling="text-2xl pt-[10px] h-12" fullWidth />
           </div>
         </form>
       </div>

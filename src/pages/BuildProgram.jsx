@@ -6,10 +6,12 @@ import ProgramModal from "../components/ProgramModal";
 import Button from "../components/Button";
 import TaskFiltering from "../components/TaskFiltering";
 import TaskCard from "../components/TaskCard";
+import CompletedModal from "../components/CompletedModal";
 
 const BuildProgram = () => {
   const [tasks, setTasks] = useState([]);
-  const [showModal, setShowModal] = useState(false);
+  const [showProgramModal, setShowProgramModal] = useState(false);
+  const [showCompletedModal, setShowCompletedModal] = useState(false);
   const dragTask = useRef(null);
   const draggedOverTask = useRef(null);
   function handleSort() {
@@ -23,11 +25,13 @@ const BuildProgram = () => {
     setTasks(tasksClone);
     setTasks(tasksClone);
   }
+  console.log(tasks);
   return (
     <main>
       <Menu />
       <TaskFiltering />
-      <ProgramModal showModal={showModal} setShowModal={setShowModal} />
+      <ProgramModal showModal={showProgramModal} setShowModal={setShowProgramModal} onSubmit={() => setShowCompletedModal(true)} />
+      <CompletedModal showModal={showCompletedModal} setShowModal={setShowCompletedModal} onSubmit={() => setShowCompletedModal(true)} />
       <div className="fixed flex flex-col top-0 left-0 w-[400px] py-10 h-screen bg-alt-color border-r-[5px] border-r-primary border-solid">
         <h1 className="text-3xl font-bold text-center ">Dit program</h1>
         {!tasks.length > 0 && (
@@ -43,47 +47,49 @@ const BuildProgram = () => {
               </ol>
             </div>
           </div>
-        )}{" "}
+        )}
         {tasks.length > 0 && (
-          <div className="flex flex-col items-center gap-2 h-dvh pt-2">
-            {tasks.map((task, index) => (
-              <TaskCard
-                exerciseNo={task.exerciseNo}
-                title={task.title}
-                image={task.image}
-                withHelp={task.withHelp}
-                variant="small"
-                repititions={task.repititions}
-                setTasks={setTasks}
-                draggable
-                onDragStart={() => (dragTask.current = index)}
-                onDragEnter={() => (draggedOverTask.current = index)}
-                onDragEnd={handleSort}
-                onDragOver={(e) => e.preventDefault()}
-              />
-            ))}
-
+          <div className="flex flex-col items-center gap-2 h-dvh pt-2 ">
+            <div className="flex flex-col items-center gap-2 h-[72dvh] overflow-scroll">
+              {tasks.map((task, index) => (
+                <TaskCard
+                  exerciseNo={task.exerciseNo}
+                  title={task.title}
+                  image={task.image}
+                  withHelp={task.withHelp}
+                  variant="small"
+                  repititions={task.repititions}
+                  setTasks={setTasks}
+                  draggable
+                  onDragStart={() => (dragTask.current = index)}
+                  onDragEnter={() => (draggedOverTask.current = index)}
+                  onDragEnd={handleSort}
+                  onDragOver={(e) => e.preventDefault()}
+                />
+              ))}
+            </div>
             <div className="mt-auto">
               <Button
                 type="button"
                 variant="Primary"
-                onClick={() => setShowModal(true)}
+                onClick={() => setShowProgramModal(true)}
                 icon="Bookmark"
                 text="Gem mit program"
-                styling="w-[300px] mx-auto text-2xl gap-4 h-10 "
+                styling="mx-auto text-2xl gap-4 h-12 px-6"
                 iconStyling="w-5 h-5 mt-[4px]"
               />
             </div>
           </div>
         )}
       </div>
+      <div className="pt-3">
+        <TaskList headline="Pande" description="Disse øvelser fokusere på området omkring panden" setTasks={setTasks} tasks={tasks} />
+        <TaskList headline="Øjne" description="Disse øvelser fokusere på øjnene" setTasks={setTasks} />
+        <TaskList headline="Næse" description="Disse øvelser fokusere på området omkring næsen" setTasks={setTasks} tasks={tasks} />
+        <TaskList headline="Kinder og mund" description="Disse øvelser fokusere på området omkring kinderne og munden" setTasks={setTasks} tasks={tasks} />
 
-      <TaskList headline="Pande" description="Disse øvelser fokusere på området omkring panden" setTasks={setTasks} tasks={tasks} />
-      <TaskList headline="Øjne" description="Disse øvelser fokusere på øjnene" setTasks={setTasks} />
-      <TaskList headline="Næse" description="Disse øvelser fokusere på området omkring næsen" setTasks={setTasks} tasks={tasks} />
-      <TaskList headline="Kinder og mund" description="Disse øvelser fokusere på området omkring kinderne og munden" setTasks={setTasks} tasks={tasks} />
-
-      <TaskList divider={false} headline="Tunge" description="Disse øvelser fokusere på tungen" setTasks={setTasks} tasks={tasks} />
+        <TaskList divider={false} headline="Tunge" description="Disse øvelser fokusere på tungen" setTasks={setTasks} tasks={tasks} />
+      </div>
     </main>
   );
 };

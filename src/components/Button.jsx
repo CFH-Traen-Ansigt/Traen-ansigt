@@ -50,13 +50,15 @@ function getIcon(icon) {
       return { default: "/assets/edit-green.svg", hover: "/assets/edit-white.svg" };
     case "PlusIcon":
       return { default: "/assets/plus-icon-white.svg", hover: "/assets/plus-icon-green.svg" };
+    case "InvertedPlusIcon":
+      return { default: "/assets/plus-icon-green.svg", hover: "/assets/plus-icon-white.svg" };
     case "Bookmark":
       return { default: "/assets/bookmark-filled-icon.svg", hover: "/assets/bookmark-green.svg" };
     default:
   }
 }
 
-export default function Button({ text, href, variant, styling, type = "button", onClick, icon, iconStyling, disabled = false }) {
+export default function Button({ text, href, variant, styling, type = "button", onClick, icon, iconStyling, disabled = false, fullWidth }) {
   const iconType = getIcon(icon);
   const [displayedIcon, setDisplayedIcon] = useState(icon && iconType.default);
   const configuration = getConfiguration(variant);
@@ -71,9 +73,11 @@ export default function Button({ text, href, variant, styling, type = "button", 
       }}
       onMouseOver={() => icon && !disabled && setDisplayedIcon(iconType.hover)}
       onMouseOut={() => icon && !disabled && setDisplayedIcon(iconType.default)}
-      className={`flex justify-center  h-12 w-full py-2 font-manjari  ${configuration.textColor} ${configuration.backgroundColor}  border-[2px] rounded-lg ${
-        configuration.borderColor
-      } ${!disabled && configuration.hoverTextColor} ${!disabled && configuration.hoverBackground} ${!disabled && configuration.hoverBorder} ${styling}`}
+      className={`flex justify-center ${fullWidth ? "w-full" : "w-auto"} py-2 font-manjari  ${configuration.textColor} ${configuration.backgroundColor}  ${
+        disabled && "cursor-default"
+      } border-[2px] rounded-lg ${configuration.borderColor} ${!disabled && configuration.hoverTextColor} ${!disabled && configuration.hoverBackground} ${
+        !disabled && configuration.hoverBorder
+      } ${styling}`}
       type={type}
     >
       <p>{text}</p>
