@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import Button from "./Button";
 import RepititionButton from "./RepititionButton";
 
+// make image dynamic by using the exerciseNo as a path to the image
+
 export default function TaskCard({
   exerciseNo,
   title = "Løft brynene",

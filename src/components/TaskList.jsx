@@ -14,3 +14,7 @@ export default function TaskList({ headline, description, tasks, setTasks, divid
     </div>
   );
 }
+
+// make taskcards according to number of tasks that are passed in as props
+// Change exerciseNo to be ID from database
+// add withHelp according to the data from the database

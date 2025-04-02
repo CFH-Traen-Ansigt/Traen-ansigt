@@ -8,6 +8,12 @@ import TaskFiltering from "../components/TaskFiltering";
 import TaskCard from "../components/TaskCard";
 import CompletedModal from "../components/CompletedModal";
 
+// Get Tasks From API
+
+// Sort tasks by type
+
+// Input task arrays into respective task lists
+
 const BuildProgram = () => {
   const [tasks, setTasks] = useState([]);
   const [showProgramModal, setShowProgramModal] = useState(false);
