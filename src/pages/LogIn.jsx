@@ -18,7 +18,7 @@ const LogIn = () => {
           <div>
             <input type="checkbox" id="auto-log-in" name="auto-log-in" />
             <label for="auto-log-in" className="ml-2 text-lg">
-              Forbliv logget ind 2
+              Forbliv logget ind
             </label>
           </div>
           {errorDisplayed && <h2 id="error">Forkert brugernavn og/eller adgangskode</h2>}
