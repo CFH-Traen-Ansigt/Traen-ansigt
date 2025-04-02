@@ -14,6 +14,16 @@ import CompletedModal from "../components/CompletedModal";
 
 // Input task arrays into respective task lists
 
+/*useEffect(() => {
+    const fetchProfiles = async () => {
+      const { data, error } = await supabase.from("profiles").select("*");
+      if (error) {
+        setError(error.message);
+      } else {
+        setProfiles(data);
+      }
+    };*/
+
 const BuildProgram = () => {
   const [tasks, setTasks] = useState([]);
   const [showProgramModal, setShowProgramModal] = useState(false);
