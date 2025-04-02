@@ -5,6 +5,22 @@ import BackgroundImage from "../components/BackgroundImage";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
 
+//code for handling login and rememberMe functionality
+
+/* const handleLogin = async (email, password, rememberMe) => {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+    options: { persistSession: rememberMe }, // true = localStorage, false = sessionStorage
+  });
+
+  if (error) {
+    console.error("Login failed:", error.message);
+  } else {
+    console.log("Login successful:", data);
+  }
+}; */
+
 const LogIn = () => {
   const [errorDisplayed, setErrorDisplayed] = useState(false);
   return (
