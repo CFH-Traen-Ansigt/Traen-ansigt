@@ -10,7 +10,7 @@ export default function ProgramCard({
   return (
     <article className={`relative w-[264px] h-[480px] ${addShadow && "border-dashed border-[2px] border-secondary rounded-lg  cursor-pointer"} p-3 flex flex-col items-center`}>
       {addShadow && (
-        <div className="absolute z-10 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full">
+        <div className="absolute z-10 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full" onClick={() => (window.location.href = "/opsæt-mit-program")}>
           <p className="text-secondary text-lg text-center font-bold">Tilføj nyt program</p>
           <img src="/assets/plus-circle.svg" alt="plus icon" className="w-1/6 m-auto" />
         </div>
