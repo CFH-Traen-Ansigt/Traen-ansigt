@@ -11,7 +11,7 @@ export default function Menu() {
         <img src="/assets/burger-menu.svg" alt="x icon" className="w-full" />
       </button>
       {openMenu === true && (
-        <div className={`fixed flex justify-center items-center h-screen w-screen my-0 mx-auto z-10 left-0 top-0 overflow-x-hidden bg-primary`}>
+        <div className={`fixed flex justify-center items-center h-screen w-screen my-0 mx-auto z-20 left-0 top-0 overflow-x-hidden bg-primary`}>
           <button className="absolute right-7 top-7 w-14 h-14 cursor-pointer" onClick={() => setOpenMenu(false)}>
             <img src="/assets/close-icon.svg" alt="x icon" className="w-full" />
           </button>
