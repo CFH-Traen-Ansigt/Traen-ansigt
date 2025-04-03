@@ -11,8 +11,8 @@ export default function CompletedModal({ showModal, setShowModal }) {
         </div>
         <div></div>
         <div className="flex gap-5 justify-center mt-10">
-          <Button type="button" text="Nej" variant="Cancel" onClick={() => setShowModal(false)} styling="w-40 text-xl h-10 pt-2" />
-          <Button type="button" text="Ja" variant="Primary" styling="w-40 text-xl h-10 pt-2" onClick={() => setShowModal(false)} />
+          <Button type="button" text="Nej" variant="Cancel" onClick={() => setShowModal(false)} styling="px-5 min-w-36 text-xl h-10 pt-2" />
+          <Button type="button" text="Ja" variant="Primary" styling="px-5 min-w-36 text-xl h-10 pt-2" onClick={() => setShowModal(false)} />
         </div>
       </div>
     </dialog>

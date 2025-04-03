@@ -8,6 +8,7 @@ import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 import BuildProgram from "./pages/BuildProgram";
+import MyPrograms from "./pages/MyPrograms";
 
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
   { path: "/opret-bruger", element: <SignUp /> },
   { path: "/forside", element: <Home /> },
   { path: "/opsæt-mit-program", element: <BuildProgram /> },
+  { path: "/mine-programmer", element: <MyPrograms /> },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

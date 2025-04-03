@@ -25,12 +25,12 @@ export default function ProgramModal({ showModal, setShowModal, onSubmit }) {
 
           <div></div>
           <div className="flex gap-5 justify-center">
-            <Button type="button" text="Afbryd" variant="Cancel" onClick={() => setShowModal(false)} styling="w-40 text-xl h-10 pt-2" />
+            <Button type="button" text="Afbryd" variant="Cancel" onClick={() => setShowModal(false)} styling="px-5 text-xl h-10 pt-2" />
             <Button
               type="submit"
               text="Færdig"
               variant="Primary"
-              styling="w-40 text-xl h-10 pt-2"
+              styling="px-5 text-xl h-10 pt-2"
               onClick={() => {
                 setShowModal(false);
                 onSubmit();

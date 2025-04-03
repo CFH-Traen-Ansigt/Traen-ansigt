@@ -48,6 +48,8 @@ function getIcon(icon) {
       return { default: "/assets/play-icon-white.svg", hover: "/assets/play-icon-green.svg" };
     case "EditIcon":
       return { default: "/assets/edit-green.svg", hover: "/assets/edit-white.svg" };
+    case "InvertedEditIcon":
+      return { default: "/assets/edit-white.svg", hover: "/assets/edit-green.svg" };
     case "PlusIcon":
       return { default: "/assets/plus-icon-white.svg", hover: "/assets/plus-icon-green.svg" };
     case "InvertedPlusIcon":

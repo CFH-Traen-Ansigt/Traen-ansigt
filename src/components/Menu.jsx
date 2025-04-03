@@ -7,7 +7,7 @@ export default function Menu() {
 
   return (
     <div>
-      <button className="absolute right-7 top-7 w-14 h-14 cursor-pointer" onClick={() => setOpenMenu(true)}>
+      <button className="fixed right-7 top-7 w-14 h-14 cursor-pointer" onClick={() => setOpenMenu(true)}>
         <img src="/assets/burger-menu.svg" alt="x icon" className="w-full" />
       </button>
       {openMenu === true && (
@@ -17,7 +17,7 @@ export default function Menu() {
           </button>
           <div className="grid grid-cols-[repeat(3,1fr)] gap-14">
             <MenuItem text="Forside" icon="HomeIcon" href="/forside" />
-            <MenuItem text="Mine programmer" icon="BookmarkIcon" href="" />
+            <MenuItem text="Mine programmer" icon="BookmarkIcon" href="/mine-programmer" />
             <MenuItem text="Opsæt mit program" icon="BuildIcon" href="/opsæt-mit-program" />
             <MenuItem text="Om os" icon="AboutUsIcon" href="" />
             <MenuItem text="Indstillinger" icon="SettingsIcon" href="" />
