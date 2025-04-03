@@ -18,7 +18,7 @@ const MyPrograms = () => {
           Disse programmer er standard-programmer sammensat af Center for Hjerneskades logopæder, som du frit kan benytte som supplerende materiale til dit forløb .
         </p>
         <div className="grid grid-cols-3 gap-6 w-full">
-          <ProgramCard addShadow />
+          <ProgramCard />
         </div>
       </div>
     </main>
