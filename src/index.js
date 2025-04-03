@@ -9,6 +9,8 @@ import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 import BuildProgram from "./pages/BuildProgram";
 import MyPrograms from "./pages/MyPrograms";
+import AboutUs from "./pages/AboutUs";
+import Settings from "./pages/Settings";
 
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
@@ -17,6 +19,8 @@ const router = createBrowserRouter([
   { path: "/forside", element: <Home /> },
   { path: "/opsæt-mit-program", element: <BuildProgram /> },
   { path: "/mine-programmer", element: <MyPrograms /> },
+  { path: "/om-os", element: <AboutUs /> },
+  { path: "/indstillinger", element: <Settings /> },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

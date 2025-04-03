@@ -19,8 +19,8 @@ export default function Menu() {
             <MenuItem text="Forside" icon="HomeIcon" href="/forside" />
             <MenuItem text="Mine programmer" icon="BookmarkIcon" href="/mine-programmer" />
             <MenuItem text="Opsæt mit program" icon="BuildIcon" href="/opsæt-mit-program" />
-            <MenuItem text="Om os" icon="AboutUsIcon" href="" />
-            <MenuItem text="Indstillinger" icon="SettingsIcon" href="" />
+            <MenuItem text="Om os" icon="AboutUsIcon" href="/om-os" />
+            <MenuItem text="Indstillinger" icon="SettingsIcon" href="/indstillinger" />
             <MenuItem text="Log ud" icon="ExitIcon" href="/" id="exit" />
           </div>
         </div>
