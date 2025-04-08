@@ -7,22 +7,17 @@ import Button from "../components/Button";
 import TaskFiltering from "../components/TaskFiltering";
 import TaskCard from "../components/TaskCard";
 import CompletedModal from "../components/CompletedModal";
+import { supabase } from "../DB/supabaseClient";
 
 // Get Tasks From API
 
-// Sort tasks by type
 
-// Input task arrays into respective task lists
+let { data:Exercises, error } = await supabase.from("Exercises").select("id, name, type, duration, description, help").order("id", { ascending: true });
 
-/*useEffect(() => {
-    const fetchProfiles = async () => {
-      const { data, error } = await supabase.from("profiles").select("*");
-      if (error) {
-        setError(error.message);
-      } else {
-        setProfiles(data);
-      }
-    };*/
+console.log(Exercises)
+console.log(error)
+
+
 
 const BuildProgram = () => {
   const [tasks, setTasks] = useState([]);
@@ -38,7 +33,6 @@ const BuildProgram = () => {
     tasksClone.splice(dragTask.current, 1);
     tasksClone.splice(draggedOverTask.current, 0, draggedItem);
 
-    setTasks(tasksClone);
     setTasks(tasksClone);
   }
   console.log(tasks);
@@ -99,12 +93,12 @@ const BuildProgram = () => {
         )}
       </div>
       <div className="pt-3">
-        <TaskList headline="Pande" description="Disse øvelser fokusere på området omkring panden" setTasks={setTasks} tasks={tasks} />
-        <TaskList headline="Øjne" description="Disse øvelser fokusere på øjnene" setTasks={setTasks} />
-        <TaskList headline="Næse" description="Disse øvelser fokusere på området omkring næsen" setTasks={setTasks} tasks={tasks} />
-        <TaskList headline="Kinder og mund" description="Disse øvelser fokusere på området omkring kinderne og munden" setTasks={setTasks} tasks={tasks} />
+        <TaskList headline="Pande" description="Disse øvelser fokusere på området omkring panden" setTasks={setTasks} tasks={tasks} exercises={Exercises.filter((task) => task.type === "Pande")}/>
+        <TaskList headline="Øjne" description="Disse øvelser fokusere på øjnene" setTasks={setTasks} tasks={tasks} exercises={Exercises.filter((task) => task.type === "Øjne")}/>
+        <TaskList headline="Næse" description="Disse øvelser fokusere på området omkring næsen" setTasks={setTasks} tasks={tasks} exercises={Exercises.filter((task) => task.type === "Næse")} />
+        <TaskList headline="Kinder og mund" description="Disse øvelser fokusere på området omkring kinderne og munden" setTasks={setTasks} tasks={tasks} exercises={Exercises.filter((task) => task.type === "Mund")} />
 
-        <TaskList divider={false} headline="Tunge" description="Disse øvelser fokusere på tungen" setTasks={setTasks} tasks={tasks} />
+        <TaskList divider={false} headline="Tunge" description="Disse øvelser fokusere på tungen" setTasks={setTasks} tasks={tasks} exercises={Exercises.filter((task) => task.type === "Tunge")} />
       </div>
     </main>
   );
