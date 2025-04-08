@@ -22,23 +22,3 @@ export default function TaskFiltering() {
     </ul>
   );
 }
-
-//   }
-//     > li {
-//       font-size: var(--fs-m);
-//       font-family: var(--main-font);
-//       font-weight: 100;
-//       padding: 15px 0px 10px 0px;
-//       background-color: var(--alternative-bg-color);
-//       > a {
-//         height: 30px;
-//         padding: 0 40px;
-//         text-decoration: none;
-//         color: var(--font-color);
-//         border: 1px solid var(--alternative-bg-color);
-//       }
-
-//       > a:visited {
-//         color: var(--font-color);
-//       }
-//     }

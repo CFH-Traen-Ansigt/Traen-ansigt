@@ -5,6 +5,22 @@ import BackgroundImage from "../components/BackgroundImage";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
 
+//code for handling login and rememberMe functionality
+
+/* const handleLogin = async (email, password, rememberMe) => {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+    options: { persistSession: rememberMe }, // true = localStorage, false = sessionStorage
+  });
+
+  if (error) {
+    console.error("Login failed:", error.message);
+  } else {
+    console.log("Login successful:", data);
+  }
+}; */
+
 const LogIn = () => {
   const [errorDisplayed, setErrorDisplayed] = useState(false);
   const [email, setEmail] = useState("");
@@ -48,8 +64,8 @@ const LogIn = () => {
           </div>
           {errorDisplayed && <h2 id="error">Forkert brugernavn og/eller adgangskode</h2>}
           <div className="flex w-full gap-5 mt-8">
-            <Button type="button" text="Afbryd" variant="Cancel" href=".." styling="text-2xl pt-[10px] h-10" />
-            <Button type="submit" text="Log ind" variant="Primary" styling="text-2xl pt-[10px] h-10"/>
+            <Button type="button" text="Afbryd" variant="Cancel" href=".." styling="text-2xl pt-[10px] h-12" fullWidth />
+            <Button type="submit" text="Log ind" variant="Primary" styling="text-2xl pt-[10px] h-12" fullWidth />
           </div>
         </form>
       </div>

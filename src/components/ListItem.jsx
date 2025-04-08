@@ -15,7 +15,7 @@ export default function ListItem({ itemName, listStyling, onHover }) {
         setIsHovered(false);
       }}
     >
-      <a href={`#${itemName}`} className={`h-6 px-12 ${isHovered ? "text-main-color" : "text-text-color"} ${listStyling}`}>
+      <a href={`#${itemName}`} className={`h-6 px-8 ${isHovered ? "text-main-color" : "text-text-color"} ${listStyling}`}>
         {itemName}
       </a>
     </li>

@@ -13,7 +13,7 @@ export default function InputField({ id, label, type, icon, required = false, se
       </label>
       <div className="relative flex w-full">
         <input
-          className="w-full h-10 bg-alt-color mb-4 rounded-[10px] text-xl pl-3"
+          className="w-full py-2 bg-alt-color mb-4 rounded-[10px] text-xl pl-3"
           id={id}
           name={id}
           value={value}

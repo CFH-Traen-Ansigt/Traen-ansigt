@@ -127,15 +127,16 @@ const SignUp = () => {
           />
           <div>{errorDisplayed && <h2 className="mt-2 text-lg text-primary max-w-64 font-bold">{errorMessage}</h2>}</div>
           <div className="flex w-full gap-5 mt-8">
-            <Button variant="Cancel" text="Afbryd" href=".." styling="text-2xl pt-[10px] h-10" />
+            <Button variant="Cancel" text="Afbryd" href=".." styling="text-2xl pt-[10px] h-12" fullWidth />
             <Button
               type="submit"
               text="Fortsæt"
               variant="Primary"
-              styling="text-2xl pt-[10px] h-10"
+              styling="text-2xl pt-[10px] h-12"
               onClick={() => {
                 displayErrorMessage();
               }}
+              fullWidth
             />
           </div>
         </form>
