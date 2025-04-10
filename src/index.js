@@ -11,6 +11,7 @@ import BuildProgram from "./pages/BuildProgram";
 import MyPrograms from "./pages/MyPrograms";
 import AboutUs from "./pages/AboutUs";
 import Settings from "./pages/Settings";
+import VideoScreen from "./pages/VideoScreen";
 
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
@@ -18,9 +19,10 @@ const router = createBrowserRouter([
   { path: "/opret-bruger", element: <SignUp /> },
   { path: "/forside", element: <Home /> },
   { path: "/opsæt-mit-program", element: <BuildProgram /> },
-  { path: "/mine-programmer", element: <MyPrograms /> },
+  { path: "/mit-program", element: <MyPrograms /> },
   { path: "/om-os", element: <AboutUs /> },
   { path: "/indstillinger", element: <Settings /> },
+  { path: "/afspil", element: <VideoScreen /> },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

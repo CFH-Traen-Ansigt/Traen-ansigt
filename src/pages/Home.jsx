@@ -8,9 +8,8 @@ import PersonalInfoModal from "../components/PersonalInfoModal";
 const Home = () => {
   const [showModal, setShowModal] = useState(false);
   const selectedIcon = "";
-  const name = "";
   const email = "";
-  const signedUpDate = "";
+
   return (
     <main className="mx-20">
       <Menu />
@@ -19,14 +18,9 @@ const Home = () => {
         <article className="flex flex-col border-r-solid border-r-alt-color border-r-4 h-[80vh] px-12">
           <div className="flex flex-col items-center gap-8 text-center mt-8">
             <img src={selectedIcon.length > 0 ? selectedIcon : "/assets/person-1.svg"} alt="profile icon" />
-            <h1 className="text-3xl font-bold">{name ? name : ""}</h1>
             <div>
               <h2 className="text-xl text-primary font-bold">Mail:</h2>
               <p className="text-xl text-font-color font-bold">{email ? email : ""}</p>
-            </div>
-            <div>
-              <h2 className="text-xl text-primary font-bold">Oprettelsesdato:</h2>
-              <p className="text-xl text-font-color font-bold">{signedUpDate ? signedUpDate : ""}</p>
             </div>
           </div>
           <Button

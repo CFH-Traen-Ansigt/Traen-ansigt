@@ -27,7 +27,7 @@ const SignUp = () => {
     const { data, error } = await supabase.auth.signUp({
       email: email,
       password: password,
-      options:{
+      options: {
         data: { display_name: fullName },
       },
     });
@@ -47,7 +47,7 @@ const SignUp = () => {
     setPassword("");
     setPasswordRepeat("");
     setFullName("");
-  }
+  };
 
   const modalItem = useRef();
 
@@ -101,8 +101,7 @@ const SignUp = () => {
       <div className="w-80 mt-16">
         <h1 className="text-2xl mb-3 text-primary font-bold">Opret bruger:</h1>
         <form onSubmit={handleSubmit}>
-          <InputField label="Fulde navn" value={fullName} setValue={setFullName} id="user-full-name" type="text" required/>
-          <InputField label="Email" value={email} setValue={setEmail} id="user-email" type="email" required/>
+          <InputField label="Brugernavn (email)" id="user-email" type="email" required />
           <InputField
             label="Adgangskode"
             id="user-password"

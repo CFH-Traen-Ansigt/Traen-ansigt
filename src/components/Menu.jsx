@@ -17,7 +17,7 @@ export default function Menu() {
           </button>
           <div className="grid grid-cols-[repeat(3,1fr)] gap-14">
             <MenuItem text="Forside" icon="HomeIcon" href="/forside" />
-            <MenuItem text="Mine programmer" icon="BookmarkIcon" href="/mine-programmer" />
+            <MenuItem text="Mit program" icon="BookmarkIcon" href="/mit-program" />
             <MenuItem text="Opsæt mit program" icon="BuildIcon" href="/opsæt-mit-program" />
             <MenuItem text="Om os" icon="AboutUsIcon" href="/om-os" />
             <MenuItem text="Indstillinger" icon="SettingsIcon" href="/indstillinger" />

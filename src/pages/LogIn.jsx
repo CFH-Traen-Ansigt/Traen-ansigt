@@ -24,13 +24,13 @@ import Button from "../components/Button";
 const LogIn = () => {
   const [errorDisplayed, setErrorDisplayed] = useState(false);
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");       
+  const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
   const handleLogin = async (event) => {
     event.preventDefault();
     setMessage("");
-    
+
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -40,7 +40,7 @@ const LogIn = () => {
       console.error("Login error:", error.message);
       setErrorDisplayed(true);
       setErrorDisplayed(error.message);
-      console.log(message)
+      console.log(message);
     } else {
       console.log("Login successful:", data);
       localStorage.setItem("token", data.session.access_token); // Store session token
@@ -53,9 +53,9 @@ const LogIn = () => {
       <BackgroundImage />
       <div className="w-80 mt-16">
         <h1 className="text-2xl font-manjari mb-3 text-primary font-bold">Log ind:</h1>
-        <form onSubmit={handleLogin}>
-          <InputField label="Email" id="user-email" type="email" required value={email} setValue={setEmail} />
-          <InputField label="Adgangskode" id="user-password" type="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" value={password} setValue={setPassword}  />
+        <form>
+          <InputField label="Brugernavn (email)" id="user-email" type="email" required />
+          <InputField label="Adgangskode" id="user-password" type="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />
           <div>
             <input type="checkbox" id="auto-log-in" name="auto-log-in" />
             <label for="auto-log-in" className="ml-2 text-lg">
