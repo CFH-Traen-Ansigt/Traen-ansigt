@@ -17,7 +17,7 @@ const MyPrograms = () => {
         setShowModal={setShowCompletedModal}
         onSubmit={() => setShowCompletedModal(true)}
       >
-        <p className="text-lg">Du er ved at slette dit program. Vil du fortsætte.</p>
+        <p className="text-lg">Du er ved at slette dit program. Vil du fortsætte?</p>
       </ActionModal>
       <div className="pb-10 border-b-4 border-b-solid border-b-alt-color max-w-[1100px]">
         <h1 className="text-font-color font-bold text-3xl">Dine gemte programmer</h1>
