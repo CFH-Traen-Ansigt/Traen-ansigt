@@ -6,6 +6,7 @@ export default function ProgramCard({
   duration = "5",
   totalExercises = "12",
   addShadow = false,
+  onDelete,
 }) {
   return (
     <article className={`relative w-[264px] h-[480px] ${addShadow && "border-dashed border-[2px] border-secondary rounded-lg  cursor-pointer"} p-3 flex flex-col items-center`}>
@@ -50,6 +51,7 @@ export default function ProgramCard({
               iconStyling="w-[20px] h-[20px]"
               disabled={addShadow}
               fullWidth
+              onClick={onDelete}
             />
             <Button
               type="button"
