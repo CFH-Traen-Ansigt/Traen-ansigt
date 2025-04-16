@@ -11,7 +11,7 @@ const Home = () => {
   const email = "";
 
   return (
-    <main className="mx-20">
+    <main className="mx-20 max-w-full overflow-hidden">
       <Menu />
       <PersonalInfoModal setShowModal={setShowModal} showModal={showModal} />
       <div className={`grid grid-cols-3 mt-20 `}>
@@ -32,7 +32,7 @@ const Home = () => {
             iconStyling="pt-[2px]"
           />
         </article>
-        <div className="grid grid-cols-2 w-full gap-x-4 gap-y-10 col-span-2 my-auto">
+        <div className="grid grid-cols-2 w-full gap-x-4 gap-y-10 col-span-2 my-auto min-w-[800px]">
           <OptionCard icon="/assets/bookmark-red-outline.svg" option="Mine programmer" text="Her finder du dine gemte programmer med udvalgte øvelser." href="/mit-program" />
           <OptionCard icon="/assets/build-red.svg" option="Opsæt mit program" text="Tryk for at komme i gang med at lave dit program." href="/opsæt-mit-program" />
           <OptionCard icon="/assets/about-us-red.svg" option="Om os" text="Her kan du finde information om organisationen og kontaktpersoner." />
