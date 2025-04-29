@@ -11,7 +11,7 @@ import { supabase } from "../DB/supabaseClient";
 
 // Get Tasks From API
 
-let { data: Exercises, error } = await supabase.from("Exercises").select("id, name, type, duration, description, help").order("id", { ascending: true });
+let { data: Exercises, error } = await supabase.from("Exercises").select("id, name, type, duration, help").order("id", { ascending: true });
 
 console.log(Exercises);
 console.log(error);

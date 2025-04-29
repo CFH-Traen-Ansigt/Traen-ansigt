@@ -4,7 +4,6 @@ import Button from "./Button";
 import RepititionButton from "./RepititionButton";
 
 // make image dynamic by using the exerciseNo as a path to the image
-// todo awaiting descriptions and adding them to database
 
 export default function TaskCard({
   exerciseNo,
@@ -12,7 +11,6 @@ export default function TaskCard({
   image = "/assets/images/018.webp",
   withHelp = false,
   variant,
-  description = variant !== "small" ? "En øvelse til at styrke muskulaturen omkring øjnene" : "",
   tasks,
   setTasks,
   repititions,
@@ -25,7 +23,7 @@ export default function TaskCard({
   const [isSelected, setIsSelected] = useState(false);
   function addTask() {
     if (!tasks.some((e) => e.exerciseNo === exerciseNo)) {
-      setTasks((old) => old.concat([{ exerciseNo: exerciseNo, title: title, description: description, image: image, withHelp: withHelp, repititions: numberOfRepititions }]));
+      setTasks((old) => old.concat([{ exerciseNo: exerciseNo, title: title, image: image, withHelp: withHelp, repititions: numberOfRepititions }]));
     }
   }
   useEffect(() => {
@@ -43,7 +41,6 @@ export default function TaskCard({
         <div className="flex flex-col py-2 w-full pl-1">
           <h2 className={`${variant === "small" ? "text-xl" : "text-2xl"} font-bold `}>{title}</h2>
           <h3 className="font-sm mb-2">{withHelp && "(med hjælp)"}</h3>
-          <p className="font-light leading-[1.1]">{description}</p>
           <div className="flex items-center mt-auto justify-between w-full">
             <RepititionButton variant={variant} numberOfRepititions={repititions ? repititions : numberOfRepititions} setNumberOfRepititions={setNumberOfRepititions} />
             <Button
