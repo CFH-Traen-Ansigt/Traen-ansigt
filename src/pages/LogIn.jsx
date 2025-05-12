@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { supabase } from "../DB/supabaseClient"; // Import Supabase client
 import LandingPageLayout from "../components/LandingPageLayout";
 import BackgroundImage from "../components/BackgroundImage";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 
 //code for handling login and rememberMe functionality
 
@@ -26,6 +27,18 @@ const LogIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (session) {
+        navigate('/forside') // Redirect if already logged in
+      }
+    }
+
+    checkSession()
+  }, [navigate])
 
   const handleLogin = async (event) => {
     event.preventDefault();

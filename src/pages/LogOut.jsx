@@ -1,0 +1,18 @@
+import { supabase } from "../DB/supabaseClient";
+import { useEffect } from "react";
+
+const LogOut = () => {
+  useEffect(() => {
+    const logout = async () => {
+      await supabase.auth.signOut()
+        localStorage.removeItem("refreshToken") // Remove session token
+        localStorage.removeItem("token") // Remove refresh token
+      window.location.href = '/' // or wherever your login page is
+    }
+
+    logout()
+  }, [])
+  return <div>Logging out...</div>
+}
+
+export default LogOut;

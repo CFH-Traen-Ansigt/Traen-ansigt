@@ -21,7 +21,7 @@ export default function Menu() {
             <MenuItem text="Opsæt mit program" icon="BuildIcon" href="/opsæt-mit-program" />
             <MenuItem text="Om os" icon="AboutUsIcon" href="/om-os" />
             <MenuItem text="Indstillinger" icon="SettingsIcon" href="/indstillinger" />
-            <MenuItem text="Log ud" icon="ExitIcon" href="/" id="exit" />
+            <MenuItem text="Log ud" icon="ExitIcon" href="/logout" id="exit" />
           </div>
         </div>
       )}

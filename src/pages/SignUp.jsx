@@ -5,8 +5,21 @@ import LandingPageLayout from "../components/LandingPageLayout";
 import Button from "../components/Button";
 import InputField from "../components/InputField";
 import BackgroundImage from "../components/BackgroundImage";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 
 const SignUp = () => {
+   const navigate = useNavigate();
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (session) {
+        navigate('/forside') // Redirect if already logged in
+      }
+    }
+
+    checkSession()
+  }, [navigate])
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [errorDisplayed, setErrorDisplayed] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
