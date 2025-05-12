@@ -37,9 +37,11 @@ const SignUp = () => {
       setMessage("Fejl ved oprettelse af bruger: " + error.message);
     }
 
-    if (data) {
+    if (data && !error) {
       console.log("User signed up successfully:", data);
       setMessage("Bruger oprettet. Tjek din email for at bekræfte din konto.");
+
+      window.location.href = "/log-ind"; // Redirect user after signup
     }
 
     console.log(message);
@@ -101,7 +103,8 @@ const SignUp = () => {
       <div className="w-80 mt-16">
         <h1 className="text-2xl mb-3 text-primary font-bold">Opret bruger:</h1>
         <form onSubmit={handleSubmit}>
-          <InputField label="Brugernavn (email)" id="user-email" type="email" required />
+          <InputField label="Brugernavn (email)" id="user-email" type="email"
+           required value={email} setValue={setEmail} />
           <InputField
             label="Adgangskode"
             id="user-password"

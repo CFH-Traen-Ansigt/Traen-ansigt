@@ -44,8 +44,8 @@ const LogIn = () => {
     } else {
       console.log("Login successful:", data);
       localStorage.setItem("token", data.session.access_token); // Store session token
-      alert("Login successful!");
-      window.location.href = "/dashboard"; // Redirect user after login
+      localStorage.setItem("refreshToken", data.session.refresh_token); // Store refresh token
+      window.location.href = "/forside"; // Redirect user after login
     }
   };
   return (
@@ -53,9 +53,10 @@ const LogIn = () => {
       <BackgroundImage />
       <div className="w-80 mt-16">
         <h1 className="text-2xl font-manjari mb-3 text-primary font-bold">Log ind:</h1>
-        <form>
-          <InputField label="Brugernavn (email)" id="user-email" type="email" required />
-          <InputField label="Adgangskode" id="user-password" type="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />
+        <form onSubmit={handleLogin}>
+          <InputField label="Brugernavn (email)" id="user-email" type="email" required value={email} setValue={setEmail}/>
+          <InputField label="Adgangskode" id="user-password" type="password" 
+          required value={password} setValue={setPassword} pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />
           <div>
             <input type="checkbox" id="auto-log-in" name="auto-log-in" />
             <label for="auto-log-in" className="ml-2 text-lg">
