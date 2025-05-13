@@ -71,7 +71,7 @@ const LogIn = () => {
           <InputField label="Adgangskode" id="user-password" type="password" 
           required value={password} setValue={setPassword} pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />
           <div>
-            <input type="checkbox" id="auto-log-in" name="auto-log-in" />
+            <input type="checkbox" id="auto-log-in" name="auto-log-in" defaultChecked />
             <label for="auto-log-in" className="ml-2 text-lg">
               Forbliv logget ind
             </label>

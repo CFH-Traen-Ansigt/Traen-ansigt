@@ -26,33 +26,33 @@ const BuildProgram = () => {
   const dragTask = useRef(null);
   const draggedOverTask = useRef(null);
 
-  const saveProgram = async () => {
-    let list = tasks.map((task) => ({
-          id: task.exerciseNo,
-          repetitions: task.repititions
-        }))
+  // const saveProgram = async () => {
+  //   let list = tasks.map((task) => ({
+  //         id: task.exerciseNo,
+  //         repetitions: task.repititions
+  //       }))
 
-    console.log(list);
-    const { data, error } = await supabase.from("Programs").insert([
-      {
-        name: "Mit program",
-        exercises: tasks.map((task) => ({
-          id: task.exerciseNo,
-          repetitions: task.repititions
-        })),
-      },
-    ]);
+  //   console.log(list);
+  //   const { data, error } = await supabase.from("Programs").insert([
+  //     {
+  //       name: "Mit program",
+  //       exercises: tasks.map((task) => ({
+  //         id: task.exerciseNo,
+  //         repetitions: task.repititions
+  //       })),
+  //     },
+  //   ]);
 
-    if (error) {
-      console.error("Error saving program:", error);
-      setShowProgramModal(true);
-      setShowCompletedModal(false);
-    } else {
-      console.log("Program saved successfully:", data);
-      setShowProgramModal(false);
-      setShowCompletedModal(true);
-    }
-  }
+  //   if (error) {
+  //     console.error("Error saving program:", error);
+  //     setShowProgramModal(true);
+  //     setShowCompletedModal(false);
+  //   } else {
+  //     console.log("Program saved successfully:", data);
+  //     setShowProgramModal(false);
+  //     setShowCompletedModal(true);
+  //   }
+  // }
 
   function handleSort() {
     if (dragTask.current === null || draggedOverTask.current === null) return;
@@ -65,9 +65,11 @@ const BuildProgram = () => {
     setTasks(tasksClone);
   }
 
-  async function saveProgram() {
+  async function saveProgram(formData) {
+    console.log(formData);
     const program = {
-      name: "My Program",
+      name: formData.title,
+      description: formData.description,
       exercises: tasks.map((task) => ({
         id: task.exerciseNo,
         repetitions: task.repititions,
@@ -85,7 +87,6 @@ const BuildProgram = () => {
     }
 
     const userId = user.id;
-    console.log("User ID:", userId);
     console.log("Program to save:", program);
 
     try{
@@ -94,7 +95,7 @@ const BuildProgram = () => {
     // Save the program to the database
     const { data, error } = await supabase
       .from("Programs")
-      .insert([{ user_id: userId, name: program.name }])
+      .insert([{ user_id: userId, name: program.name, description: program.description }])
       .select();
 
     if (error) {
@@ -111,6 +112,7 @@ const BuildProgram = () => {
       program_id: programId,
       exercise_id: exercise.id,
       repetitions: exercise.repetitions,
+      order: program.exercises.indexOf(exercise) + 1,
     }));
     const { error: exerciseError } = await supabase
       .from("ExercisesOnPrograms")
@@ -121,6 +123,7 @@ const BuildProgram = () => {
       return;
     }
     setShowProgramModal(false);
+    setShowCompletedModal(true);
 
     } catch (error) {
       console.error("Error saving program:", error);
@@ -143,7 +146,14 @@ const BuildProgram = () => {
         icon="/assets/bookmark-red.svg"
         showModal={showCompletedModal}
         setShowModal={setShowCompletedModal}
-        onSubmit={() => setShowCompletedModal(true)}
+        onAccept={() => {
+          window.location.href = "/mit-program";
+          setShowCompletedModal(false);
+        }}
+        onCancel={() => {
+          window.location.href = "/forside";
+          setShowCompletedModal(false);
+        }}
       >
         <p className="text-lg">
           Du kan finde dine gemte programmer under "Mine programmer".
