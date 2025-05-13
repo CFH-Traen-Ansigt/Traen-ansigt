@@ -22,6 +22,35 @@ const BuildProgram = () => {
   const [showCompletedModal, setShowCompletedModal] = useState(false);
   const dragTask = useRef(null);
   const draggedOverTask = useRef(null);
+
+  const saveProgram = async () => {
+    let list = tasks.map((task) => ({
+          id: task.exerciseNo,
+          repetitions: task.repititions
+        }))
+
+    console.log(list);
+    const { data, error } = await supabase.from("Programs").insert([
+      {
+        name: "Mit program",
+        exercises: tasks.map((task) => ({
+          id: task.exerciseNo,
+          repetitions: task.repititions
+        })),
+      },
+    ]);
+
+    if (error) {
+      console.error("Error saving program:", error);
+      setShowProgramModal(true);
+      setShowCompletedModal(false);
+    } else {
+      console.log("Program saved successfully:", data);
+      setShowProgramModal(false);
+      setShowCompletedModal(true);
+    }
+  }
+
   function handleSort() {
     if (dragTask.current === null || draggedOverTask.current === null) return;
 
@@ -37,7 +66,7 @@ const BuildProgram = () => {
     <main>
       <Menu />
       <TaskFiltering />
-      <ProgramModal showModal={showProgramModal} setShowModal={setShowProgramModal} onSubmit={() => setShowCompletedModal(true)} />
+      <ProgramModal showModal={showProgramModal} setShowModal={setShowProgramModal} onSubmit={() => saveProgram()} />
       <ActionModal
         title="Dit program er nu gemt!"
         cancelButtonText="Nej"
