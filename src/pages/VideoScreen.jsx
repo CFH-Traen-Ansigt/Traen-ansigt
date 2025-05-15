@@ -1,5 +1,13 @@
+import React from "react";
+import VideoPlayer from "../components/VideoPlayer";
+
 const VideoScreen = () => {
-  <main></main>;
+  return(
+  <main>
+    <VideoPlayer filename="v001.mp4" />
+
+  </main>
+  )
 };
 
 export default VideoScreen;
