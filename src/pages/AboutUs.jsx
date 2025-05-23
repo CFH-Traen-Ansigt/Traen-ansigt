@@ -28,7 +28,7 @@ const AboutUs = () => {
                 understøttelse af nye styresystemer på digitale platforme, hvorfor Træn Ansigt ikke var tilgængeligt eller kunne opdateres, når det var downloadet.
               </p>
               <p>
-                Center for hjerneskade fik i 2022 lov af OUH og udviklerne til at genopfinde Træn Ansigt og videreudvikle den på ny. Det er lykkedes især med hjælp og viden fra OUH
+                Center for Hjerneskade fik i 2022 lov af OUH og udviklerne til at genopfinde Træn Ansigt og videreudvikle den på ny. Det er lykkedes især med hjælp og viden fra OUH
                 og ikke mindst de nye eksterne udviklere Zasia Meincke, Katrine Bang Nielsen og Simon Jørgensen, som har bistået Center for Hjerneskade i udviklingen.{" "}
               </p>
             </div>
