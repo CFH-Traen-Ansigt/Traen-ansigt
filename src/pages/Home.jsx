@@ -37,8 +37,8 @@ const Home = () => {
         <div className="grid grid-cols-2 w-full gap-x-4 gap-y-10 col-span-2 my-auto min-w-[800px]">
           <OptionCard icon="/assets/bookmark-red-outline.svg" option="Mit program" text="Her finder du dine gemte programmer med udvalgte øvelser." href="/mit-program" />
           <OptionCard icon="/assets/build-red.svg" option="Opsæt mit program" text="Tryk for at komme i gang med at lave dit program." href="/opsæt-mit-program" />
-          <OptionCard icon="/assets/about-us-red.svg" option="Om os" text="Her kan du finde information om organisationen og kontaktpersoner." />
-          <OptionCard icon="/assets/settings-red.svg" option="Indstillinger" text="Under indstillinger kan du justere dine præferencer" />
+          <OptionCard icon="/assets/about-us-red.svg" option="Om os" text="Her kan du finde information om organisationen og kontaktpersoner." href="/om-os" />
+          <OptionCard icon="/assets/settings-red.svg" option="Indstillinger" text="Under indstillinger kan du justere dine præferencer" href="/indstillinger" />
         </div>
       </div>
     </main>
