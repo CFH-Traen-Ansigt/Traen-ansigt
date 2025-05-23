@@ -4,11 +4,13 @@ import Menu from "../components/Menu";
 import ProgramCard from "../components/ProgramCard";
 import ActionModal from "../components/ActionModal";
 import { supabase } from "../DB/supabaseClient";
-
+import { useNavigate } from "react-router-dom";
 
 const MyPrograms = () => {
   const [showCompletedModal, setShowCompletedModal] = useState(false);
   const [programs, setPrograms] = useState([]);
+  const [selectedProgramId, setSelectedProgramId] = useState(null);
+  const navigate = useNavigate();
 
   async function getPrograms(){
     const {
@@ -22,7 +24,7 @@ const MyPrograms = () => {
     }
     const { data, error: fetchError } = await supabase
       .from("Programs")
-      .select("name, description")
+      .select("name, description, id")
       .eq("user_id", user.id);
 
     if (fetchError) {
@@ -41,6 +43,19 @@ const MyPrograms = () => {
   }, []);
   console.log("Fetched programs:", programs);
   
+  function deleteProgram(id) {
+    supabase
+      .from("Programs")
+      .delete()
+      .eq("id", id)
+      .then(({ error }) => {
+        if (error) {
+          console.error("Error deleting program:", error);
+        } else {
+          setPrograms((prevPrograms) => prevPrograms.filter((program) => program.id !== id));
+        }
+      });
+  }
 
   return (
     <main className="mx-20 my-12">
@@ -52,7 +67,12 @@ const MyPrograms = () => {
         icon="/assets/trashcan-black.svg"
         showModal={showCompletedModal}
         setShowModal={setShowCompletedModal}
-        onSubmit={() => setShowCompletedModal(true)}
+        
+        onCancel={() => setShowCompletedModal(false)}
+        onAccept={() => {
+          deleteProgram(selectedProgramId);
+        }}
+        onClose={() => setShowCompletedModal(false)}
       >
         <p className="text-lg">Du er ved at slette dit program. Vil du fortsætte?</p>
       </ActionModal>
@@ -68,7 +88,13 @@ const MyPrograms = () => {
               description={program.description}
               duration="30"
               totalExercises="12"
-              onDelete={() => setShowCompletedModal(true)}
+              onDelete={() => {
+                setSelectedProgramId(program.id);
+                setShowCompletedModal(true)
+              }}
+              onPlay={() => {
+                navigate(`/afspil/${program.id}`);
+              }}
             />
           ))}
           

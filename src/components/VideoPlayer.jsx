@@ -9,8 +9,15 @@ import { FaPause } from "react-icons/fa";
 const VideoPlayer = ({ filename }) => {
   const playerRef = useRef(null);
   const [playing, setPlaying] = useState(false);
+  const [isEnded, setIsEnded] = useState(false);
 
   const togglePlayPause = () => {
+
+    if (isEnded) {
+      playerRef.current.seekTo(0);
+      setIsEnded(false);
+    }
+
     setPlaying(prev => !prev);
   };
 
@@ -28,6 +35,10 @@ const VideoPlayer = ({ filename }) => {
           url={videoUrl}
           playing={playing}
           controls={false}
+          onEnded={() => {
+            setPlaying(false)
+            setIsEnded(true)
+          }}
           width="100%"
           height="100%"
           style={{ position: 'absolute', top: 0, left: 0 }}
@@ -56,9 +67,7 @@ const VideoPlayer = ({ filename }) => {
             cursor: 'pointer',
           }}
         >
-          {playing ? <FaPause size={40} /> : <IoMdPlay size={40} />
-
-}
+          {isEnded ? <IoMdPlay size={40} /> : playing ? <FaPause size={40} /> : <IoMdPlay size={40} />}
         </button>
       </div>
     </div>

@@ -1,11 +1,96 @@
-import React from "react";
+import React, { useEffect, useState} from "react";
 import VideoPlayer from "../components/VideoPlayer";
+import { useParams } from "react-router-dom";
+import { supabase } from "../DB/supabaseClient";
+import Button from "../components/Button";
 
 const VideoScreen = () => {
+  const { id } = useParams();
+  const [program, setProgram] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+  async function getProgram(){
+    const { data: { user }, error } = await supabase.auth.getUser();
+    if (error) {
+      console.error("Failed to get user", error);
+      return;
+    }
+    const { data, error: fetchError } = await supabase
+      .from("ExercisesOnPrograms")
+      .select("repetitions, order, Programs (user_id), Exercises (id, name)")
+      .eq("program_id", id)
+      .eq("Programs.user_id", user.id)
+      .order("order", { ascending: true })
+
+    if (fetchError) {
+      console.error("Error fetching program:", fetchError);
+      return;
+    }
+    let programData = data.map((item) => ({
+      id: item.Exercises.id,
+      name: item.Exercises.name,
+      repetitions: item.repetitions,
+      order: item.order,
+    }));
+    
+    setProgram(programData);
+    setIsLoading(false);
+  }
+  getProgram();
+  }, [id]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  console.log("Fetched program:", program);
+
+  const currentVideo = "v0" + program[currentIndex].id + ".mp4";
+
+  const nextVideo = () => {
+    if (currentIndex < program.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    }
+  };
+  const prevVideo = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    }
+  };
+  // const handleVideoEnd = () => {
+  //   if (currentIndex < program.length - 1) {
+  //     setCurrentIndex(currentIndex + 1);
+  //   } else {
+  //     console.log("End of program");
+  //   }
+  // };
+
+  const handleExit = () => {
+    // Logic to handle exit, e.g., navigate back to the previous screen
+    console.log("Exit button clicked");
+    window.location.href = "/forside";
+  }
+
+
   return(
   <main>
-    <VideoPlayer filename="v001.mp4" />
+    <VideoPlayer filename={currentVideo} />
 
+    <div className="video-controls">
+      <button onClick={prevVideo} disabled={currentIndex === 0}>
+          ⏮️ Forrige
+        </button>
+        <button onClick={nextVideo} disabled={currentIndex === program.length - 1}>
+          ⏭️ Næste
+        </button>
+    </div>
+
+    <div>
+      <button onClick={handleExit}>afslut</button>
+    </div>
+    
   </main>
   )
 };

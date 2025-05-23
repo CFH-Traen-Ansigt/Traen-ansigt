@@ -25,7 +25,7 @@ const router = createBrowserRouter([
   { path: "/mit-program", element:  <ProtectedRoute><MyPrograms /></ProtectedRoute> },
   { path: "/om-os", element:  <ProtectedRoute><AboutUs /></ProtectedRoute> },
   { path: "/indstillinger", element:  <ProtectedRoute><Settings /></ProtectedRoute> },
-  { path: "/afspil", element:  <ProtectedRoute><VideoScreen /></ProtectedRoute> },
+  { path: "/afspil/:id", element:  <ProtectedRoute><VideoScreen /></ProtectedRoute> },
   { path: "/logout", element:  <ProtectedRoute><LogOut /></ProtectedRoute> },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(

@@ -7,6 +7,7 @@ export default function ProgramCard({
   totalExercises = "12",
   addShadow = false,
   onDelete,
+  onPlay,
 }) {
   return (
     <article className={`relative w-[300px] min-h-[480px] ${addShadow && "border-dashed border-[2px] border-secondary rounded-lg  cursor-pointer"} p-3 flex flex-col items-center`}>
@@ -62,6 +63,7 @@ export default function ProgramCard({
               iconStyling="w-[20px] h-[20px]"
               disabled={addShadow}
               fullWidth
+              onClick={onPlay}
             />
           </div>
         </div>
