@@ -11,13 +11,13 @@ import { supabase } from "../DB/supabaseClient";
 
 // Get Tasks From API
 //move this to a function so it does not run on every render
-let { data: Exercises, error } = await supabase
+let { data: Exercises, /*error*/ } = await supabase
   .from("Exercises")
   .select("id, name, type, duration, help")
   .order("id", { ascending: true });
 
-console.log(Exercises);
-console.log(error);
+//console.log(Exercises);
+//console.log(error);
 
 const BuildProgram = () => {
   const [tasks, setTasks] = useState([]);
@@ -25,34 +25,6 @@ const BuildProgram = () => {
   const [showCompletedModal, setShowCompletedModal] = useState(false);
   const dragTask = useRef(null);
   const draggedOverTask = useRef(null);
-
-  // const saveProgram = async () => {
-  //   let list = tasks.map((task) => ({
-  //         id: task.exerciseNo,
-  //         repetitions: task.repititions
-  //       }))
-
-  //   console.log(list);
-  //   const { data, error } = await supabase.from("Programs").insert([
-  //     {
-  //       name: "Mit program",
-  //       exercises: tasks.map((task) => ({
-  //         id: task.exerciseNo,
-  //         repetitions: task.repititions
-  //       })),
-  //     },
-  //   ]);
-
-  //   if (error) {
-  //     console.error("Error saving program:", error);
-  //     setShowProgramModal(true);
-  //     setShowCompletedModal(false);
-  //   } else {
-  //     console.log("Program saved successfully:", data);
-  //     setShowProgramModal(false);
-  //     setShowCompletedModal(true);
-  //   }
-  // }
 
   function handleSort() {
     if (dragTask.current === null || draggedOverTask.current === null) return;

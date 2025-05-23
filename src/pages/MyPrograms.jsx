@@ -1,10 +1,47 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Menu from "../components/Menu";
 import ProgramCard from "../components/ProgramCard";
 import ActionModal from "../components/ActionModal";
+import { supabase } from "../DB/supabaseClient";
+
+
 const MyPrograms = () => {
   const [showCompletedModal, setShowCompletedModal] = useState(false);
+  const [programs, setPrograms] = useState([]);
+
+  async function getPrograms(){
+    const {
+          data: { user },
+          error,
+        } = await supabase.auth.getUser();
+
+    if (error) {
+      console.error("Failed to get user", error);
+      return;
+    }
+    const { data, error: fetchError } = await supabase
+      .from("Programs")
+      .select("name, description")
+      .eq("user_id", user.id);
+
+    if (fetchError) {
+      console.error("Error fetching programs:", fetchError);
+      return;
+    }
+    console.log("Fetched programs:", data);
+    return data;
+  }
+  useEffect(() => {
+    async function fetchPrograms() {
+      const data = await getPrograms();
+      if (data) setPrograms(data);
+    }
+    fetchPrograms();
+  }, []);
+  console.log("Fetched programs:", programs);
+  
+
   return (
     <main className="mx-20 my-12">
       <Menu />
@@ -25,6 +62,16 @@ const MyPrograms = () => {
         <div className="grid grid-cols-3 gap-6 w-full">
           <ProgramCard addShadow />
           <ProgramCard onDelete={() => setShowCompletedModal(true)} />
+          {programs.map((program) => (
+            <ProgramCard
+              title={program.name}
+              description={program.description}
+              duration="30"
+              totalExercises="12"
+              onDelete={() => setShowCompletedModal(true)}
+            />
+          ))}
+          
         </div>
       </div>
     </main>

@@ -1,5 +1,51 @@
 const VideoScreen = () => {
-  <main></main>;
+  return (
+  <main>
+    <button class="top-right close-v">
+      <div id=" close-vid">
+        <img
+          class="img-close"
+          src="../assets/fat-close-btn-icon.svg"
+          alt="Næste video"
+        />
+      </div>
+      <p class="close-p">Afbryd</p>
+    </button>
+    <div class="top-left con-1">
+      <h1>Repetition</h1>
+      <p>4/5</p>
+    </div>
+
+    <div class="top-left con-2">
+      <h2>Øvelse</h2>
+      <p>Rynk brynene</p>
+    </div>
+
+    <video id="background-video">
+      <source src="../assets/videos/v003.mp4" type="video/mp4" />
+      Din browser undersøtter ikke dette video format.
+    </video>
+
+    <div class="control-buttons">
+      <button id="backward-button">
+        <img src="../assets/backward-icon.svg" alt="Forrige video" />
+      </button>
+      <button id="play-button">
+        <img src="../assets/play-btn-icon.svg" alt="Afspil" />
+      </button>
+      <button id="pause-button">
+        <img src="../assets/pause-btn-icon.svg" alt="Pause" />
+      </button>
+      <button id="forward-button">
+        <img src="../assets/forward-icon.svg" alt="Næste video" />
+      </button>
+    </div>
+
+    <div class="container">
+      <video id="video" autoplay></video>
+    </div>
+  </main>
+  );
 };
 
 export default VideoScreen;
