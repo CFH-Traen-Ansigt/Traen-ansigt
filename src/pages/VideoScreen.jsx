@@ -76,7 +76,7 @@ const VideoScreen = () => {
 
   return(
   <main>
-    <VideoPlayer filename={currentVideo} />
+    <VideoPlayer  filename={currentVideo} />
 
     <div className="video-controls">
       <button onClick={prevVideo} disabled={currentIndex === 0}>

@@ -1,5 +1,5 @@
 // src/components/VideoPlayer.jsx
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import ReactPlayer from 'react-player';
 import { IoMdPlay } from "react-icons/io";
 import { FaPause } from "react-icons/fa";
@@ -22,6 +22,11 @@ const VideoPlayer = ({ filename }) => {
   };
 
   const videoUrl = `/assets/videos/${filename}`;
+
+  //  useEffect(() => {
+  //   setPlaying(false);
+  //   setIsEnded(false);
+  // }, [filename]);
 
   return (
     <div
