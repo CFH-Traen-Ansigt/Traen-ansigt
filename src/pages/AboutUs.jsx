@@ -1,4 +1,5 @@
 import Menu from "../components/Menu";
+import TextSection from "../components/TextSection";
 
 const AboutUs = () => {
   return (
@@ -6,16 +7,14 @@ const AboutUs = () => {
       <Menu color="alt" />
       <div className="grid grid-cols-[4fr_3fr] w-full">
         <div className="mx-16 grid gap-8 pt-10">
-          <div>
-            <h1 className="text-3xl font-bold">Om os</h1>
+          <TextSection headline="Om os">
             <p>
               Center for Hjerneskade er en selvejende institution og et specialhospital, og er højt specialiseret inden for medfødte og erhvervede hjerneskader, hjernerystelser,
               udviklingsforstyrrelser og kognitive vanskeligheder hos børn, unge og voksne. Center for Hjerneskade er grundlagt i 1985 på Københavns Universitet som det første
               rehabiliteringscenter for voksne med hjerneskader i Danmark.
             </p>
-          </div>
-          <div>
-            <h2 className="text-3xl font-bold">Træn ansigt</h2>
+          </TextSection>
+          <TextSection headline="Træn ansigt">
             <div className="grid gap-4">
               <p>Træn ansigt er et øvelses program, der har til formål at bedre følgende, som kan opstå isoleret eller i kombination efter en skade i hjernen:</p>
               <ul className="list-disc list-inside">
@@ -33,15 +32,14 @@ const AboutUs = () => {
                 og ikke mindst de nye eksterne udviklere Zasia Meincke, Katrine Bang Nielsen og Simon Jørgensen, som har bistået Center for Hjerneskade i udviklingen.{" "}
               </p>
             </div>
-          </div>
-          <div>
-            <h2 className="text-3xl font-bold">Tak</h2>
+          </TextSection>
+          <TextSection headline="Tak">
             <p>
               Der skal lyde en stor tak til OUH for rettighederne til Træn Ansigt og for at give os lov til at videreføre app’en til gavn for mennesker med bl.a. nedsat
               ansigtsmimik. En særlig tak også til Trine Engdahl Poulsen fra OUH, som medvirker i alle videoklip i Træn Ansigt, og som har givet tilladelse til, at vi fortsat
               benytter hendes gode og tydelige illustrationer af øvelserne.
             </p>
-          </div>
+          </TextSection>
           <div>
             <p className="font-thin text-lg">Udviklet i samarbejde med:</p>
             <div className="flex justify-between h-[80px]">
