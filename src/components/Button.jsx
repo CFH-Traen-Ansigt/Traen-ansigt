@@ -36,6 +36,14 @@ function getConfiguration(type) {
       configuration.hoverBackground = "hover:bg-main-color";
       configuration.hoverBorder = "hover:border-primary";
       break;
+    case "InvertedCancel":
+      configuration.textColor = "text-primary";
+      configuration.backgroundColor = "bg-main-color";
+      configuration.borderColor = "border-main";
+      configuration.hoverTextColor = "hover:text-main-color";
+      configuration.hoverBackground = "hover:bg-primary";
+      configuration.hoverBorder = "hover:border-main-color";
+      break;
     default:
   }
   return configuration;
