@@ -7,6 +7,7 @@ const LogOut = () => {
       await supabase.auth.signOut()
         localStorage.removeItem("refreshToken") // Remove session token
         localStorage.removeItem("token") // Remove refresh token
+        localStorage.removeItem("userEmail") // Remove user data
       window.location.href = '/' // or wherever your login page is
     }
 

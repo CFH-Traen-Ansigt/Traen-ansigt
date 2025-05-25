@@ -6,7 +6,9 @@ import IconOption from "./IconOption";
 export default function PersonalInfoModal({ showModal, setShowModal }) {
   const [icon, setIcon] = useState("");
   const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(localStorage.getItem("userEmail") || "");
+
+
   return (
     <dialog className="fixed mt-[6%] bg-white rounded-xl w-[650px] h-[70vh] z-30" open={showModal}>
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  w-full px-40">

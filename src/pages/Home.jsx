@@ -9,7 +9,7 @@ import BackgroundImage from "../components/BackgroundImage";
 const Home = () => {
   const [showModal, setShowModal] = useState(false);
   const selectedIcon = "";
-  const email = "";
+  const email = localStorage.getItem("userEmail") || "";
 
   return (
     <main className="mx-14 max-w-full overflow-hidden">

@@ -3,6 +3,8 @@ import VideoPlayer from "../components/VideoPlayer";
 import { useParams } from "react-router-dom";
 import { supabase } from "../DB/supabaseClient";
 import Button from "../components/Button";
+import Webcam from "react-webcam";
+
 
 const VideoScreen = () => {
   const { id } = useParams();
@@ -73,6 +75,19 @@ const VideoScreen = () => {
     window.location.href = "/forside";
   }
 
+  //aspect ratio 4:3
+  const videoConstraints = {
+  width: 500,
+  height: 375,
+  facingMode: "user"
+  };
+  const videoStyle = {
+    width: "100%",
+    height: "100%",
+    borderRadius: "15px",
+  }
+  const WebcamComponent = <Webcam audio={false} mirrored={true} videoConstraints={videoConstraints} style={videoStyle}/>;
+
 
   return(
   <main>
@@ -89,6 +104,9 @@ const VideoScreen = () => {
 
     <div>
       <button onClick={handleExit}>afslut</button>
+    </div>
+    <div className="absolute bottom-10 right-10 border-radius-5 overflow-hidden ">
+    {WebcamComponent}
     </div>
     
   </main>

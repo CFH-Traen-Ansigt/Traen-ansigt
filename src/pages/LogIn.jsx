@@ -58,6 +58,7 @@ const LogIn = () => {
       console.log("Login successful:", data);
       localStorage.setItem("token", data.session.access_token); // Store session token
       localStorage.setItem("refreshToken", data.session.refresh_token); // Store refresh token
+      localStorage.setItem("userEmail", email); // Store user email
       window.location.href = "/forside"; // Redirect user after login
     }
   };
