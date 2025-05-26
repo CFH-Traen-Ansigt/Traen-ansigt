@@ -3,11 +3,10 @@ import { useState } from "react";
 import Button from "./Button";
 import InputField from "./InputField";
 import IconOption from "./IconOption";
-export default function PersonalInfoModal({ showModal, setShowModal }) {
+export default function PersonalInfoModal({ showModal, setShowModal, onDeleteUserClick }) {
   const [icon, setIcon] = useState("");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState(localStorage.getItem("userEmail") || "");
-
 
   return (
     <dialog className="fixed mt-[6%] bg-white rounded-xl w-[650px] h-[70vh] z-30" open={showModal}>
@@ -42,6 +41,7 @@ export default function PersonalInfoModal({ showModal, setShowModal }) {
             styling="px-5 text-xl h-10 pt-2"
             onClick={() => {
               setShowModal(false);
+              onDeleteUserClick();
             }}
           />
         </form>

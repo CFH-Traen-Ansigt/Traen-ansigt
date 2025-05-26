@@ -5,9 +5,11 @@ import Button from "../components/Button";
 import OptionCard from "../components/OptionCard";
 import PersonalInfoModal from "../components/PersonalInfoModal";
 import BackgroundImage from "../components/BackgroundImage";
-
+import DeleteUserModal from "../components/DeleteUserModa";
 const Home = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [showPersonalInfoModal, setShowPersonalInfoModal] = useState(false);
+  const [showDeleteUserModal, setShowDeleteUserModal] = useState(false);
+
   const selectedIcon = "";
   const email = localStorage.getItem("userEmail") || "";
 
@@ -15,7 +17,8 @@ const Home = () => {
     <main className="mx-14 max-w-full overflow-hidden">
       <BackgroundImage />
       <Menu />
-      <PersonalInfoModal setShowModal={setShowModal} showModal={showModal} />
+      <PersonalInfoModal setShowModal={setShowPersonalInfoModal} showModal={showPersonalInfoModal} onDeleteUserClick={() => setShowDeleteUserModal(true)} />
+      <DeleteUserModal setShowModal={setShowDeleteUserModal} showModal={showDeleteUserModal} />
       <div className={`grid grid-cols-[minmax(250px,_400px)_1fr_1fr] mt-20 `}>
         <article className="flex flex-col border-r-solid border-r-alt-color border-r-4 h-[80vh] px-12">
           <div className="flex flex-col items-center gap-8 text-center mt-8">
@@ -27,7 +30,7 @@ const Home = () => {
           </div>
           <Button
             text="Rediger"
-            onClick={() => setShowModal(true)}
+            onClick={() => setShowPersonalInfoModal(true)}
             variant="Primary"
             icon="InvertedEditIcon"
             styling="text-2xl h-10 pt-[6px] w-auto mt-auto mb-3 gap-1"
