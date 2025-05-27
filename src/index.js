@@ -15,6 +15,7 @@ import AboutUs from "./pages/AboutUs";
 import Settings from "./pages/Settings";
 import VideoScreen from "./pages/VideoScreen";
 import LogOut from "./pages/LogOut";
+import EditProgram from "./pages/EditProgram";
 
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
   { path: "/opret-bruger", element: <SignUp /> },
   { path: "/forside", element: <ProtectedRoute><Home /></ProtectedRoute> },
   { path: "/opsæt-mit-program", element:  <ProtectedRoute><BuildProgram /></ProtectedRoute> },
+  { patjh: "/rediger-program/:id", element:  <ProtectedRoute><EditProgram /></ProtectedRoute> }, // note working yet dont use
   { path: "/mit-program", element:  <ProtectedRoute><MyPrograms /></ProtectedRoute> },
   { path: "/om-os", element:  <ProtectedRoute><AboutUs /></ProtectedRoute> },
   { path: "/indstillinger", element:  <ProtectedRoute><Settings /></ProtectedRoute> },
