@@ -30,12 +30,16 @@ const VideoScreen = () => {
       console.error("Error fetching program:", fetchError);
       return;
     }
-    let programData = data.map((item) => ({
-      id: item.Exercises.id,
-      name: item.Exercises.name,
-      repetitions: item.repetitions,
-      order: item.order,
-    }));
+    
+    let programData = [];
+    data.forEach((item) => {
+      for (let i = 0; i < item.repetitions; i++) {
+        programData.push({
+          id: item.Exercises.id,
+          name: item.Exercises.name
+        });
+      }
+    });
     
     setProgram(programData);
     setIsLoading(false);
@@ -49,7 +53,6 @@ const VideoScreen = () => {
 
   console.log("Fetched program:", program);
 
-  const currentVideo = "v0" + program[currentIndex].id + ".mp4";
 
   const nextVideo = () => {
     if (currentIndex < program.length - 1) {
@@ -61,19 +64,19 @@ const VideoScreen = () => {
       setCurrentIndex(currentIndex - 1);
     }
   };
-  // const handleVideoEnd = () => {
-  //   if (currentIndex < program.length - 1) {
-  //     setCurrentIndex(currentIndex + 1);
-  //   } else {
-  //     console.log("End of program");
-  //   }
-  // };
 
   const handleExit = () => {
     // Logic to handle exit, e.g., navigate back to the previous screen
     console.log("Exit button clicked");
     window.location.href = "/forside";
   }
+
+  const handeVideoEnd = () => {
+    nextVideo();
+  }
+
+  const currentVideo = program.length > 0 ? `v0${program[currentIndex].id}.mp4` : null;
+
 
   //aspect ratio 4:3
   const videoConstraints = {
@@ -91,7 +94,7 @@ const VideoScreen = () => {
 
   return(
   <main>
-    <VideoPlayer  filename={currentVideo} />
+    <VideoPlayer  filename={currentVideo} onEnded={handeVideoEnd} index={currentIndex} />
 
     <div className="video-controls">
       <button onClick={prevVideo} disabled={currentIndex === 0}>
@@ -107,6 +110,9 @@ const VideoScreen = () => {
     </div>
     <div className="absolute bottom-10 right-10 border-radius-5 overflow-hidden ">
     {WebcamComponent}
+    </div>
+    <div>
+      <p>{currentIndex}</p>
     </div>
     
   </main>

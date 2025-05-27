@@ -6,7 +6,7 @@ import { FaPause } from "react-icons/fa";
 
 
 
-const VideoPlayer = ({ filename }) => {
+const VideoPlayer = ({ filename, onEnded, index }) => {
   const playerRef = useRef(null);
   const [playing, setPlaying] = useState(false);
   const [isEnded, setIsEnded] = useState(false);
@@ -23,10 +23,13 @@ const VideoPlayer = ({ filename }) => {
 
   const videoUrl = `/assets/videos/${filename}`;
 
-  //  useEffect(() => {
-  //   setPlaying(false);
-  //   setIsEnded(false);
-  // }, [filename]);
+    useEffect(() => {
+     setPlaying(true);
+     setIsEnded(false);
+     if(playerRef.current) {
+       playerRef.current.seekTo(0);
+     }
+   }, [index]);
 
   return (
     <div
@@ -43,6 +46,7 @@ const VideoPlayer = ({ filename }) => {
           onEnded={() => {
             setPlaying(false)
             setIsEnded(true)
+            onEnded && onEnded();
           }}
           width="100%"
           height="100%"
