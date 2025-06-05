@@ -2,7 +2,6 @@ import React, { useEffect, useState} from "react";
 import VideoPlayer from "../components/VideoPlayer";
 import { useParams } from "react-router-dom";
 import { supabase } from "../DB/supabaseClient";
-import Button from "../components/Button";
 import Webcam from "react-webcam";
 
 
@@ -32,6 +31,7 @@ const VideoScreen = () => {
     }
     
     let programData = [];
+    let introVideo = ``;
     data.forEach((item) => {
       for (let i = 0; i < item.repetitions; i++) {
         programData.push({
