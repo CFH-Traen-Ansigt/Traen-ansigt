@@ -12,6 +12,7 @@ export default function TaskList({ headline, description, exercises, tasks, setT
           withHelp={task.help}
           tasks={tasks}
           setTasks={setTasks}
+          image={`/assets/images/0${task.id}.webp`}
         />
       ))}
       </div>

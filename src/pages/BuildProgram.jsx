@@ -160,7 +160,7 @@ const BuildProgram = () => {
                 <TaskCard
                   exerciseNo={task.exerciseNo}
                   title={task.title}
-                  image={task.image}
+                  image={`/assets/images/0${task.exerciseNo}.webp`}
                   withHelp={task.withHelp}
                   variant="small"
                   repititions={task.repititions}
