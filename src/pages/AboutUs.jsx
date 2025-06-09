@@ -53,7 +53,7 @@ const AboutUs = () => {
         </div>
         <div className="bg-primary h-full ">
           <div className="pt-10 relative flex justify-center aspect-540/1416 min-h-[1600px]">
-            <img src="assets/timeline.svg" className="absolute min-w-[500px] bg-primary" alt="Tidslinje over udviklingen af app'en" />
+            <img src="assets/timeline.svg" className="absolute min-w-[500px]" alt="Tidslinje over udviklingen af app'en" />
             <TimelineItem icon="lightbulb.svg" text="Ideen om at lave en genoptræningsapp opstod" position="w-40 left-[20%]" iconWidth="w-20" />
             <TimelineItem
               icon="handshake.svg"
