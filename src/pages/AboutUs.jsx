@@ -8,6 +8,7 @@ const AboutUs = () => {
       <Menu color="alt" />
       <div className="grid grid-cols-[4fr_minmax(550px,_3fr)] w-full">
         <div className="mx-16 grid gap-8 pt-10 self-start">
+          <img src="assets/cfh-building.png" alt="Center for Hjerneskade bygning" className="w-full" />
           <TextSection headline="Om os">
             <p>
               Center for Hjerneskade er en selvejende institution og et specialhospital, og er højt specialiseret inden for medfødte og erhvervede hjerneskader, hjernerystelser,
