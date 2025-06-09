@@ -51,26 +51,32 @@ const AboutUs = () => {
             </div>
           </div>
         </div>
-        <div className="bg-primary h-full ">
-          <div className="pt-10 relative flex justify-center aspect-540/1416 min-h-[1600px]">
+        <div className="bg-primary min-h-[1600px] ">
+          <div className="pt-10 relative flex justify-center aspect-540/1416 h-[1600px]">
             <img src="assets/timeline.svg" className="absolute min-w-[500px]" alt="Tidslinje over udviklingen af app'en" />
-            <TimelineItem icon="lightbulb.svg" text="Ideen om at lave en genoptræningsapp opstod" position="w-40 left-[20%]" iconWidth="w-20" />
+            <TimelineItem icon="lightbulb.svg" text="Ideen om at lave en genoptræningsapp opstod" position="w-[32%] left-[20%]" iconWidth="w-[40%]" />
             <TimelineItem
               icon="handshake.svg"
               text="Ideen får økonomisk opbakning fra EU struktur- og regionalfondsprojektet Gamelab4Health."
-              position="w-48 top-[220px] right-[9%]"
+              position="w-[35%] top-[14%] right-[9%]"
+              iconWidth="w-[65%]"
             />
-            <TimelineItem icon="old-app.svg" text="Odense Universitetshospital og Play APS, går sammen om at udvkle appen" position="w-48 top-[440px] left-[2%]" />
-            <TimelineItem icon="hospital.svg" text="I januar 2016 udkom “Træn ansigt” appen på App Store" position="w-44 top-[620px] right-[2%]" iconWidth="w-20" />
+            <TimelineItem
+              icon="old-app.svg"
+              text="Odense Universitetshospital og Play APS, går sammen om at udvkle appen"
+              position="w-[30%] top-[30%] left-[2%]"
+              iconWidth="w-[70%]"
+            />
+            <TimelineItem icon="hospital.svg" text="I januar 2016 udkom “Træn ansigt” appen på App Store" position="w-[30%] top-[40%] right-[2%]" iconWidth="w-[45%]" />
             <TimelineItem
               icon="developer-team.svg"
               text="I 2024 re-designes “Træn ansigt” i et samarbejde med studerende på KEA og Center for Hjerneskade"
-              position="w-[200px] top-[820px] left-[14%]"
-              iconWidth="w-30"
+              position="w-[38%] top-[52%] left-[12%]"
+              iconWidth="w-[70%]"
             />
-            <TimelineItem icon="developer-team-2.svg" text="Udviklingen af “Træn ansigt” som webapp finansieres." position="w-[150px] top-[1020px] right-[2%]" iconWidth="w-30" />
-            <TimelineItem icon="new-app.svg" text="Udviklingen af “Træn ansigt” som webapp går i gang." position="w-[150px] top-[1230px] left-[6%]" iconWidth="w-30" />
-            <TimelineItem icon="hospital.svg" text="“Træn ansigt” webapp bliver taget i brug." position="w-[150px] top-[1410px] right-[6%]" iconWidth="w-20" />
+            <TimelineItem icon="developer-team-2.svg" text="Udviklingen af “Træn ansigt” som webapp finansieres." position="w-[30%] top-[65%] right-[3%]" iconWidth="w-[90%]" />
+            <TimelineItem icon="new-app.svg" text="Udviklingen af “Træn ansigt” som webapp går i gang." position="w-[30%] top-[78%] left-[6%]" iconWidth="w-[75%]" />
+            <TimelineItem icon="hospital.svg" text="“Træn ansigt” webapp bliver taget i brug." position="w-[30%] top-[88%] right-[6%]" iconWidth="w-[45%]" />
           </div>
         </div>
       </div>
