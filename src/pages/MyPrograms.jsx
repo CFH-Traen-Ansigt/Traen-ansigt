@@ -12,20 +12,17 @@ const MyPrograms = () => {
   const [selectedProgramId, setSelectedProgramId] = useState(null);
   const navigate = useNavigate();
 
-  async function getPrograms(){
+  async function getPrograms() {
     const {
-          data: { user },
-          error,
-        } = await supabase.auth.getUser();
+      data: { user },
+      error,
+    } = await supabase.auth.getUser();
 
     if (error) {
       console.error("Failed to get user", error);
       return;
     }
-    const { data, error: fetchError } = await supabase
-      .from("Programs")
-      .select("name, description, id")
-      .eq("user_id", user.id);
+    const { data, error: fetchError } = await supabase.from("Programs").select("name, description, id").eq("user_id", user.id);
 
     if (fetchError) {
       console.error("Error fetching programs:", fetchError);
@@ -42,7 +39,7 @@ const MyPrograms = () => {
     fetchPrograms();
   }, []);
   console.log("Fetched programs:", programs);
-  
+
   function deleteProgram(id) {
     supabase
       .from("Programs")
@@ -67,7 +64,6 @@ const MyPrograms = () => {
         icon="/assets/trashcan-black.svg"
         showModal={showCompletedModal}
         setShowModal={setShowCompletedModal}
-        
         onCancel={() => setShowCompletedModal(false)}
         onAccept={() => {
           deleteProgram(selectedProgramId);
@@ -81,7 +77,6 @@ const MyPrograms = () => {
         <p className="text-font-color text-xl my-3">Disse programmer er nogle du eller din tilknyttede terapeut tidligere har sammensat.</p>
         <div className="grid grid-cols-3 gap-6 w-full">
           <ProgramCard addShadow />
-          <ProgramCard onDelete={() => setShowCompletedModal(true)} />
           {programs.map((program) => (
             <ProgramCard
               title={program.name}
@@ -90,14 +85,13 @@ const MyPrograms = () => {
               totalExercises="12"
               onDelete={() => {
                 setSelectedProgramId(program.id);
-                setShowCompletedModal(true)
+                setShowCompletedModal(true);
               }}
               onPlay={() => {
                 navigate(`/afspil/${program.id}`);
               }}
             />
           ))}
-          
         </div>
       </div>
     </main>
