@@ -51,8 +51,8 @@ const AboutUs = () => {
             </div>
           </div>
         </div>
-        <div className="bg-primary min-h-[1600px] ">
-          <div className="pt-10 relative flex justify-center aspect-540/1416 h-[1600px]">
+        <div className="bg-primary min-h-[1600px] px-4">
+          <div className="pt-10 relative flex justify-center aspect-540/1416 h-[1550px]">
             <img src="assets/timeline.svg" className="absolute min-w-[500px]" alt="Tidslinje over udviklingen af app'en" />
             <TimelineItem icon="lightbulb.svg" text="Ideen om at lave en genoptræningsapp opstod" position="w-[32%] left-[20%]" iconWidth="w-[40%]" />
             <TimelineItem
@@ -74,9 +74,9 @@ const AboutUs = () => {
               position="w-[38%] top-[52%] left-[12%]"
               iconWidth="w-[70%]"
             />
-            <TimelineItem icon="developer-team-2.svg" text="Udviklingen af “Træn ansigt” som webapp finansieres." position="w-[30%] top-[65%] right-[3%]" iconWidth="w-[90%]" />
-            <TimelineItem icon="new-app.svg" text="Udviklingen af “Træn ansigt” som webapp går i gang." position="w-[30%] top-[78%] left-[6%]" iconWidth="w-[75%]" />
-            <TimelineItem icon="hospital.svg" text="“Træn ansigt” webapp bliver taget i brug." position="w-[30%] top-[88%] right-[6%]" iconWidth="w-[45%]" />
+            <TimelineItem icon="developer-team-2.svg" text="Udviklingen af “Træn ansigt” som webapp finansieres." position="w-[30%] top-[67%] right-[3%]" iconWidth="w-[90%]" />
+            <TimelineItem icon="new-app.svg" text="Udviklingen af “Træn ansigt” som webapp går i gang." position="w-[30%] top-[82%] left-[6%]" iconWidth="w-[75%]" />
+            <TimelineItem icon="hospital.svg" text="“Træn ansigt” webapp bliver taget i brug." position="w-[30%] top-[92%] right-[6%]" iconWidth="w-[45%]" />
           </div>
         </div>
       </div>
