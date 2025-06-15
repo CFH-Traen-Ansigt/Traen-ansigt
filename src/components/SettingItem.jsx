@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 
-export default function SettingItem({ type, image, imageOnHover, text, altText }) {
+export default function SettingItem({ type, image, imageOnHover, text, altText, onClick }) {
   const [itemState, setItemState] = useState("default");
   return (
     <button
@@ -10,6 +10,7 @@ export default function SettingItem({ type, image, imageOnHover, text, altText }
       } rounded-lg flex flex-col justify-center items-center px-4 gap-3`}
       onMouseOver={() => setItemState("hover")}
       onMouseOut={() => setItemState("default")}
+      onClick={onClick}
     >
       <img src={itemState === "default" ? image : imageOnHover} alt={altText} />
       <p className="text-primary text-3xl font-bold pt-4">

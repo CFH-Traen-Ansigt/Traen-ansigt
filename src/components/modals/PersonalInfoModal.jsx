@@ -1,8 +1,8 @@
 import React from "react";
 import { useState } from "react";
-import Button from "./Button";
-import InputField from "./InputField";
-import IconOption from "./IconOption";
+import Button from "../Button";
+import InputField from "../InputField";
+import IconOption from "../IconOption";
 export default function PersonalInfoModal({ showModal, setShowModal, onDeleteUserClick }) {
   const [icon, setIcon] = useState("");
   const [fullName, setFullName] = useState("");

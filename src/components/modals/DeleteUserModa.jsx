@@ -1,39 +1,37 @@
 import React from "react";
 import { useState } from "react";
-import InputField from "./InputField";
-import Button from "./Button";
-import { supabase } from "../DB/supabaseClient";
+import InputField from "../InputField";
+import Button from "../Button";
+import { supabase } from "../../DB/supabaseClient";
 
 export default function DeleteUserModal({ showModal, setShowModal }) {
   const [email, setEmail] = useState(localStorage.getItem("userEmail") || "");
   const [password, setPassword] = useState("");
 
-
   const deleteUser = async () => {
+    const { data, error } = await supabase.auth.getSession();
 
-     const { data, error } = await supabase.auth.getSession();
+    if (error || !data.session) {
+      console.error("Not logged in");
+      return;
+    }
 
-  if (error || !data.session) {
-    console.error("Not logged in");
-    return;
-  }
+    const accessToken = data.session.access_token;
 
-  const accessToken = data.session.access_token;
-    
-  const res = await fetch('/api/delete-user', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+    const res = await fetch("/api/delete-user", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
 
-  if (res.ok) {
-    console.log('User deleted');
-    // Redirect or show message
-  } else {
-    console.error('Failed to delete user');
-  }
-};
+    if (res.ok) {
+      console.log("User deleted");
+      // Redirect or show message
+    } else {
+      console.error("Failed to delete user");
+    }
+  };
 
   return (
     <dialog className="fixed mt-[6%] bg-white rounded-xl w-[650px] h-[70vh] z-30" open={showModal}>

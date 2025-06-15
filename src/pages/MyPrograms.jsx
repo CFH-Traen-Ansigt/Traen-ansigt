@@ -1,8 +1,7 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import Menu from "../components/Menu";
 import ProgramCard from "../components/ProgramCard";
-import ActionModal from "../components/ActionModal";
+import ActionModal from "../components/modals/ActionModal";
 import { supabase } from "../DB/supabaseClient";
 import { useNavigate } from "react-router-dom";
 

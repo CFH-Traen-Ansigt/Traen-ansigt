@@ -1,11 +1,10 @@
-import React from "react";
 import { useState } from "react";
 import Menu from "../components/Menu";
 import Button from "../components/Button";
 import OptionCard from "../components/OptionCard";
-import PersonalInfoModal from "../components/PersonalInfoModal";
+import PersonalInfoModal from "../components/modals/PersonalInfoModal";
 import BackgroundImage from "../components/BackgroundImage";
-import DeleteUserModal from "../components/DeleteUserModa";
+import DeleteUserModal from "../components/modals/DeleteUserModa";
 const Home = () => {
   const [showPersonalInfoModal, setShowPersonalInfoModal] = useState(false);
   const [showDeleteUserModal, setShowDeleteUserModal] = useState(false);
