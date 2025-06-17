@@ -8,6 +8,9 @@ const LogOut = () => {
         localStorage.removeItem("refreshToken") // Remove session token
         localStorage.removeItem("token") // Remove refresh token
         localStorage.removeItem("userEmail") // Remove user data
+        localStorage.removeItem("userFullName") // Remove user full name
+        localStorage.removeItem("userId") // Remove user ID
+        localStorage.removeItem("userIcon") // Remove user icon
       window.location.href = '/' // or wherever your login page is
     }
 

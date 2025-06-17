@@ -8,9 +8,11 @@ import DeleteUserModal from "../components/modals/DeleteUserModa";
 const Home = () => {
   const [showPersonalInfoModal, setShowPersonalInfoModal] = useState(false);
   const [showDeleteUserModal, setShowDeleteUserModal] = useState(false);
+  
 
-  const selectedIcon = "";
+  const selectedIcon = localStorage.getItem("userIcon") ||1; // Default icon if not set
   const email = localStorage.getItem("userEmail") || "";
+  const fullName = localStorage.getItem("userFullName") || "";
 
   return (
     <main className="mx-14 max-w-full overflow-hidden">
@@ -21,10 +23,14 @@ const Home = () => {
       <div className={`grid grid-cols-[minmax(250px,_400px)_1fr_1fr] mt-20 `}>
         <article className="flex flex-col border-r-solid border-r-alt-color border-r-4 h-[80vh] px-12">
           <div className="flex flex-col items-center gap-8 text-center mt-8">
-            <img src={selectedIcon.length > 0 ? selectedIcon : "/assets/person-1.svg"} alt="profile icon" />
+            <img src={`/assets/person-${selectedIcon}.svg`} alt="profile icon" />
             <div>
               <h2 className="text-xl text-primary font-bold">Mail:</h2>
               <p className="text-xl text-font-color font-bold">{email ? email : ""}</p>
+            </div>
+            <div>
+              <h2 className="text-xl text-primary font-bold">Navn:</h2>
+              <p className="text-xl text-font-color font-bold">{fullName ? fullName : ""}</p>
             </div>
           </div>
           <Button

@@ -59,9 +59,24 @@ const LogIn = () => {
       localStorage.setItem("token", data.session.access_token); // Store session token
       localStorage.setItem("refreshToken", data.session.refresh_token); // Store refresh token
       localStorage.setItem("userEmail", email); // Store user email
+      localStorage.setItem("userId", data.session.user.id); // Store user ID
+      await getUserInfo(data.session.user.id); // Fetch and store user full name
       window.location.href = "/forside"; // Redirect user after login
     }
   };
+
+  async function getUserInfo(id){
+    const { data, error } = await supabase.from("UserInfo")
+      .select("full_name, profile_picture").eq("id", id).single();
+
+    if (error) {
+      console.error("Error fetching user info:", error);
+      return null;
+    }
+    localStorage.setItem("userFullName", data.full_name); // Store user full name
+    localStorage.setItem("userIcon", data.profile_picture); // Store user profile picture
+  }
+
   return (
     <LandingPageLayout>
       <BackgroundImage />
