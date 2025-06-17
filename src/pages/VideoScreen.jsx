@@ -1,50 +1,64 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import VideoPlayer from "../components/VideoPlayer";
 import { useParams } from "react-router-dom";
 import { supabase } from "../DB/supabaseClient";
 import Webcam from "react-webcam";
-
+import { IoMdPlay, IoMdClose } from "react-icons/io";
+import { FaPause } from "react-icons/fa";
 
 const VideoScreen = () => {
   const { id } = useParams();
   const [program, setProgram] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [playing, setPlaying] = useState(false);
+  const [isEnded, setIsEnded] = useState(false);
 
   useEffect(() => {
-  async function getProgram(){
-    const { data: { user }, error } = await supabase.auth.getUser();
-    if (error) {
-      console.error("Failed to get user", error);
-      return;
-    }
-    const { data, error: fetchError } = await supabase
-      .from("ExercisesOnPrograms")
-      .select("repetitions, order, Programs (user_id), Exercises (id, name)")
-      .eq("program_id", id)
-      .eq("Programs.user_id", user.id)
-      .order("order", { ascending: true })
-
-    if (fetchError) {
-      console.error("Error fetching program:", fetchError);
-      return;
-    }
-    
-    let programData = [];
-    let introVideo = ``;
-    data.forEach((item) => {
-      for (let i = 0; i < item.repetitions; i++) {
-        programData.push({
-          id: item.Exercises.id,
-          name: item.Exercises.name
-        });
+    async function getProgram() {
+      const {
+        data: { user },
+        error,
+      } = await supabase.auth.getUser();
+      if (error) {
+        console.error("Failed to get user", error);
+        return;
       }
-    });
-    
-    setProgram(programData);
-    setIsLoading(false);
-  }
-  getProgram();
+      const { data, error: fetchError } = await supabase
+        .from("ExercisesOnPrograms")
+        .select("repetitions, order, Programs (user_id), Exercises (id, name)")
+        .eq("program_id", id)
+        .eq("Programs.user_id", user.id)
+        .order("order", { ascending: true });
+
+      if (fetchError) {
+        console.error("Error fetching program:", fetchError);
+        return;
+      }
+
+      let programData = [];
+      let introVideo = `/assets/intro-videos/intro`;
+      programData.push({
+        id: introVideo,
+        name: "Intro Video",
+      });
+      data.forEach((item) => {
+        programData.push({
+          id: `/assets/intro-videos/vi0${item.Exercises.id}`,
+          name: item.Exercises.name,
+        });
+        for (let i = 0; i < item.repetitions; i++) {
+          programData.push({
+            id: `/assets/videos/v0${item.Exercises.id}`,
+            name: item.Exercises.name,
+          });
+        }
+      });
+
+      setProgram(programData);
+      setIsLoading(false);
+    }
+    getProgram();
   }, [id]);
 
   if (isLoading) {
@@ -52,7 +66,6 @@ const VideoScreen = () => {
   }
 
   console.log("Fetched program:", program);
-
 
   const nextVideo = () => {
     if (currentIndex < program.length - 1) {
@@ -69,54 +82,135 @@ const VideoScreen = () => {
     // Logic to handle exit, e.g., navigate back to the previous screen
     console.log("Exit button clicked");
     window.location.href = "/forside";
-  }
+  };
 
   const handeVideoEnd = () => {
+    setPlaying(false);
     nextVideo();
-  }
+    setPlaying(true); // Set playing to true when moving to the next video
+  };
 
-  const currentVideo = program.length > 0 ? `v0${program[currentIndex].id}.mp4` : null;
+  const togglePlayPause = () => {
+    setPlaying(!playing);
+    if (isEnded) {
+      setIsEnded(false);
+    }
+  };
 
+  const currentVideo =
+    program.length > 0 ? `${program[currentIndex].id}.mp4` : null;
 
   //aspect ratio 4:3
   const videoConstraints = {
-  width: 500,
-  height: 375,
-  facingMode: "user"
+    width: 500,
+    height: 375,
+    facingMode: "user",
   };
   const videoStyle = {
     width: "100%",
     height: "100%",
     borderRadius: "15px",
-  }
-  const WebcamComponent = <Webcam audio={false} mirrored={true} videoConstraints={videoConstraints} style={videoStyle}/>;
+  };
+  const WebcamComponent = (
+    <Webcam
+      audio={false}
+      mirrored={true}
+      videoConstraints={videoConstraints}
+      style={videoStyle}
+    />
+  );
 
+  return (
+    <main>
+      <VideoPlayer
+        filename={currentVideo}
+        onEnded={handeVideoEnd}
+        index={currentIndex}
+        playing={playing}
+      />
 
-  return(
-  <main>
-    <VideoPlayer  filename={currentVideo} onEnded={handeVideoEnd} index={currentIndex} />
-
-    <div className="video-controls">
-      <button onClick={prevVideo} disabled={currentIndex === 0}>
+      <div className="video-controls">
+        <button onClick={prevVideo} disabled={currentIndex === 0}>
           ⏮️ Forrige
         </button>
-        <button onClick={nextVideo} disabled={currentIndex === program.length - 1}>
+        <button
+          onClick={nextVideo}
+          disabled={currentIndex === program.length - 1}
+        >
           ⏭️ Næste
         </button>
-    </div>
+        <div
+          style={{
+            position: "absolute",
+            bottom: "40px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 10,
+          }}
+        >
+          <button
+            onClick={togglePlayPause}
+            style={{
+              background: "rgba(144, 26, 54, 0.5)",
+              color: "white",
+              padding: "15px 15px",
+              borderRadius: "10px",
+              fontSize: "18px",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            {isEnded ? (
+              <IoMdPlay size={40} />
+            ) : playing ? (
+              <FaPause size={40} />
+            ) : (
+              <IoMdPlay size={40} />
+            )}
+          </button>
+        </div>
+      </div>
 
-    <div>
-      <button onClick={handleExit}>afslut</button>
-    </div>
-    <div className="absolute bottom-10 right-10 border-radius-5 overflow-hidden ">
-    {WebcamComponent}
-    </div>
-    <div>
-      <p>{currentIndex}</p>
-    </div>
-    
-  </main>
-  )
+      <div
+        style={{
+          position: "absolute",
+          top: "20px",
+          right: "20px",
+          backgroundColor: "#901A36", // transparent red
+          color: "white",
+          padding: "10px 15px",
+          borderRadius: "8px",
+          zIndex: 1000,
+          opacity: 0.8,
+        }}
+      >
+        <button
+          onClick={handleExit}
+          style={{
+            background: "none",
+            border: "none",
+            color: "white",
+            fontSize: "18px",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+            fontWeight: "bold",
+          }}
+          aria-label="Luk"
+        >
+          <IoMdClose size={30} style={{ fontWeight: "bold"}} />
+          <span>Afbryd program</span>
+        </button>
+      </div>
+      <div className="absolute bottom-10 right-10 border-radius-5 overflow-hidden ">
+        {WebcamComponent}
+      </div>
+      <div>
+        <p>{currentIndex}</p>
+      </div>
+    </main>
+  );
 };
 
 export default VideoScreen;
