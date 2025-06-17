@@ -1,12 +1,14 @@
 import Menu from "../components/Menu";
 import TextSection from "../components/TextSection";
+import TimelineItem from "../components/TimeLineItem";
 
 const AboutUs = () => {
   return (
     <main>
       <Menu color="alt" />
-      <div className="grid grid-cols-[4fr_3fr] w-full">
-        <div className="mx-16 grid gap-8 pt-10">
+      <div className="grid grid-cols-[4fr_minmax(550px,_3fr)] w-full">
+        <div className="mx-16 grid gap-8 pt-10 self-start">
+          <img src="assets/cfh-building.png" alt="Center for Hjerneskade bygning" className="w-full" />
           <TextSection headline="Om os">
             <p>
               Center for Hjerneskade er en selvejende institution og et specialhospital, og er højt specialiseret inden for medfødte og erhvervede hjerneskader, hjernerystelser,
@@ -49,7 +51,34 @@ const AboutUs = () => {
             </div>
           </div>
         </div>
-        <div className="bg-primary min-h-full pt-10"></div>
+        <div className="bg-primary min-h-[1600px] px-4">
+          <div className="pt-10 relative flex justify-center aspect-540/1416 h-[1550px]">
+            <img src="assets/timeline.svg" className="absolute min-w-[500px]" alt="Tidslinje over udviklingen af app'en" />
+            <TimelineItem icon="lightbulb.svg" text="Ideen om at lave en genoptræningsapp opstod" position="w-[32%] left-[20%]" iconWidth="w-[40%]" />
+            <TimelineItem
+              icon="handshake.svg"
+              text="Ideen får økonomisk opbakning fra EU struktur- og regionalfondsprojektet Gamelab4Health."
+              position="w-[35%] top-[14%] right-[9%]"
+              iconWidth="w-[65%]"
+            />
+            <TimelineItem
+              icon="old-app.svg"
+              text="Odense Universitetshospital og Play APS, går sammen om at udvkle appen"
+              position="w-[30%] top-[30%] left-[2%]"
+              iconWidth="w-[70%]"
+            />
+            <TimelineItem icon="hospital.svg" text="I januar 2016 udkom “Træn ansigt” appen på App Store" position="w-[30%] top-[40%] right-[2%]" iconWidth="w-[45%]" />
+            <TimelineItem
+              icon="developer-team.svg"
+              text="I 2024 re-designes “Træn ansigt” i et samarbejde med studerende på KEA og Center for Hjerneskade"
+              position="w-[38%] top-[52%] left-[12%]"
+              iconWidth="w-[70%]"
+            />
+            <TimelineItem icon="developer-team-2.svg" text="Udviklingen af “Træn ansigt” som webapp finansieres." position="w-[30%] top-[67%] right-[3%]" iconWidth="w-[90%]" />
+            <TimelineItem icon="new-app.svg" text="Udviklingen af “Træn ansigt” som webapp går i gang." position="w-[30%] top-[82%] left-[6%]" iconWidth="w-[75%]" />
+            <TimelineItem icon="hospital.svg" text="“Træn ansigt” webapp bliver taget i brug." position="w-[30%] top-[92%] right-[6%]" iconWidth="w-[45%]" />
+          </div>
+        </div>
       </div>
     </main>
   );

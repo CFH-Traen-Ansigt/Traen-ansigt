@@ -7,7 +7,7 @@ export default function Menu({ color = "primary" }) {
 
   return (
     <div>
-      <button className="fixed right-7 top-7 w-14 h-14 cursor-pointer" onClick={() => setOpenMenu(true)}>
+      <button className="fixed right-7 top-7 w-14 h-14 cursor-pointer z-10" onClick={() => setOpenMenu(true)}>
         <img src={color === "primary" ? "/assets/burger-menu.svg" : "/assets/burger-menu-light.svg"} alt="x icon" className="w-full" />
       </button>
       {openMenu === true && (

@@ -1,20 +1,7 @@
-import Button from "./Button";
-export default function ActionModal({
-  title,
-  cancelButtonText,
-  primaryButtonText,
-  icon,
-  children,
-  showModal,
-  setShowModal,
-  onAccept,
-  onCancel,
-}) {
+import Button from "../Button";
+export default function ActionModal({ title, cancelButtonText, primaryButtonText, icon, children, showModal, setShowModal, onAccept, onCancel }) {
   return (
-    <dialog
-      className="fixed mt-[6%] bg-white rounded-xl z-20 w-[650px] h-[60vh]"
-      open={showModal}
-    >
+    <dialog className="fixed mt-[6%] bg-white rounded-xl z-20 w-[650px] h-[60vh]" open={showModal}>
       <div className="absolute text-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  w-full px-10">
         <img src={icon} alt="icon" className="w-24 m-auto mb-8" />
         <h1 className="text-3xl font-bold">{title}</h1>
