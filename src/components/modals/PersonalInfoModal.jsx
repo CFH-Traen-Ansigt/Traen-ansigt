@@ -6,7 +6,7 @@ import IconOption from "../IconOption";
 import { supabase } from "../../DB/supabaseClient";
 
 export default function PersonalInfoModal({ showModal, setShowModal, onDeleteUserClick }) {
-  const [icon, setIcon] = useState("");
+  const [icon, setIcon] = useState(localStorage.getItem("userIcon") || "1");
   const [fullName, setFullName] = useState(localStorage.getItem("userFullName") || "");
   const [email, setEmail] = useState(localStorage.getItem("userEmail") || "");
 

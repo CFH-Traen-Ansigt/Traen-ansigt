@@ -6,22 +6,6 @@ import InputField from "../components/InputField";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 
-//code for handling login and rememberMe functionality
-
-/* const handleLogin = async (email, password, rememberMe) => {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-    options: { persistSession: rememberMe }, // true = localStorage, false = sessionStorage
-  });
-
-  if (error) {
-    console.error("Login failed:", error.message);
-  } else {
-    console.log("Login successful:", data);
-  }
-}; */
-
 const LogIn = () => {
   const [errorDisplayed, setErrorDisplayed] = useState(false);
   const [email, setEmail] = useState("");
@@ -69,12 +53,22 @@ const LogIn = () => {
     const { data, error } = await supabase.from("UserInfo")
       .select("full_name, profile_picture").eq("id", id).single();
 
-    if (error) {
+    if (error && error.details === "The result contains 0 rows") {
+      const { data: userData, error: userError } = await supabase.from("UserInfo").insert({
+        id: id,
+        full_name: "Ukendt",
+        profile_picture: "1" // Default icon
+      })
+      localStorage.setItem("userFullName", "Ukendt"); // Store default full name
+      localStorage.setItem("userIcon", "1"); // Store default profile picture
+    } else if(error) {
       console.error("Error fetching user info:", error);
-      return null;
-    }
+    } else {
+
     localStorage.setItem("userFullName", data.full_name); // Store user full name
     localStorage.setItem("userIcon", data.profile_picture); // Store user profile picture
+
+    }
   }
 
   return (

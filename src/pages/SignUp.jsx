@@ -8,17 +8,19 @@ import BackgroundImage from "../components/BackgroundImage";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 
 const SignUp = () => {
-   const navigate = useNavigate();
+  const navigate = useNavigate();
   useEffect(() => {
     const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession()
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (session) {
-        navigate('/forside') // Redirect if already logged in
+        navigate("/forside"); // Redirect if already logged in
       }
-    }
+    };
 
-    checkSession()
-  }, [navigate])
+    checkSession();
+  }, [navigate]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [errorDisplayed, setErrorDisplayed] = useState(false);
@@ -41,7 +43,7 @@ const SignUp = () => {
       email: email,
       password: password,
       options: {
-        data: { display_name: fullName },
+        data: { display_name: "Ukendt" },
       },
     });
 
@@ -53,12 +55,13 @@ const SignUp = () => {
     if (data && !error) {
       console.log("User signed up successfully:", data);
       setMessage("Bruger oprettet. Tjek din email for at bekræfte din konto.");
-
+      localStorage.setItem("userEmail", email); // Store user email
+      localStorage.setItem("userFullName", "Ukendt"); // Store default full name
       window.location.href = "/log-ind"; // Redirect user after signup
     }
 
     console.log(message);
-    setEmail("");
+
     setPassword("");
     setPasswordRepeat("");
     setFullName("");
@@ -70,7 +73,10 @@ const SignUp = () => {
     if (password !== passwordRepeat) {
       setErrorDisplayed(true);
       setErrorMessage("Adgangskoder matcher ikke");
-    } else if (!password.match(lowerCaseLetters) || !password.match(upperCaseLetters)) {
+    } else if (
+      !password.match(lowerCaseLetters) ||
+      !password.match(upperCaseLetters)
+    ) {
       setErrorDisplayed(true);
       setErrorMessage("Adgangskoden skal indeholde store og små bogstaver");
     } else if (!password.match(numbers)) {
@@ -100,9 +106,20 @@ const SignUp = () => {
 
   return (
     <LandingPageLayout>
-      <dialog open={isModalOpen} ref={modalItem} className="w-80 rounded-xl border-2 border-solid border-black fixed  top-1/2 -translate-y-1/2  p-4 z-50">
-        <div onClick={() => setIsModalOpen(false)} className="flex justify-end w-full mb-3">
-          <img src="/assets/x-red.svg" alt="red x" className="w-6 cursor-pointer" />
+      <dialog
+        open={isModalOpen}
+        ref={modalItem}
+        className="w-80 rounded-xl border-2 border-solid border-black fixed  top-1/2 -translate-y-1/2  p-4 z-50"
+      >
+        <div
+          onClick={() => setIsModalOpen(false)}
+          className="flex justify-end w-full mb-3"
+        >
+          <img
+            src="/assets/x-red.svg"
+            alt="red x"
+            className="w-6 cursor-pointer"
+          />
         </div>
         <p className="text-lg mb-2">Din adgangskode skal bestå af:</p>
         <ul className="text-lg list-disc ml-6">
@@ -116,8 +133,14 @@ const SignUp = () => {
       <div className="w-80 mt-16">
         <h1 className="text-2xl mb-3 text-primary font-bold">Opret bruger:</h1>
         <form onSubmit={handleSubmit}>
-          <InputField label="Brugernavn (email)" id="user-email" type="email"
-           required value={email} setValue={setEmail} />
+          <InputField
+            label="Brugernavn (email)"
+            id="user-email"
+            type="email"
+            required
+            value={email}
+            setValue={setEmail}
+          />
           <InputField
             label="Adgangskode"
             id="user-password"
@@ -140,9 +163,21 @@ const SignUp = () => {
             value={passwordRepeat}
             setValue={setPasswordRepeat}
           />
-          <div>{errorDisplayed && <h2 className="mt-2 text-lg text-primary max-w-64 font-bold">{errorMessage}</h2>}</div>
+          <div>
+            {errorDisplayed && (
+              <h2 className="mt-2 text-lg text-primary max-w-64 font-bold">
+                {errorMessage}
+              </h2>
+            )}
+          </div>
           <div className="flex w-full gap-5 mt-8">
-            <Button variant="Cancel" text="Afbryd" href=".." styling="text-2xl pt-[10px] h-12" fullWidth />
+            <Button
+              variant="Cancel"
+              text="Afbryd"
+              href=".."
+              styling="text-2xl pt-[10px] h-12"
+              fullWidth
+            />
             <Button
               type="submit"
               text="Fortsæt"
