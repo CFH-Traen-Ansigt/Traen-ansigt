@@ -9,9 +9,9 @@ export default function VisualsSettingModal({ isModalOpen, setIsModalOpen }) {
       if (!modalItem.current) {
         return;
       }
-      if (!modalItem.current.contains(event.target)) {
-        setIsModalOpen(false);
-      }
+      // if (!modalItem.current.contains(event.target)) {
+      //   setIsModalOpen(false);
+      // }
     };
     document.addEventListener("click", handler, true);
     return () => {
