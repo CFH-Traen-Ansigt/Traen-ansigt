@@ -71,7 +71,7 @@ const MyPrograms = () => {
       >
         <p className="text-lg">Du er ved at slette dit program. Vil du fortsætte?</p>
       </ActionModal>
-      <div className="pb-10 border-b-4 border-b-solid border-b-alt-color max-w-[1100px]">
+      <div className="pb-10 max-w-[1100px]">
         <h1 className="text-font-color font-bold text-3xl">Dine gemte programmer</h1>
         <p className="text-font-color text-xl my-3">Disse programmer er nogle du eller din tilknyttede terapeut tidligere har sammensat.</p>
         <div className="grid grid-cols-3 gap-6 w-full">

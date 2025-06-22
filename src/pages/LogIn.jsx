@@ -15,14 +15,16 @@ const LogIn = () => {
   const navigate = useNavigate();
   useEffect(() => {
     const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession()
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (session) {
-        navigate('/forside') // Redirect if already logged in
+        navigate("/forside"); // Redirect if already logged in
       }
-    }
+    };
 
-    checkSession()
-  }, [navigate])
+    checkSession();
+  }, [navigate]);
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -49,9 +51,8 @@ const LogIn = () => {
     }
   };
 
-  async function getUserInfo(id){
-    const { data, error } = await supabase.from("UserInfo")
-      .select("full_name, profile_picture").eq("id", id).single();
+  async function getUserInfo(id) {
+    const { data, error } = await supabase.from("UserInfo").select("full_name, profile_picture").eq("id", id).single();
 
     if (error && error.details === "The result contains 0 rows") {
       const { data: userData, error: userError } = await supabase.from("UserInfo").insert({
@@ -77,16 +78,20 @@ const LogIn = () => {
       <div className="w-80 mt-16">
         <h1 className="text-2xl font-manjari mb-3 text-primary font-bold">Log ind:</h1>
         <form onSubmit={handleLogin}>
-          <InputField label="Brugernavn (email)" id="user-email" type="email" required value={email} setValue={setEmail}/>
-          <InputField label="Adgangskode" id="user-password" type="password" 
-          required value={password} setValue={setPassword} pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />
+          <InputField label="Brugernavn (email)" id="user-email" type="email" required value={email} setValue={setEmail} />
+          <InputField label="Adgangskode" id="user-password" type="password" required value={password} setValue={setPassword} pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />
+          {errorDisplayed && (
+            <h2 id="error" className="text-primary -mt-2 mb-6">
+              Forkert brugernavn og/eller adgangskode
+            </h2>
+          )}
           <div>
             <input type="checkbox" id="auto-log-in" name="auto-log-in" defaultChecked />
             <label for="auto-log-in" className="ml-2 text-lg">
               Forbliv logget ind
             </label>
           </div>
-          {errorDisplayed && <h2 id="error">Forkert brugernavn og/eller adgangskode</h2>}
+
           <div className="flex w-full gap-5 mt-8">
             <Button type="button" text="Afbryd" variant="Cancel" href=".." styling="text-2xl pt-[10px] h-12" fullWidth />
             <Button type="submit" text="Log ind" variant="Primary" styling="text-2xl pt-[10px] h-12" fullWidth />
