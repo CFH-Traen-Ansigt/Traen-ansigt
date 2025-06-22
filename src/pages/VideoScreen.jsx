@@ -24,12 +24,7 @@ const VideoScreen = () => {
         console.error("Failed to get user", error);
         return;
       }
-      const { data, error: fetchError } = await supabase
-        .from("ExercisesOnPrograms")
-        .select("repetitions, order, Programs (user_id), Exercises (id, name)")
-        .eq("program_id", id)
-        .eq("Programs.user_id", user.id)
-        .order("order", { ascending: true });
+      const { data, error: fetchError } = await supabase.from("ExercisesOnPrograms").select("repetitions, order, Programs (user_id), Exercises (id, name)").eq("program_id", id).eq("Programs.user_id", user.id).order("order", { ascending: true });
 
       if (fetchError) {
         console.error("Error fetching program:", fetchError);
@@ -97,8 +92,7 @@ const VideoScreen = () => {
     }
   };
 
-  const currentVideo =
-    program.length > 0 ? `${program[currentIndex].id}.mp4` : null;
+  const currentVideo = program.length > 0 ? `${program[currentIndex].id}.mp4` : null;
 
   //aspect ratio 4:3
   const videoConstraints = {
@@ -111,43 +105,15 @@ const VideoScreen = () => {
     height: "100%",
     borderRadius: "15px",
   };
-  const WebcamComponent = (
-    <Webcam
-      audio={false}
-      mirrored={true}
-      videoConstraints={videoConstraints}
-      style={videoStyle}
-    />
-  );
+  const WebcamComponent = <Webcam audio={false} mirrored={true} videoConstraints={videoConstraints} style={videoStyle} />;
 
   return (
-    <main>
-      <VideoPlayer
-        filename={currentVideo}
-        onEnded={handeVideoEnd}
-        index={currentIndex}
-        playing={playing}
-      />
+    <main style={{ backgroundColor: "black" }}>
+      <VideoPlayer filename={currentVideo} onEnded={handeVideoEnd} index={currentIndex} playing={playing} />
 
-      <div className="video-controls">
-        <button onClick={prevVideo} disabled={currentIndex === 0}>
-          ⏮️ Forrige
-        </button>
-        <button
-          onClick={nextVideo}
-          disabled={currentIndex === program.length - 1}
-        >
-          ⏭️ Næste
-        </button>
-        <div
-          style={{
-            position: "absolute",
-            bottom: "40px",
-            left: "50%",
-            transform: "translateX(-50%)",
-            zIndex: 10,
-          }}
-        >
+      <div className="video-controls" style={{ position: "absolute", left: "calc(50% - 126.34px)", bottom: "5%", display: "flex", gap: "20px", justifyContent: "center", alignItems: "center" }}>
+        <button onClick={prevVideo} disabled={currentIndex === 0} style={{ background: `no-repeat center url(../assets/backward-icon.svg)`, width: "71.35px", height: "45.49px", opacity: "50%" }}></button>
+        <div>
           <button
             onClick={togglePlayPause}
             style={{
@@ -160,18 +126,13 @@ const VideoScreen = () => {
               cursor: "pointer",
             }}
           >
-            {isEnded ? (
-              <IoMdPlay size={40} />
-            ) : playing ? (
-              <FaPause size={40} />
-            ) : (
-              <IoMdPlay size={40} />
-            )}
+            {isEnded ? <IoMdPlay size={40} /> : playing ? <FaPause size={40} /> : <IoMdPlay size={40} />}
           </button>
         </div>
+        <button onClick={nextVideo} disabled={currentIndex === program.length - 1} style={{ background: `no-repeat center url(../assets/backward-icon.svg)`, width: "71.35px", height: "45.49px", opacity: "50%", transform: "rotate(180deg)" }}></button>
       </div>
 
-      <div
+      <div //afbryd knap
         style={{
           position: "absolute",
           top: "20px",
@@ -199,15 +160,18 @@ const VideoScreen = () => {
           }}
           aria-label="Luk"
         >
-          <IoMdClose size={30} style={{ fontWeight: "bold"}} />
+          <IoMdClose size={30} style={{ fontWeight: "bold" }} />
           <span>Afbryd program</span>
         </button>
       </div>
-      <div className="absolute bottom-10 right-10 border-radius-5 overflow-hidden ">
+      <div
+        className="absolute bottom-5 right-5 border-radius-5 overflow-hidden "
+        style={{
+          height: "auto",
+          width: "25%",
+        }}
+      >
         {WebcamComponent}
-      </div>
-      <div>
-        <p>{currentIndex}</p>
       </div>
     </main>
   );
