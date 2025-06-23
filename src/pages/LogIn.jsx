@@ -47,6 +47,7 @@ const LogIn = () => {
       localStorage.setItem("userEmail", email); // Store user email
       localStorage.setItem("userId", data.session.user.id); // Store user ID
       await getUserInfo(data.session.user.id); // Fetch and store user full name
+      await getSettings(data.session.user.id); // Fetch and store user settings
       window.location.href = "/forside"; // Redirect user after login
     }
   };
@@ -65,11 +66,28 @@ const LogIn = () => {
     } else if(error) {
       console.error("Error fetching user info:", error);
     } else {
-
     localStorage.setItem("userFullName", data.full_name); // Store user full name
     localStorage.setItem("userIcon", data.profile_picture); // Store user profile picture
 
     }
+  }
+
+  async function getSettings(id){
+    const { data, error } = await supabase.from("Settings").select("visual_neglect").eq("user_id", id).single();
+
+    if( error && error.details === "The result contains 0 rows") {
+      const { data: settingsData, error: settingsError } = await supabase.from("Settings").insert({
+        user_id: id,
+        visual_neglect: "Standard"
+      });
+      localStorage.setItem("visualNeglect", "Standard"); // Store default visual neglect setting
+    } else if(error) {
+      console.error("Error fetching user settings:", error);
+    } else {
+      localStorage.setItem("visualNeglect", data.visual_neglect); // Store user visual neglect setting
+    }
+
+
   }
 
   return (

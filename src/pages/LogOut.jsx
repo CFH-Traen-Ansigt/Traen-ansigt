@@ -11,6 +11,7 @@ const LogOut = () => {
         localStorage.removeItem("userFullName") // Remove user full name
         localStorage.removeItem("userId") // Remove user ID
         localStorage.removeItem("userIcon") // Remove user icon
+        localStorage.removeItem("visualNeglect") // Remove visual settings
       window.location.href = '/' // or wherever your login page is
     }
 
