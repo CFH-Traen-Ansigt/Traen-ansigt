@@ -13,7 +13,7 @@ const VideoScreen = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [isEnded, setIsEnded] = useState(false);
-  const [visualSettings] = useState(localStorage.getItem("visualSettings") ==="Højre" || false);
+  const [visualSettings] = useState(localStorage.getItem("visualNeglect") === "Højre" || false);
 
   useEffect(() => {
     async function getProgram() {
@@ -137,7 +137,7 @@ const VideoScreen = () => {
         style={{
           position: "absolute",
           top: "20px",
-         ...(visualSettings ? { right: "20px" } : { left: "20px" }),
+          ...(visualSettings ? { left: "20px" } : { right: "20px" }),
           backgroundColor: "#901A36", // transparent red
           color: "white",
           padding: "10px 15px",
@@ -166,7 +166,7 @@ const VideoScreen = () => {
         </button>
       </div>
       <div
-        className={`absolute bottom-5 ${visualSettings ? 'right-5' : 'left-5'} border-radius-5 overflow-hidden`}
+        className={`absolute bottom-5 ${visualSettings ? 'left-5' : 'right-5'} border-radius-5 overflow-hidden`}
         style={{
           height: "auto",
           width: "25%",
