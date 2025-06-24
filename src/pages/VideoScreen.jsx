@@ -13,7 +13,7 @@ const VideoScreen = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [isEnded, setIsEnded] = useState(false);
-  const [visualSettings] = useState(localStorage.getItem("visualSettings") || "standard");
+  const [visualSettings] = useState(localStorage.getItem("visualSettings") ==="Højre" || false);
 
   useEffect(() => {
     async function getProgram() {
