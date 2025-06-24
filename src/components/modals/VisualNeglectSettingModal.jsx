@@ -21,7 +21,7 @@ export default function VisualNeglectSettingModal({ isModalOpen, setIsModalOpen 
     return () => {
       document.removeEventListener("click", handler);
     };
-  }, []);
+  }, [setIsModalOpen]);
 
   return (
     <dialog className="fixed mt-[6%] bg-white rounded-xl z-10 w-[800px] h-[60vh]" open={isModalOpen} ref={modalItem}>
