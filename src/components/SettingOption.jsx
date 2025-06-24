@@ -16,9 +16,9 @@ export default function SettingOption({ optionText, iconOutOfFocus, iconInFocus,
     console.log("Setting to save:", visualNeglectOption);
 
     try {
-      const { updatingError } = await supabase.from("Settings").update({ visual_neglect: visualNeglectOption }).eq("user_id", userId);
-    } catch (updatingError) {
-      console.error("Error saving program:", updatingError);
+      const { error } = await supabase.from("Settings").update({ visual_neglect: visualNeglectOption }).eq("user_id", userId);
+    } catch (error) {
+      console.error("Error saving program:", error);
     }
   }
   return (
