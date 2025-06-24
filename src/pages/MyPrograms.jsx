@@ -9,6 +9,7 @@ const MyPrograms = () => {
   const [showCompletedModal, setShowCompletedModal] = useState(false);
   const [programs, setPrograms] = useState([]);
   const [selectedProgramId, setSelectedProgramId] = useState(null);
+  const [visualSettings] = useState(localStorage.getItem("visualNeglect") || "Standard");
   const navigate = useNavigate();
 
   async function getPrograms() {
@@ -71,10 +72,10 @@ const MyPrograms = () => {
       >
         <p className="text-lg">Du er ved at slette dit program. Vil du fortsætte?</p>
       </ActionModal>
-      <div className="pb-10 max-w-[1100px]">
+      <div className={`flex flex-col pb-10 max-w-[1100px] ${visualSettings === "Venstre" && "items-end mx-auto"}`}>
         <h1 className="text-font-color font-bold text-3xl">Dine gemte programmer</h1>
         <p className="text-font-color text-xl my-3">Disse programmer er nogle du eller din tilknyttede terapeut tidligere har sammensat.</p>
-        <div className="grid grid-cols-3 gap-6 w-full">
+        <div className={`flex flex-wrap ${visualSettings === "Venstre" && "flex-row-reverse justify-end"}gap-6 w-full`}>
           <ProgramCard addShadow />
           {programs.map((program) => (
             <ProgramCard
