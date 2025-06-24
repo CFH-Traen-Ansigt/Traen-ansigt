@@ -8,7 +8,7 @@ const Settings = () => {
 
   return (
     <main className="bg-alt-color h-screen">
-      <Menu />
+      <Menu visualSetting={localStorage.getItem("visualNeglect")} />
       <VisualNeglectSettingModal setIsModalOpen={setShowmodal} isModalOpen={showModal} />
       <h1 className="text-font-color font-bold text-3xl text-center py-16">Indstillinger</h1>
       <div className="flex justify-center">

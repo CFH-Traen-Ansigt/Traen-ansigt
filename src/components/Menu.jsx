@@ -2,12 +2,13 @@ import React from "react";
 import { useState } from "react";
 import MenuItem from "./MenuItem";
 
-export default function Menu({ color = "primary" }) {
+export default function Menu({ color = "primary", visualSetting= "Standard" }) {
   const [openMenu, setOpenMenu] = useState(false);
+  const isRight = visualSetting === "Højre" || false;
 
   return (
     <div>
-      <button className="fixed right-7 top-7 w-14 h-14 cursor-pointer z-10" onClick={() => setOpenMenu(true)}>
+      <button className={`fixed top-7 w-14 h-14 cursor-pointer z-10 ${isRight ? 'left-7' : 'right-7'}`} onClick={() => setOpenMenu(true)}>
         <img src={color === "primary" ? "/assets/burger-menu.svg" : "/assets/burger-menu-light.svg"} alt="x icon" className="w-full" />
       </button>
       {openMenu === true && (

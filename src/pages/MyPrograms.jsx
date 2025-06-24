@@ -55,7 +55,7 @@ const MyPrograms = () => {
 
   return (
     <main className="mx-20 my-12">
-      <Menu />
+      <Menu visualSetting={localStorage.getItem("visualNeglect")} />
       <ActionModal
         title="Slet program"
         cancelButtonText="Nej, afbryd"

@@ -57,6 +57,7 @@ const SignUp = () => {
       setMessage("Bruger oprettet. Tjek din email for at bekræfte din konto.");
       localStorage.setItem("userEmail", email); // Store user email
       localStorage.setItem("userFullName", "Ukendt"); // Store default full name
+      insertSetting(data.user.id); // Insert default settings for the user
       window.location.href = "/log-ind"; // Redirect user after signup
     }
 
@@ -68,6 +69,19 @@ const SignUp = () => {
   };
 
   const modalItem = useRef();
+
+  function insertSetting(id){
+    supabase
+      .from("Settings")
+      .insert({ user_id: id, visual_neglect: "Standard" })
+      .then(({ error }) => {
+        if (error) {
+          console.error("Error inserting setting:", error);
+        } else {
+          console.log("Setting inserted successfully");
+        }
+      });
+  }
 
   function displayErrorMessage() {
     if (password !== passwordRepeat) {

@@ -17,7 +17,7 @@ const Home = () => {
   return (
     <main className="mx-14 max-w-full overflow-hidden">
       <BackgroundImage />
-      <Menu />
+      <Menu visualSetting={localStorage.getItem("visualNeglect")} />
       <PersonalInfoModal setShowModal={setShowPersonalInfoModal} showModal={showPersonalInfoModal} onDeleteUserClick={() => setShowDeleteUserModal(true)} />
       <DeleteUserModal setShowModal={setShowDeleteUserModal} showModal={showDeleteUserModal} />
       <div className={`grid grid-cols-[minmax(250px,_400px)_1fr_1fr] mt-20 `}>
