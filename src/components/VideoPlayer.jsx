@@ -1,7 +1,6 @@
 // src/components/VideoPlayer.jsx
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import ReactPlayer from 'react-player';
-
 
 
 
