@@ -6,42 +6,8 @@ export default function VisualNeglectSettingModal({ isModalOpen, setIsModalOpen 
   const [visualNeglectOption, setVisualNeglectOption] = useState("Standard");
   const modalItem = useRef();
 
-  async function getSetting() {
-    const {
-      data: { user },
-      error,
-    } = await supabase.auth.getUser();
-
-    if (error) {
-      console.error("Failed to get user", error);
-      return;
-    }
-
-    const userId = user.id;
-    const { data, error: fetchError } = await supabase.from("Settings").select("visual_neglect, id").eq("user_id", userId);
-
-    if (fetchError) {
-      console.error("Error fetching programs:", fetchError);
-      return;
-    }
-    if (data.length < 1) {
-      const { error: insertError, data: insertData } = await supabase.from("Settings").insert({
-        user_id: userId,
-        visual_neglect: visualNeglectOption || "Standard",
-      });
-
-      if (insertError) {
-        console.error("Error inserting setting:", insertError);
-        return;
-      }
-      console.log("Inserted new setting row:", insertData);
-    }
-    console.log("Fetched setting:", data[0].visual_neglect);
-    setVisualNeglectOption(data[0].visual_neglect);
-  }
-
   useEffect(() => {
-    getSetting();
+    setVisualNeglectOption(localStorage.getItem("visualNeglect"));
 
     const handler = (event) => {
       if (!modalItem.current) {
