@@ -1,8 +1,36 @@
-export default function SettingOption({ optionText, optionIcon }) {
+import { supabase } from "../DB/supabaseClient";
+
+export default function SettingOption({ optionText, iconOutOfFocus, iconInFocus, settingOption, setSettingOption }) {
+  async function saveSetting(visualNeglectOption) {
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser();
+
+    if (error) {
+      console.error("Failed to get user", error);
+      return;
+    }
+
+    const userId = user.id;
+    console.log("Setting to save:", visualNeglectOption);
+
+    try {
+      const { updatingError } = await supabase.from("Settings").update({ visual_neglect: visualNeglectOption }).eq("user_id", userId);
+    } catch (updatingError) {
+      console.error("Error saving program:", updatingError);
+    }
+  }
   return (
-    <div className="bg-alt-color py-6 px-20 rounded-md">
-      <p className="text-center text-xl mb-2 font-bold">{optionText}</p>
-      <img src={`/assets/${optionIcon}.svg`} alt={`${optionIcon}`} className="w-24" />
-    </div>
+    <button
+      className={`${settingOption === optionText ? "bg-primary" : "bg-alt-color"} py-6 px-16 rounded-md`}
+      onClick={() => {
+        saveSetting(optionText);
+        setSettingOption(optionText);
+      }}
+    >
+      <p className={`${settingOption === optionText ? "text-alt-color" : "text-primary"} text-center text-xl mb-2 font-bold`}>{optionText}</p>
+      <img src={`/assets/${settingOption === optionText ? iconInFocus : iconOutOfFocus}.svg`} alt={`${iconInFocus}`} className="max-w-20 mx-auto" />
+    </button>
   );
 }
