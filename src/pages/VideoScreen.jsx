@@ -25,7 +25,12 @@ const VideoScreen = () => {
         console.error("Failed to get user", error);
         return;
       }
-      const { data, error: fetchError } = await supabase.from("ExercisesOnPrograms").select("repetitions, order, Programs (user_id), Exercises (id, name)").eq("program_id", id).eq("Programs.user_id", user.id).order("order", { ascending: true });
+      const { data, error: fetchError } = await supabase
+        .from("ExercisesOnPrograms")
+        .select("repetitions, order, Programs (user_id), Exercises (id, name)")
+        .eq("program_id", id)
+        .eq("Programs.user_id", user.id)
+        .order("order", { ascending: true });
 
       if (fetchError) {
         console.error("Error fetching program:", fetchError);
@@ -112,8 +117,15 @@ const VideoScreen = () => {
     <main style={{ backgroundColor: "black" }}>
       <VideoPlayer filename={currentVideo} onEnded={handeVideoEnd} index={currentIndex} playing={playing} />
 
-      <div className="video-controls" style={{ position: "absolute", left: "calc(50% - 126.34px)", bottom: "5%", display: "flex", gap: "20px", justifyContent: "center", alignItems: "center" }}>
-        <button onClick={prevVideo} disabled={currentIndex === 0} style={{ background: `no-repeat center url(../assets/backward-icon.svg)`, width: "71.35px", height: "45.49px", opacity: "50%" }}></button>
+      <div
+        className="video-controls"
+        style={{ position: "absolute", left: "calc(50% - 126.34px)", bottom: "5%", display: "flex", gap: "20px", justifyContent: "center", alignItems: "center" }}
+      >
+        <button
+          onClick={prevVideo}
+          disabled={currentIndex === 0}
+          style={{ background: `no-repeat center url(../assets/backward-icon.svg)`, width: "71.35px", height: "45.49px", opacity: "50%" }}
+        ></button>
         <div>
           <button
             onClick={togglePlayPause}
@@ -130,7 +142,11 @@ const VideoScreen = () => {
             {isEnded ? <IoMdPlay size={40} /> : playing ? <FaPause size={40} /> : <IoMdPlay size={40} />}
           </button>
         </div>
-        <button onClick={nextVideo} disabled={currentIndex === program.length - 1} style={{ background: `no-repeat center url(../assets/backward-icon.svg)`, width: "71.35px", height: "45.49px", opacity: "50%", transform: "rotate(180deg)" }}></button>
+        <button
+          onClick={nextVideo}
+          disabled={currentIndex === program.length - 1}
+          style={{ background: `no-repeat center url(../assets/backward-icon.svg)`, width: "71.35px", height: "45.49px", opacity: "50%", transform: "rotate(180deg)" }}
+        ></button>
       </div>
 
       <div //afbryd knap
@@ -166,7 +182,7 @@ const VideoScreen = () => {
         </button>
       </div>
       <div
-        className={`absolute bottom-5 ${visualSettings ? 'left-5' : 'right-5'} border-radius-5 overflow-hidden`}
+        className={`absolute bottom-5 ${visualSettings ? "left-5" : "right-5"} border-radius-5 overflow-hidden`}
         style={{
           height: "auto",
           width: "25%",
@@ -179,4 +195,3 @@ const VideoScreen = () => {
 };
 
 export default VideoScreen;
-
