@@ -1,13 +1,13 @@
 import React from "react";
 import { useState } from "react";
 import ListItem from "./ListItem";
-export default function TaskFiltering() {
+export default function TaskFiltering({ isRight }) {
   const [noseItemHovered, setNoseItemHovered] = useState(false);
   const [tongueItemHovered, setTongueItemHovered] = useState(false);
   const [foreheadItemHovered, setForeheadItemHovered] = useState(false);
 
   return (
-    <ul className="fixed flex justify-center items-center mt-5 top-0 ml-[420px] z-2 ps-0  list-none">
+    <ul className={`fixed flex justify-center items-center mt-5 top-0 ${isRight ? "ml-[420px]" : "ml-6"} z-2 ps-0  list-none`}>
       <ListItem itemName="Pande" onHover={setForeheadItemHovered} />
       <ListItem
         itemName="Øjne"

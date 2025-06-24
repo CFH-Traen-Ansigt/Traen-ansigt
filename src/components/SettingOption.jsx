@@ -26,6 +26,7 @@ export default function SettingOption({ optionText, iconOutOfFocus, iconInFocus,
       className={`${settingOption === optionText ? "bg-primary" : "bg-alt-color"} py-6 px-16 rounded-md`}
       onClick={() => {
         saveSetting(optionText);
+        localStorage.setItem("visualNeglect", optionText);
         setSettingOption(optionText);
       }}
     >

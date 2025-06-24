@@ -10,10 +10,7 @@ import { supabase } from "../DB/supabaseClient";
 
 // Get Tasks From API
 //move this to a function so it does not run on every render
-let { data: Exercises /*error*/ } = await supabase
-  .from("Exercises")
-  .select("id, name, type, duration, help")
-  .order("id", { ascending: true });
+let { data: Exercises /*error*/ } = await supabase.from("Exercises").select("id, name, type, duration, help").order("id", { ascending: true });
 
 //console.log(Exercises);
 //console.log(error);
@@ -24,11 +21,7 @@ const BuildProgram = () => {
   const [showCompletedModal, setShowCompletedModal] = useState(false);
   const dragTask = useRef(null);
   const draggedOverTask = useRef(null);
-  const [isRight] = useState(
-    localStorage.getItem("visualNeglect") !== "Standard"
-      ? true
-      : false
-  );
+  const [isRight] = useState(localStorage.getItem("visualNeglect") !== "Venstre" ? true : false);
   console.log(isRight);
 
   function handleSort() {
@@ -99,9 +92,7 @@ const BuildProgram = () => {
         repetitions: exercise.repetitions,
         order: program.exercises.indexOf(exercise) + 1,
       }));
-      const { error: exerciseError } = await supabase
-        .from("ExercisesOnPrograms")
-        .insert(exercisesToInsert);
+      const { error: exerciseError } = await supabase.from("ExercisesOnPrograms").insert(exercisesToInsert);
       if (exerciseError) {
         setShowProgramModal(true);
         console.error("Error saving exercises:", exerciseError);
@@ -117,12 +108,8 @@ const BuildProgram = () => {
   return (
     <main>
       <Menu />
-      <TaskFiltering />
-      <ProgramModal
-        showModal={showProgramModal}
-        setShowModal={setShowProgramModal}
-        onSubmit={saveProgram}
-      />
+      <TaskFiltering isRight={isRight} />
+      <ProgramModal showModal={showProgramModal} setShowModal={setShowProgramModal} onSubmit={saveProgram} />
       <ActionModal
         title="Dit program er nu gemt!"
         cancelButtonText="Nej"
@@ -139,32 +126,23 @@ const BuildProgram = () => {
           setShowCompletedModal(false);
         }}
       >
-        <p className="text-lg">
-          Du kan finde dine gemte programmer under "Mine programmer".
-        </p>
+        <p className="text-lg">Du kan finde dine gemte programmer under "Mine programmer".</p>
         <p className="text-lg">Vil du fortsætte til siden?</p>
       </ActionModal>
       <div
         className={`fixed flex flex-col top-0 ${
-          isRight
-            ? "left-0 border-r-[5px] border-r-primary"
-            : "right-0 border-l-[5px] border-l-primary"
+          isRight ? "left-0 border-r-[5px] border-r-primary" : "right-0 border-l-[5px] border-l-primary"
         } w-[400px] py-10 h-screen bg-alt-color border-solid`}
       >
         <h1 className="text-3xl font-bold text-center ">Dit program</h1>
         {!tasks.length > 0 && (
           <div className="mx-8 text-center ">
-            <h2 className="text-sm mt-2 ">
-              Når du har valgt nogle øvelser, vil de blive vist her.
-            </h2>
+            <h2 className="text-sm mt-2 ">Når du har valgt nogle øvelser, vil de blive vist her.</h2>
             <div className="text-start mt-12">
               <p className="text-primary font-light mb-2">Sådan gør du:</p>
               <ol className="flex flex-col gap-2 list-decimal mx-4 font-light text-sm">
                 <li>Udvælg de øvelser du gerne vil have i dit program</li>
-                <li>
-                  Vælg hvor mange repetitioner du gerne vil have af den
-                  pågældende øvelse
-                </li>
+                <li>Vælg hvor mange repetitioner du gerne vil have af den pågældende øvelse</li>
                 <li>Tilføj øvelsen ved at trykke på "tilføj"-knappen</li>
                 <li>Gem eller afspil dit program</li>
               </ol>
