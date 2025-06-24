@@ -137,7 +137,7 @@ const VideoScreen = () => {
         style={{
           position: "absolute",
           top: "20px",
-          right: "20px",
+         ...(visualSettings ? { right: "20px" } : { left: "20px" }),
           backgroundColor: "#901A36", // transparent red
           color: "white",
           padding: "10px 15px",
