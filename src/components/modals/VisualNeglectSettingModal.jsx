@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { supabase } from "../../DB/supabaseClient";
 import SettingOption from "../SettingOption";
 
 export default function VisualNeglectSettingModal({ isModalOpen, setIsModalOpen }) {

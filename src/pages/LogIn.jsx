@@ -56,11 +56,14 @@ const LogIn = () => {
     const { data, error } = await supabase.from("UserInfo").select("full_name, profile_picture").eq("id", id).single();
 
     if (error && error.details === "The result contains 0 rows") {
-      const { data: userData, error: userError } = await supabase.from("UserInfo").insert({
+      const { error: userError } = await supabase.from("UserInfo").insert({
         id: id,
         full_name: "Ukendt",
         profile_picture: "1" // Default icon
       })
+      if (userError) {
+        console.error("Error inserting default user info:", userError);
+      }
       localStorage.setItem("userFullName", "Ukendt"); // Store default full name
       localStorage.setItem("userIcon", "1"); // Store default profile picture
     } else if(error) {
@@ -76,10 +79,13 @@ const LogIn = () => {
     const { data, error } = await supabase.from("Settings").select("visual_neglect").eq("user_id", id).single();
 
     if( error && error.details === "The result contains 0 rows") {
-      const { data: settingsData, error: settingsError } = await supabase.from("Settings").insert({
+      const { error: settingsError } = await supabase.from("Settings").insert({
         user_id: id,
         visual_neglect: "Standard"
       });
+      if (settingsError) {
+        console.error("Error inserting default settings:", settingsError);
+      }
       localStorage.setItem("visualNeglect", "Standard"); // Store default visual neglect setting
     } else if(error) {
       console.error("Error fetching user settings:", error);

@@ -11,22 +11,22 @@ export default function PersonalInfoModal({ showModal, setShowModal, onDeleteUse
   const [email, setEmail] = useState(localStorage.getItem("userEmail") || "");
 
   
-  async function fetchUserInfo() {
-    console.log("Fetching user info for userId:", localStorage.getItem("userId"));
-    let { data, error } = await supabase
-      .from("UserInfo")
-      .select("*")
-      .eq("id", localStorage.getItem("userId"))
-      .single();
+  // async function fetchUserInfo() {
+  //   console.log("Fetching user info for userId:", localStorage.getItem("userId"));
+  //   let { data, error } = await supabase
+  //     .from("UserInfo")
+  //     .select("*")
+  //     .eq("id", localStorage.getItem("userId"))
+  //     .single();
 
-    if (error) {
-      console.error("Error fetching user info:", error);
-    } else {
-      setFullName(data.fullName || "");
-      setIcon(data.icon || "");
-    }
-    console.log("Fetched user info:", data);
-  }
+  //   if (error) {
+  //     console.error("Error fetching user info:", error);
+  //   } else {
+  //     setFullName(data.fullName || "");
+  //     setIcon(data.icon || "");
+  //   }
+  //   console.log("Fetched user info:", data);
+  // }
   //fetchUserInfo();
 
   async function saveInfo() {
@@ -35,14 +35,15 @@ export default function PersonalInfoModal({ showModal, setShowModal, onDeleteUse
       return;
     }
     // Save the user information to the database
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("UserInfo")
       .update({
         full_name: fullName,
         profile_picture: icon
       }).eq("id", localStorage.getItem("userId"));
-    
-  
+    if (error) {
+      console.error("Error saving user info:", error);
+    }
     // Save the information to localStorage or send it to the server
     localStorage.setItem("userFullName", fullName);
     // localStorage.setItem("userEmail", email);

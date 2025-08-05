@@ -7,7 +7,6 @@ import TaskFiltering from "../components/TaskFiltering";
 import TaskCard from "../components/TaskCard";
 import ActionModal from "../components/modals/ActionModal";
 import { supabase } from "../DB/supabaseClient";
-import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useCallback } from "react";
 

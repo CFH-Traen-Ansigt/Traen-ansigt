@@ -32,7 +32,6 @@ const SignUp = () => {
   const numbers = /[0-9]/g;
 
   const [email, setEmail] = useState("");
-  const [fullName, setFullName] = useState("");
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (event) => {
@@ -65,7 +64,6 @@ const SignUp = () => {
 
     setPassword("");
     setPasswordRepeat("");
-    setFullName("");
   };
 
   const modalItem = useRef();
