@@ -22,7 +22,6 @@ const BuildProgram = () => {
   const dragTask = useRef(null);
   const draggedOverTask = useRef(null);
   const [isRight] = useState(localStorage.getItem("visualNeglect") !== "Venstre" ? true : false);
-  console.log(isRight);
 
   function handleSort() {
     if (dragTask.current === null || draggedOverTask.current === null) return;

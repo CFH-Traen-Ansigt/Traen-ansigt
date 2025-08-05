@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-import { useParams } from "react-router-dom";
 import TaskList from "../components/TaskList";
 import Menu from "../components/Menu";
 import ProgramModal from "../components/modals/ProgramModal";
@@ -8,20 +7,26 @@ import TaskFiltering from "../components/TaskFiltering";
 import TaskCard from "../components/TaskCard";
 import ActionModal from "../components/modals/ActionModal";
 import { supabase } from "../DB/supabaseClient";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useCallback } from "react";
+
 
 // Get Tasks From API
 //move this to a function so it does not run on every render
 let { data: Exercises /*error*/ } = await supabase.from("Exercises").select("id, name, type, duration, help").order("id", { ascending: true });
 
-//console.log(Exercises);
-//console.log(error);
 
 const EditProgram = () => {
+  const { id } = useParams();
   const [tasks, setTasks] = useState([]);
   const [showProgramModal, setShowProgramModal] = useState(false);
   const [showCompletedModal, setShowCompletedModal] = useState(false);
   const dragTask = useRef(null);
   const draggedOverTask = useRef(null);
+  const [isRight] = useState(localStorage.getItem("visualNeglect") !== "Venstre" ? true : false);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
   function handleSort() {
     if (dragTask.current === null || draggedOverTask.current === null) return;
@@ -34,7 +39,50 @@ const EditProgram = () => {
     setTasks(tasksClone);
   }
 
-  async function saveProgram(formData) {
+  
+  const getProgram = useCallback(async (id) => {
+    console.log("Fetching program with ID:", id);
+    const res = await supabase.from("Programs").select("name, description").eq("id", id);
+
+    console.log("Fetched program:", res.data);
+    setTitle(res.data[0].name);
+    setDescription(res.data[0].description);
+
+    console.log(description)
+    console.log(title)
+
+    const { data, error } = await supabase
+      .from("ExercisesOnPrograms")
+      .select(`*,
+        Exercises(name, help)`)
+      .eq("program_id", id);
+    if (error) {
+      console.error("Error fetching program:", error);
+    }
+    let programData = [];
+    data.forEach((item) => {
+      programData.push({
+        exerciseNo: item.exercise_id,
+        repititions: item.repetitions,
+        title: item.Exercises.name,
+        withHelp: item.Exercises.help,
+      });
+    });
+
+    setTasks(programData);
+
+
+  }, [description, title]);
+
+  useEffect(() => {
+    if (id) {
+      getProgram(id);
+    }
+  }, [getProgram, id]);
+
+  
+
+  async function updateProgram(formData) {
     console.log(formData);
     const program = {
       name: formData.title,
@@ -56,13 +104,23 @@ const EditProgram = () => {
     }
 
     const userId = user.id;
-    console.log("Program to save:", program);
+    console.log("Program to update:", program);
+
+    if (program.description === "") {
+      program.description = "Ingen beskrivelse.";
+    }
 
     try {
       // Save the program to the database
       const { data, error } = await supabase
         .from("Programs")
-        .insert([{ user_id: userId, name: program.name, description: program.description }])
+        .update([
+          {
+            name: program.name,
+            description: program.description,
+          },
+        ])
+        .eq("id", id)
         .select();
 
       if (error) {
@@ -81,12 +139,13 @@ const EditProgram = () => {
         repetitions: exercise.repetitions,
         order: program.exercises.indexOf(exercise) + 1,
       }));
-      const { error: exerciseError } = await supabase.from("ExercisesOnPrograms").insert(exercisesToInsert);
-      if (exerciseError) {
-        setShowProgramModal(true);
-        console.error("Error saving exercises:", exerciseError);
-        return;
-      }
+
+      await supabase
+        .from("ExercisesOnPrograms")
+        .upsert(exercisesToInsert, { onConflict: ["program_id", "exercise_id"] });
+      console.log("Exercises updated successfully");
+
+      
       setShowProgramModal(false);
       setShowCompletedModal(true);
     } catch (error) {
@@ -96,9 +155,9 @@ const EditProgram = () => {
   console.log(tasks);
   return (
     <main>
-      <Menu />
-      <TaskFiltering />
-      <ProgramModal showModal={showProgramModal} setShowModal={setShowProgramModal} onSubmit={saveProgram} />
+      <Menu visualSetting={localStorage.getItem("visualNeglect")} />
+      <TaskFiltering isRight={isRight} />
+      <ProgramModal showModal={showProgramModal} setShowModal={setShowProgramModal} onSubmit={updateProgram} editTitle={title} editDescription={description}/>
       <ActionModal
         title="Dit program er nu gemt!"
         cancelButtonText="Nej"
@@ -118,7 +177,11 @@ const EditProgram = () => {
         <p className="text-lg">Du kan finde dine gemte programmer under "Mine programmer".</p>
         <p className="text-lg">Vil du fortsætte til siden?</p>
       </ActionModal>
-      <div className="fixed flex flex-col top-0 left-0 w-[400px] py-10 h-screen bg-alt-color border-r-[5px] border-r-primary border-solid">
+      <div
+        className={`fixed flex flex-col top-0 ${
+          isRight ? "left-0 border-r-[5px] border-r-primary" : "right-0 border-l-[5px] border-l-primary"
+        } w-[400px] py-10 h-screen bg-alt-color border-solid`}
+      >
         <h1 className="text-3xl font-bold text-center ">Dit program</h1>
         {!tasks.length > 0 && (
           <div className="mx-8 text-center ">
@@ -141,7 +204,7 @@ const EditProgram = () => {
                 <TaskCard
                   exerciseNo={task.exerciseNo}
                   title={task.title}
-                  image={task.image}
+                  image={`/assets/images/0${task.exerciseNo}.webp`}
                   withHelp={task.withHelp}
                   variant="small"
                   repititions={task.repititions}
@@ -175,14 +238,23 @@ const EditProgram = () => {
           setTasks={setTasks}
           tasks={tasks}
           exercises={Exercises.filter((task) => task.type === "Pande")}
+          setting={isRight}
         />
-        <TaskList headline="Øjne" description="Disse øvelser fokusere på øjnene" setTasks={setTasks} tasks={tasks} exercises={Exercises.filter((task) => task.type === "Øjne")} />
+        <TaskList
+          headline="Øjne"
+          description="Disse øvelser fokusere på øjnene"
+          setTasks={setTasks}
+          tasks={tasks}
+          exercises={Exercises.filter((task) => task.type === "Øjne")}
+          setting={isRight}
+        />
         <TaskList
           headline="Næse"
           description="Disse øvelser fokusere på området omkring næsen"
           setTasks={setTasks}
           tasks={tasks}
           exercises={Exercises.filter((task) => task.type === "Næse")}
+          setting={isRight}
         />
         <TaskList
           headline="Kinder og mund"
@@ -190,6 +262,7 @@ const EditProgram = () => {
           setTasks={setTasks}
           tasks={tasks}
           exercises={Exercises.filter((task) => task.type === "Mund")}
+          setting={isRight}
         />
 
         <TaskList
@@ -199,6 +272,7 @@ const EditProgram = () => {
           setTasks={setTasks}
           tasks={tasks}
           exercises={Exercises.filter((task) => task.type === "Tunge")}
+          setting={isRight}
         />
       </div>
     </main>

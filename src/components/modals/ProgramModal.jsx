@@ -2,9 +2,9 @@ import { useState } from "react";
 import Button from "../Button";
 import InputField from "../InputField";
 
-export default function ProgramModal({ showModal, setShowModal, onSubmit }) {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+export default function ProgramModal({ showModal, setShowModal, onSubmit, editTitle, editDescription }) {
+  const [title, setTitle] = useState(editTitle || "");
+  const [description, setDescription] = useState(editDescription || "");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,7 +26,7 @@ export default function ProgramModal({ showModal, setShowModal, onSubmit }) {
           <p>Vi anbefaler også, at du giver programmet en beskrivelse, som kan hjælpe dig med at huske indholdet af øvelser.</p>
         </div>
         <form onSubmit={handleSubmit}>
-          <InputField label="Angiv navn" id="program_title" type="text" required value={title} setValue={setTitle} />
+          <InputField label="Angiv navn" id="program_title" type="text" required value={editTitle} setValue={setTitle} />
           <label for="program_description" className="flex items-center font-manjari text-lg font-bold">
             Angiv beskrivelse (valgfrit)
           </label>
@@ -36,7 +36,7 @@ export default function ProgramModal({ showModal, setShowModal, onSubmit }) {
             name="program_description"
             rows="5"
             className="w-full bg-alt-color mb-4 rounded-[10px] text-xl pl-3 py-3"
-            value={description}
+            value={editDescription}
             onChange={(e) => setDescription(e.target.value)}
           ></textarea>
 

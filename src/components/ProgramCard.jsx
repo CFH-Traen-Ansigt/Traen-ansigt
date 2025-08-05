@@ -8,6 +8,7 @@ export default function ProgramCard({
   addShadow = false,
   onDelete,
   onPlay,
+  onEdit
 }) {
   return (
     <article className={`relative w-[300px] min-h-[480px] ${addShadow && "border-dashed border-[2px] border-secondary rounded-lg  cursor-pointer"} p-3 flex flex-col`}>
@@ -43,6 +44,7 @@ export default function ProgramCard({
               iconStyling="w-[20px] h-[20px] pl-1"
               disabled={addShadow}
               fullWidth
+              onClick={onEdit}
             />
             <div className="flex gap-2 ">
               <Button

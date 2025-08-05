@@ -90,6 +90,9 @@ const MyPrograms = () => {
               onPlay={() => {
                 navigate(`/afspil/${program.id}`);
               }}
+              onEdit={() => {
+                navigate(`/rediger-program/${program.id}`);
+              }}
             />
           ))}
         </div>
