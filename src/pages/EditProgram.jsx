@@ -90,26 +90,13 @@ const EditProgram = () => {
       })),
     };
 
-    const {
-      data: { user },
-      error,
-    } = await supabase.auth.getUser();
-
-    if (error) {
-      console.error("Failed to get user", error);
-      return;
-    }
-
-    const userId = user.id;
-    console.log("Program to update:", program);
-
     if (program.description === "") {
       program.description = "Ingen beskrivelse.";
     }
 
     try {
       // Save the program to the database
-      const { data, error } = await supabase
+      const {  error } = await supabase
         .from("Programs")
         .update([
           {
