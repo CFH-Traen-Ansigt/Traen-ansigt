@@ -69,7 +69,7 @@ const EditProgram = () => {
     setTasks(programData);
 
 
-  }, [description, title]);
+  }, []);
 
   useEffect(() => {
     if (id) {
