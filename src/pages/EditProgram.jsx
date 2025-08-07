@@ -9,6 +9,7 @@ import ActionModal from "../components/modals/ActionModal";
 import { supabase } from "../DB/supabaseClient";
 import { useEffect } from "react";
 import { useCallback } from "react";
+import { useParams } from "react-router-dom";
 
 
 // Get Tasks From API
@@ -40,21 +41,17 @@ const EditProgram = () => {
 
   
   const getProgram = useCallback(async (id) => {
-    console.log("Fetching program with ID:", id);
     const res = await supabase.from("Programs").select("name, description").eq("id", id);
 
-    console.log("Fetched program:", res.data);
     setTitle(res.data[0].name);
     setDescription(res.data[0].description);
-
-    console.log(description)
-    console.log(title)
 
     const { data, error } = await supabase
       .from("ExercisesOnPrograms")
       .select(`*,
         Exercises(name, help)`)
-      .eq("program_id", id);
+      .eq("program_id", id)
+      .order("order", { ascending: true });
     if (error) {
       console.error("Error fetching program:", error);
     }
@@ -65,6 +62,7 @@ const EditProgram = () => {
         repititions: item.repetitions,
         title: item.Exercises.name,
         withHelp: item.Exercises.help,
+        order: item.order
       });
     });
 
@@ -128,9 +126,17 @@ const EditProgram = () => {
         return;
       }
 
+      const oldProgram = await supabase
+        .from("ExercisesOnPrograms")
+        .select("program_id, exercise_id, repetitions, order")
+        .eq("program_id", id);
+      if (oldProgram.error) {
+        console.error("Error fetching old program:", oldProgram.error);
+      }
+
+
       // Save the exercises to the database
-      const programId = data[0].id;
-      console.log("Program ID:", programId);
+      const programId = id;
 
       const exercisesToInsert = program.exercises.map((exercise) => ({
         program_id: programId,
@@ -138,6 +144,22 @@ const EditProgram = () => {
         repetitions: exercise.repetitions,
         order: program.exercises.indexOf(exercise) + 1,
       }));
+      
+      const exercisesToDelete = oldProgram.data.filter(
+        (oldExercise) => !exercisesToInsert.some((newExercise) => newExercise.exercise_id === oldExercise.exercise_id)
+      );
+
+      if (exercisesToDelete.length > 0) {
+
+        await supabase
+          .from("ExercisesOnPrograms")
+          .delete()
+          .in(
+            "exercise_id",
+            exercisesToDelete.map((exercise) => exercise.exercise_id)
+          )
+          .eq("program_id", programId);
+      }
 
       await supabase
         .from("ExercisesOnPrograms")
