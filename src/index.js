@@ -16,6 +16,8 @@ import Settings from "./pages/Settings";
 import VideoScreen from "./pages/VideoScreen";
 import LogOut from "./pages/LogOut";
 import EditProgram from "./pages/EditProgram";
+import AdminPage from "./pages/AdminPage";
+import AdminRoute from "./components/Adminroute";
 
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
@@ -29,6 +31,7 @@ const router = createBrowserRouter([
   { path: "/indstillinger", element:  <ProtectedRoute><Settings /></ProtectedRoute> },
   { path: "/afspil/:id", element:  <ProtectedRoute><VideoScreen /></ProtectedRoute> },
   { path: "/logout", element:  <ProtectedRoute><LogOut /></ProtectedRoute> },
+  { path: "/admin", element: <AdminRoute><AdminPage /></AdminRoute> }, // Admin route, can be used to show admin specific content
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
