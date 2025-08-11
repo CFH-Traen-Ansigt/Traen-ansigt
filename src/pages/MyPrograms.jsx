@@ -22,7 +22,7 @@ const MyPrograms = () => {
       console.error("Failed to get user", error);
       return;
     }
-    const { data, error: fetchError } = await supabase.from("Programs").select("name, description, id").eq("user_id", user.id);
+    const { data, error: fetchError } = await supabase.from("programs_with_exercise_count").select("name, description, id, duration, exercise_count").eq("user_id", user.id);
 
     if (fetchError) {
       console.error("Error fetching programs:", fetchError);
@@ -81,8 +81,8 @@ const MyPrograms = () => {
             <ProgramCard
               title={program.name}
               description={program.description}
-              duration="30"
-              totalExercises="12"
+              duration= {program.duration}
+              totalExercises= {program.exercise_count}
               onDelete={() => {
                 setSelectedProgramId(program.id);
                 setShowCompletedModal(true);

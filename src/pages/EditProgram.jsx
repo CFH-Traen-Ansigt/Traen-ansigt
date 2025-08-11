@@ -16,7 +16,6 @@ import { useParams } from "react-router-dom";
 //move this to a function so it does not run on every render
 let { data: Exercises /*error*/ } = await supabase.from("Exercises").select("id, name, type, duration, help").order("id", { ascending: true });
 
-
 const EditProgram = () => {
   const { id } = useParams();
   const [tasks, setTasks] = useState([]);
@@ -49,7 +48,7 @@ const EditProgram = () => {
     const { data, error } = await supabase
       .from("ExercisesOnPrograms")
       .select(`*,
-        Exercises(name, help)`)
+        Exercises(name, help, duration)`)
       .eq("program_id", id)
       .order("order", { ascending: true });
     if (error) {
@@ -60,6 +59,7 @@ const EditProgram = () => {
       programData.push({
         exerciseNo: item.exercise_id,
         repititions: item.repetitions,
+        duration: item.Exercises.duration,
         title: item.Exercises.name,
         withHelp: item.Exercises.help,
         order: item.order
@@ -81,9 +81,26 @@ const EditProgram = () => {
 
   async function updateProgram(formData) {
     console.log(formData);
+
+    //duration of the prgoram
+    let duration = 11;
+    tasks.forEach((task) => {
+      let taskRep = parseInt(task.repititions);
+      let taskDuration = parseInt(task.duration);
+      duration += taskRep * taskDuration + taskDuration;
+    })
+
+    let durationMin = Math.floor(duration / 60);
+     if( durationMin < 1) {
+      durationMin = 1;
+    }
+    
+    //console.log("Total duration:", durationMin);
+
     const program = {
       name: formData.title,
       description: formData.description,
+      duration: durationMin,
       exercises: tasks.map((task) => ({
         id: task.exerciseNo,
         repetitions: task.repititions,
@@ -102,6 +119,7 @@ const EditProgram = () => {
           {
             name: program.name,
             description: program.description,
+            duration: program.duration,
           },
         ])
         .eq("id", id)

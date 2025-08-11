@@ -10,6 +10,7 @@ export default function TaskList({ headline, description, exercises, tasks, setT
           exerciseNo={task.id}
           title={task.name}
           withHelp={task.help}
+          duration={task.duration}
           tasks={tasks}
           setTasks={setTasks}
           image={`/assets/images/0${task.id}.webp`}

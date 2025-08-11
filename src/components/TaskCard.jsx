@@ -10,6 +10,7 @@ export default function TaskCard({
   title = "Løft brynene",
   image = "/assets/images/018.webp",
   withHelp = false,
+  duration = 4,
   variant,
   tasks,
   setTasks,
@@ -33,6 +34,7 @@ export default function TaskCard({
             image: image,
             withHelp: withHelp,
             repititions: numberOfRepititions,
+            duration: duration,          
           },
         ])
       );

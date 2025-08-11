@@ -35,10 +35,25 @@ const BuildProgram = () => {
   }
 
   async function saveProgram(formData) {
-    console.log(formData);
+    //console.log(formData);
+
+    //duration of the prgoram
+    let duration = 11;
+    tasks.forEach((task) => {
+      let taskRep = parseInt(task.repititions);
+      let taskDuration = parseInt(task.duration);
+      duration += taskRep * taskDuration + taskDuration;
+    })
+
+    let durationMin = Math.floor(duration / 60);
+    if( durationMin < 1) {
+      durationMin = 1;
+    }
+
     const program = {
       name: formData.title,
       description: formData.description,
+      duration: durationMin,
       exercises: tasks.map((task) => ({
         id: task.exerciseNo,
         repetitions: task.repititions,
@@ -71,6 +86,7 @@ const BuildProgram = () => {
             user_id: userId,
             name: program.name,
             description: program.description,
+            duration: program.duration,
           },
         ])
         .select();
@@ -83,7 +99,7 @@ const BuildProgram = () => {
 
       // Save the exercises to the database
       const programId = data[0].id;
-      console.log("Program ID:", programId);
+      //console.log("Program ID:", programId);
 
       const exercisesToInsert = program.exercises.map((exercise) => ({
         program_id: programId,
