@@ -201,7 +201,7 @@ const BuildProgram = () => {
       <div className="pt-3">
         <TaskList
           headline="Pande"
-          description="Disse øvelser fokusere på området omkring panden"
+          description="Disse øvelser fokuserer på området omkring panden"
           setTasks={setTasks}
           tasks={tasks}
           exercises={Exercises.filter((task) => task.type === "Pande")}
@@ -209,7 +209,7 @@ const BuildProgram = () => {
         />
         <TaskList
           headline="Øjne"
-          description="Disse øvelser fokusere på øjnene"
+          description="Disse øvelser fokuserer på øjnene"
           setTasks={setTasks}
           tasks={tasks}
           exercises={Exercises.filter((task) => task.type === "Øjne")}
@@ -217,7 +217,7 @@ const BuildProgram = () => {
         />
         <TaskList
           headline="Næse"
-          description="Disse øvelser fokusere på området omkring næsen"
+          description="Disse øvelser fokuserer på området omkring næsen"
           setTasks={setTasks}
           tasks={tasks}
           exercises={Exercises.filter((task) => task.type === "Næse")}
@@ -225,7 +225,7 @@ const BuildProgram = () => {
         />
         <TaskList
           headline="Kinder og mund"
-          description="Disse øvelser fokusere på området omkring kinderne og munden"
+          description="Disse øvelser fokuserer på området omkring kinderne og munden"
           setTasks={setTasks}
           tasks={tasks}
           exercises={Exercises.filter((task) => task.type === "Mund")}
@@ -235,7 +235,7 @@ const BuildProgram = () => {
         <TaskList
           divider={false}
           headline="Tunge"
-          description="Disse øvelser fokusere på tungen"
+          description="Disse øvelser fokuserer på tungen"
           setTasks={setTasks}
           tasks={tasks}
           exercises={Exercises.filter((task) => task.type === "Tunge")}
