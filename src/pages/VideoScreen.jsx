@@ -54,7 +54,8 @@ const VideoScreen = () => {
           programData.push({
             id: `/assets/videos/v0${item.Exercises.id}`,
             name: item.Exercises.name,
-            repetitions: item.repetitions,
+            currentRepetition: i,
+            totalRepetitions: item.repetitions,
           });
         }
       });
@@ -201,7 +202,7 @@ const VideoScreen = () => {
           <p style={{ fontWeight: "100", fontSize: "36px" }}>{program[currentIndex].name}</p>
         </div>
       )}
-      {videoText && program[currentIndex].repetitions && (
+      {videoText && program[currentIndex].totalRepetitions && (
         <div
           style={{
             position: "absolute",
@@ -214,8 +215,10 @@ const VideoScreen = () => {
             opacity: 0.8,
           }}
         >
-          <h1 style={{ color: "#901A36", fontWeight: "600", fontSize: "28px" }}>Repetitioner</h1>
-          <p style={{ fontWeight: "100", fontSize: "36px" }}>{program[currentIndex].repetitions}</p>
+          <h1 style={{ color: "#901A36", fontWeight: "600", fontSize: "28px" }}>Repetition</h1>
+          <p style={{ fontWeight: "100", fontSize: "36px" }}>
+            {program[currentIndex].currentRepetition + 1}/{program[currentIndex].totalRepetitions}
+          </p>
         </div>
       )}
       <div
