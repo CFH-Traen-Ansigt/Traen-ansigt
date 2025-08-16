@@ -59,41 +59,41 @@ const LogIn = () => {
       const { error: userError } = await supabase.from("UserInfo").insert({
         id: id,
         full_name: "Ukendt",
-        profile_picture: "1" // Default icon
-      })
+        profile_picture: "1", // Default icon
+      });
       if (userError) {
         console.error("Error inserting default user info:", userError);
       }
       localStorage.setItem("userFullName", "Ukendt"); // Store default full name
       localStorage.setItem("userIcon", "1"); // Store default profile picture
-    } else if(error) {
+    } else if (error) {
       console.error("Error fetching user info:", error);
     } else {
-    localStorage.setItem("userFullName", data.full_name); // Store user full name
-    localStorage.setItem("userIcon", data.profile_picture); // Store user profile picture
-
+      localStorage.setItem("userFullName", data.full_name); // Store user full name
+      localStorage.setItem("userIcon", data.profile_picture); // Store user profile picture
     }
   }
 
-  async function getSettings(id){
-    const { data, error } = await supabase.from("Settings").select("visual_neglect").eq("user_id", id).single();
+  async function getSettings(id) {
+    const { data, error } = await supabase.from("Settings").select("visual_neglect, video_text").eq("user_id", id).single();
 
-    if( error && error.details === "The result contains 0 rows") {
+    if (error && error.details === "The result contains 0 rows") {
       const { error: settingsError } = await supabase.from("Settings").insert({
         user_id: id,
-        visual_neglect: "Standard"
+        visual_neglect: "Standard",
+        video_text: false,
       });
       if (settingsError) {
         console.error("Error inserting default settings:", settingsError);
       }
       localStorage.setItem("visualNeglect", "Standard"); // Store default visual neglect setting
-    } else if(error) {
+      localStorage.setItem("videoText", "false"); // Store default video text setting
+    } else if (error) {
       console.error("Error fetching user settings:", error);
     } else {
       localStorage.setItem("visualNeglect", data.visual_neglect); // Store user visual neglect setting
+      localStorage.setItem("videoText", data.video_text); // Store user video text setting
     }
-
-
   }
 
   return (

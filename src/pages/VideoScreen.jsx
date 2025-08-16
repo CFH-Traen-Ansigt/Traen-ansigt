@@ -14,6 +14,8 @@ const VideoScreen = () => {
   const [playing, setPlaying] = useState(false);
   const [isEnded, setIsEnded] = useState(false);
   const [visualSettings] = useState(localStorage.getItem("visualNeglect") === "Højre" || false);
+  const [defaultSetting] = useState(localStorage.getItem("visualNeglect") === "Standard" || false);
+  const [videoText] = useState(JSON.parse(localStorage.getItem("videoText")) || false);
 
   useEffect(() => {
     async function getProgram() {
@@ -52,6 +54,7 @@ const VideoScreen = () => {
           programData.push({
             id: `/assets/videos/v0${item.Exercises.id}`,
             name: item.Exercises.name,
+            repetitions: item.repetitions,
           });
         }
       });
@@ -153,7 +156,7 @@ const VideoScreen = () => {
         style={{
           position: "absolute",
           top: "20px",
-          ...(visualSettings ? { left: "20px" } : { right: "20px" }),
+          ...(visualSettings ? { left: "30px" } : { right: "30px" }),
           backgroundColor: "#901A36", // transparent red
           color: "white",
           padding: "10px 15px",
@@ -181,6 +184,40 @@ const VideoScreen = () => {
           <span>Afbryd program</span>
         </button>
       </div>
+      {videoText && (
+        <>
+          <div
+            style={{
+              position: "absolute",
+              top: defaultSetting ? "80px" : "100px",
+              ...(visualSettings || defaultSetting ? { left: "30px" } : { right: "30px" }),
+              backgroundColor: "rgba(249, 247, 244, 0.5)",
+              padding: "10px 25px",
+              borderRadius: "8px",
+              zIndex: 1000,
+              opacity: 0.8,
+            }}
+          >
+            <h1 style={{ color: "#901A36", fontWeight: "600", fontSize: "28px" }}>Øvelse</h1>
+            <p style={{ fontWeight: "100", fontSize: "36px" }}>{program[currentIndex].name}</p>
+          </div>
+          <div
+            style={{
+              position: "absolute",
+              top: defaultSetting ? "210px" : "240px",
+              ...(visualSettings || defaultSetting ? { left: "30px" } : { right: "30px" }),
+              backgroundColor: "rgba(249, 247, 244, 0.5)",
+              padding: "5px 25px 0px 25px",
+              borderRadius: "8px",
+              zIndex: 1000,
+              opacity: 0.8,
+            }}
+          >
+            <h1 style={{ color: "#901A36", fontWeight: "600", fontSize: "28px" }}>Repetitioner</h1>
+            <p style={{ fontWeight: "100", fontSize: "36px" }}>{program[currentIndex].repetitions}</p>
+          </div>
+        </>
+      )}
       <div
         className={`absolute bottom-5 ${visualSettings ? "left-5" : "right-5"} border-radius-5 overflow-hidden`}
         style={{
