@@ -185,38 +185,38 @@ const VideoScreen = () => {
         </button>
       </div>
       {videoText && (
-        <>
-          <div
-            style={{
-              position: "absolute",
-              top: defaultSetting ? "80px" : "100px",
-              ...(visualSettings || defaultSetting ? { left: "30px" } : { right: "30px" }),
-              backgroundColor: "rgba(249, 247, 244, 0.5)",
-              padding: "10px 25px",
-              borderRadius: "8px",
-              zIndex: 1000,
-              opacity: 0.8,
-            }}
-          >
-            <h1 style={{ color: "#901A36", fontWeight: "600", fontSize: "28px" }}>Øvelse</h1>
-            <p style={{ fontWeight: "100", fontSize: "36px" }}>{program[currentIndex].name}</p>
-          </div>
-          <div
-            style={{
-              position: "absolute",
-              top: defaultSetting ? "210px" : "240px",
-              ...(visualSettings || defaultSetting ? { left: "30px" } : { right: "30px" }),
-              backgroundColor: "rgba(249, 247, 244, 0.5)",
-              padding: "5px 25px 0px 25px",
-              borderRadius: "8px",
-              zIndex: 1000,
-              opacity: 0.8,
-            }}
-          >
-            <h1 style={{ color: "#901A36", fontWeight: "600", fontSize: "28px" }}>Repetitioner</h1>
-            <p style={{ fontWeight: "100", fontSize: "36px" }}>{program[currentIndex].repetitions}</p>
-          </div>
-        </>
+        <div
+          style={{
+            position: "absolute",
+            top: defaultSetting ? "80px" : "100px",
+            ...(visualSettings || defaultSetting ? { left: "30px" } : { right: "30px" }),
+            backgroundColor: "rgba(249, 247, 244, 0.5)",
+            padding: "10px 25px",
+            borderRadius: "8px",
+            zIndex: 1000,
+            opacity: 0.8,
+          }}
+        >
+          <h1 style={{ color: "#901A36", fontWeight: "600", fontSize: "28px" }}>Øvelse</h1>
+          <p style={{ fontWeight: "100", fontSize: "36px" }}>{program[currentIndex].name}</p>
+        </div>
+      )}
+      {videoText && program[currentIndex].repetitions && (
+        <div
+          style={{
+            position: "absolute",
+            top: defaultSetting ? "210px" : "240px",
+            ...(visualSettings || defaultSetting ? { left: "30px" } : { right: "30px" }),
+            backgroundColor: "rgba(249, 247, 244, 0.5)",
+            padding: "5px 25px 0px 25px",
+            borderRadius: "8px",
+            zIndex: 1000,
+            opacity: 0.8,
+          }}
+        >
+          <h1 style={{ color: "#901A36", fontWeight: "600", fontSize: "28px" }}>Repetitioner</h1>
+          <p style={{ fontWeight: "100", fontSize: "36px" }}>{program[currentIndex].repetitions}</p>
+        </div>
       )}
       <div
         className={`absolute bottom-5 ${visualSettings ? "left-5" : "right-5"} border-radius-5 overflow-hidden`}
