@@ -47,6 +47,7 @@ const Home = () => {
           <OptionCard icon="/assets/build-red.svg" option="Opsæt mit program" text="Tryk for at komme i gang med at lave dit program." href="/opsæt-mit-program" />
           <OptionCard icon="/assets/about-us-red.svg" option="Om os" text="Her kan du finde information om organisationen og kontaktpersoner." href="/om-os" />
           <OptionCard icon="/assets/settings-red.svg" option="Indstillinger" text="Under indstillinger kan du justere dine præferencer" href="/indstillinger" />
+          <OptionCard icon="/assets/settings-red.svg" option="Admin" text="Admin." href="/admin" />
         </div>
       </div>
     </main>

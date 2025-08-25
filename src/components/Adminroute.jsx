@@ -8,16 +8,17 @@ export default function AdminRoute({ children }) {
 
   useEffect(() => {
     async function checkAdmin() {
-      const user = supabase.auth.getUser();
-      if (!user) {
+      const userID = localStorage.getItem("userId");
+      if (!userID) {
         setIsAdmin(false);
         setLoading(false);
         return;
       }
+
       const { data } = await supabase
         .from("UserInfo")
         .select("is_admin")
-        .eq("id", user.id)
+        .eq("id", userID)
         .single();
 
       setIsAdmin(data?.is_admin || false);
