@@ -53,7 +53,7 @@ const LogIn = () => {
   };
 
   async function getUserInfo(id) {
-    const { data, error } = await supabase.from("UserInfo").select("full_name, profile_picture").eq("id", id).single();
+    const { data, error } = await supabase.from("UserInfo").select("full_name, profile_picture, is_admin").eq("id", id).single();
 
     if (error && error.details === "The result contains 0 rows") {
       const { error: userError } = await supabase.from("UserInfo").insert({
@@ -66,11 +66,13 @@ const LogIn = () => {
       }
       localStorage.setItem("userFullName", "Ukendt"); // Store default full name
       localStorage.setItem("userIcon", "1"); // Store default profile picture
+      localStorage.setItem("isAdmin", false); // Store default admin status
     } else if (error) {
       console.error("Error fetching user info:", error);
     } else {
       localStorage.setItem("userFullName", data.full_name); // Store user full name
       localStorage.setItem("userIcon", data.profile_picture); // Store user profile picture
+      localStorage.setItem("isAdmin", data.is_admin); // Store user admin status
     }
   }
 

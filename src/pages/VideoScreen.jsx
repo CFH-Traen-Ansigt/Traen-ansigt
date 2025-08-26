@@ -191,15 +191,15 @@ const VideoScreen = () => {
             position: "absolute",
             top: defaultSetting ? "80px" : "100px",
             ...(visualSettings || defaultSetting ? { left: "30px" } : { right: "30px" }),
-            backgroundColor: "rgba(249, 247, 244, 0.5)",
-            padding: "10px 25px",
+            backgroundColor: "rgba(249, 247, 244, 0.6)",
+            padding: "5px 25px",
             borderRadius: "8px",
             zIndex: 1000,
             opacity: 0.8,
           }}
         >
           <h1 style={{ color: "#901A36", fontWeight: "600", fontSize: "28px" }}>Øvelse</h1>
-          <p style={{ fontWeight: "100", fontSize: "36px" }}>{program[currentIndex].name}</p>
+          <p style={{ fontWeight: "100", fontSize: "32px" }}>{program[currentIndex].name}</p>
         </div>
       )}
       {videoText && program[currentIndex].totalRepetitions && (
@@ -208,7 +208,7 @@ const VideoScreen = () => {
             position: "absolute",
             top: defaultSetting ? "210px" : "240px",
             ...(visualSettings || defaultSetting ? { left: "30px" } : { right: "30px" }),
-            backgroundColor: "rgba(249, 247, 244, 0.5)",
+            backgroundColor: "rgba(249, 247, 244, 0.6)",
             padding: "5px 25px 0px 25px",
             borderRadius: "8px",
             zIndex: 1000,
@@ -216,7 +216,7 @@ const VideoScreen = () => {
           }}
         >
           <h1 style={{ color: "#901A36", fontWeight: "600", fontSize: "28px" }}>Repetition</h1>
-          <p style={{ fontWeight: "100", fontSize: "36px" }}>
+          <p style={{ fontWeight: "100", fontSize: "30px" }}>
             {program[currentIndex].currentRepetition + 1}/{program[currentIndex].totalRepetitions}
           </p>
         </div>

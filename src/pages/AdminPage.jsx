@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../DB/supabaseClient";
 
@@ -60,7 +60,7 @@ export default function AdminPage() {
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-4">All Users</h2>
       <h3
-        className="text-2xl font-bold mb-4 cursor-pointer text-blue-600 hover:underline"
+        className="text-2xl font-bold mb-4 cursor-pointer bg- text-blue-600 hover:underline"
         onClick={() => navigate("/forside")}
       >
         ← Back
