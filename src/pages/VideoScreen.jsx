@@ -13,17 +13,9 @@ const VideoScreen = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [isEnded, setIsEnded] = useState(false);
-
-  const [userInteracted, setUserInteracted] = useState(false);
-
   const [visualSettings] = useState(localStorage.getItem("visualNeglect") === "Højre" || false);
   const [defaultSetting] = useState(localStorage.getItem("visualNeglect") === "Standard" || false);
   const [videoText] = useState(JSON.parse(localStorage.getItem("videoText")) || false);
-
-  const handleUserStart = () => {
-    setUserInteracted(true);
-    setPlaying(true); // Start playing when user interacts
-  };
 
   useEffect(() => {
     async function getProgram() {
@@ -128,36 +120,6 @@ const VideoScreen = () => {
   return (
     <main style={{ backgroundColor: "black" }}>
       <VideoPlayer filename={currentVideo} onEnded={handeVideoEnd} index={currentIndex} playing={playing} />
-      {!userInteracted && (
-  <div
-    style={{
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "rgba(0,0,0,0.7)",
-      zIndex: 1000,
-    }}
-  >
-    <button
-      onClick={handleUserStart}
-      style={{
-        padding: "20px 40px",
-        fontSize: "24px",
-        backgroundColor: "#901A36",
-        color: "white",
-        borderRadius: "12px",
-        cursor: "pointer",
-      }}
-    >
-      Start Program
-    </button>
-  </div>
-)}
 
       <div
         className="video-controls"
