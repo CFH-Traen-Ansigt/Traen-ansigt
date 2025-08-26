@@ -44,6 +44,8 @@ export default function PersonalInfoModal({ showModal, setShowModal, onDeleteUse
     if (error) {
       console.error("Error saving user info:", error);
     }
+
+    alert("Information gemt succesfuldt!");
     // Save the information to localStorage or send it to the server
     localStorage.setItem("userFullName", fullName);
     // localStorage.setItem("userEmail", email);
