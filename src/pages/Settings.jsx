@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { supabase } from "../DB/supabaseClient";
 import Menu from "../components/Menu";
 import SettingItem from "../components/SettingItem";
