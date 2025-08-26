@@ -26,7 +26,7 @@ export default function InputField({ id, label, type, icon, required = false, se
             src={isPasswordVisible ? EyeOpen : EyeClosed}
             onClick={() => setIsPasswordVisible((old) => !old)}
             id={`${id}-button`}
-            className="absolute right-[5%] top-[35%] cursor-pointer -translate-y-1/2"
+            className="absolute right-[5%] top-[35%] cursor-pointer -translate-y-1/2 m-0 w-6 h-6"
             alt="password icon "
           />
         )}
