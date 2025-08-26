@@ -73,8 +73,8 @@ const MyPrograms = () => {
         <p className="text-lg">Du er ved at slette dit program. Vil du fortsætte?</p>
       </ActionModal>
       <div className={`flex flex-col pb-10 max-w-[1100px] ml-5 ${visualSettings === "Venstre" && "items-end mx-auto"}`}>
-        <h1 className="text-font-color font-bold text-3xl">Dine gemte programmer</h1>
-        <p className="text-font-color text-xl my-3">Disse programmer er nogle du eller din tilknyttede terapeut tidligere har sammensat.</p>
+        <h1 className="text-font-color font-bold text-3xl mr-5">Dine gemte programmer</h1>
+        <p className="text-font-color text-xl my-3 mr-5">Disse programmer er nogle du eller din tilknyttede terapeut tidligere har sammensat.</p>
         <div className={`flex flex-wrap ${visualSettings === "Venstre" && "flex-row-reverse justify-end"}gap-6 w-full`}>
           <ProgramCard addShadow />
           {programs.map((program) => (

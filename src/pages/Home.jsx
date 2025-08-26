@@ -39,7 +39,7 @@ const Home = () => {
             variant="Primary"
             icon="InvertedEditIcon"
             styling="text-2xl h-10 pt-[6px] w-auto mt-auto mb-3 gap-1"
-            iconStyling="pt-[2px]"
+            iconStyling="pt-[2px] w-5 h-5"
           />
         </article>
         <div className="grid grid-cols-2 w-full gap-x-4 gap-y-10 col-span-2 my-auto min-w-[800px]">
