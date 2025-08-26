@@ -42,7 +42,7 @@ const Home = () => {
             iconStyling="pt-[2px] w-5 h-5"
           />
         </article>
-        <div className="grid grid-cols-2 w-full gap-x-4 gap-y-10 col-span-2 my-auto min-w-[800px]">
+        <div className="grid grid-cols-2 w-full gap-x-0 gap-y-10 col-span-2 my-auto min-w-[650px]">
           {localStorage.getItem("isAdmin") === "false" && (
           <>
           <OptionCard icon="/assets/bookmark-red-outline.svg" option="Mit program" text="Her finder du dine gemte programmer med udvalgte øvelser." href="/mit-program" />
