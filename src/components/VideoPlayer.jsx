@@ -24,6 +24,7 @@ const VideoPlayer = ({ filename, onEnded, index, playing=false}) => {
       {/* Video player */}
       <div style={{ position: 'absolute', inset: 0 }}>
         <ReactPlayer
+          key={index}
           ref={playerRef}
           url={videoUrl}
           playing={playing}
