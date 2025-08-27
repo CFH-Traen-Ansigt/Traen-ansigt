@@ -149,7 +149,7 @@ const BuildProgram = () => {
           isRight ? "left-0 border-r-[5px] border-r-primary" : "right-0 border-l-[5px] border-l-primary"
         } w-[400px] py-10 h-screen bg-alt-color border-solid`}
       >
-        <h1 className="text-3xl font-bold text-center ">Dit program</h1>
+        <h1 className="text-3xl font-bold text-center ">Dit program 2</h1>
         {!tasks.length > 0 && (
           <div className="mx-8 text-center ">
             <h2 className="text-sm mt-2 ">Når du har valgt nogle øvelser, vil de blive vist her.</h2>
