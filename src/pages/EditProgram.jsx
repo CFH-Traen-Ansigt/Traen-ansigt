@@ -21,11 +21,26 @@ const EditProgram = () => {
   const [tasks, setTasks] = useState([]);
   const [showProgramModal, setShowProgramModal] = useState(false);
   const [showCompletedModal, setShowCompletedModal] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
   const dragTask = useRef(null);
   const draggedOverTask = useRef(null);
   const [isRight] = useState(localStorage.getItem("visualNeglect") !== "Venstre" ? true : false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+
+    useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (tasks.length > 0 && !isSaved) {
+        e.preventDefault();
+        e.returnValue = ""; // Chrome requires returnValue to be set
+      }
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    }
+
+  }, [isSaved, tasks]);
 
   function handleSort() {
     if (dragTask.current === null || draggedOverTask.current === null) return;
@@ -36,6 +51,7 @@ const EditProgram = () => {
     tasksClone.splice(draggedOverTask.current, 0, draggedItem);
 
     setTasks(tasksClone);
+    setIsSaved(false);
   }
 
   
@@ -171,7 +187,7 @@ const EditProgram = () => {
         .upsert(exercisesToInsert, { onConflict: ["program_id", "exercise_id"] });
       console.log("Exercises updated successfully");
 
-      
+      setIsSaved(true);
       setShowProgramModal(false);
       setShowCompletedModal(true);
     } catch (error) {

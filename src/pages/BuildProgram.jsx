@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect, use } from "react";
 import TaskList from "../components/TaskList";
 import Menu from "../components/Menu";
 import ProgramModal from "../components/modals/ProgramModal";
@@ -19,9 +19,24 @@ const BuildProgram = () => {
   const [tasks, setTasks] = useState([]);
   const [showProgramModal, setShowProgramModal] = useState(false);
   const [showCompletedModal, setShowCompletedModal] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
   const dragTask = useRef(null);
   const draggedOverTask = useRef(null);
   const [isRight] = useState(localStorage.getItem("visualNeglect") !== "Venstre" ? true : false);
+
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (tasks.length > 0 && !isSaved) {
+        e.preventDefault();
+        e.returnValue = ""; // Chrome requires returnValue to be set
+      }
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    }
+
+  }, [isSaved, tasks]);
 
   function handleSort() {
     if (dragTask.current === null || draggedOverTask.current === null) return;
@@ -32,6 +47,7 @@ const BuildProgram = () => {
     tasksClone.splice(draggedOverTask.current, 0, draggedItem);
 
     setTasks(tasksClone);
+    setIsSaved(false);
   }
 
   async function saveProgram(formData) {
@@ -113,6 +129,7 @@ const BuildProgram = () => {
         console.error("Error saving exercises:", exerciseError);
         return;
       }
+      setIsSaved(true);
       setShowProgramModal(false);
       setShowCompletedModal(true);
     } catch (error) {
