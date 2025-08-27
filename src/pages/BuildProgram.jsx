@@ -166,7 +166,7 @@ const BuildProgram = () => {
         )}
         {tasks.length > 0 && (
           <div className="flex flex-col items-center gap-2 h-dvh pt-2 ">
-            <div className="flex flex-col px-8 items-center gap-2 h-[72dvh] overflow-hidden overflow-y-auto w-full">
+            <div className="flex flex-col px-8 items-center gap-2 flex-1 overflow-y-auto">
               {tasks.map((task, index) => (
                 <TaskCard
                   exerciseNo={task.exerciseNo}
