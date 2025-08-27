@@ -166,7 +166,7 @@ const BuildProgram = () => {
         )}
         {tasks.length > 0 && (
           <div className="flex flex-col items-center gap-2 h-dvh pt-2 ">
-            <div className="flex flex-col px-8 items-center gap-2 flex-1 overflow-y-auto">
+            <div className="flex flex-col px-8 items-center gap-2 flex-1 overflow-y-auto w-full">
               {tasks.map((task, index) => (
                 <TaskCard
                   exerciseNo={task.exerciseNo}
@@ -184,7 +184,7 @@ const BuildProgram = () => {
                 />
               ))}
             </div>
-            <div className="mt-auto">
+            <div className="mt-auto pb-[env(safe-area-inset-bottom)]">
               <Button
                 type="button"
                 variant="Primary"
