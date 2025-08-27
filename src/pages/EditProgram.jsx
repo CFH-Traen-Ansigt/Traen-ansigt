@@ -243,7 +243,7 @@ const EditProgram = () => {
                 />
               ))}
             </div>
-            <div className="mt-auto">
+            <div className="mt-5">
               <Button
                 type="button"
                 variant="Primary"
