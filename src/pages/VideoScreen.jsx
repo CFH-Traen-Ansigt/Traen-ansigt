@@ -195,7 +195,7 @@ const VideoScreen = () => {
               position: "relative",
               ...(visualSettings || defaultSetting ? { left: "30px" } : { right: "30px" }),
               backgroundColor: "rgba(249, 247, 244, 0.6)",
-              padding: "5px 25px",
+              padding: "10px 25px 0px 25px",
               marginBottom: "15px",
               borderRadius: "8px",
               zIndex: 1000,
