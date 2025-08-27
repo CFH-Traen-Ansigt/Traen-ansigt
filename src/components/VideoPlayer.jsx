@@ -28,7 +28,6 @@ const VideoPlayer = ({ filename, onEnded, index, playing=false}) => {
           url={videoUrl}
           playing={playing}
           controls={false}
-          muted={true}
           onEnded={() => {
             onEnded && onEnded();
           }}
@@ -39,7 +38,7 @@ const VideoPlayer = ({ filename, onEnded, index, playing=false}) => {
             file: {
               attributes: {
                 preload: "auto",
-                playsInLine: true,
+                playsInline: true,
               },
             },
           }}
