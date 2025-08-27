@@ -120,7 +120,6 @@ const VideoScreen = () => {
   return (
     <main style={{ backgroundColor: "black" }}>
       <VideoPlayer filename={currentVideo} onEnded={handeVideoEnd} index={currentIndex} playing={playing} />
-
       <div
         className="video-controls"
         style={{ position: "absolute", left: "calc(50% - 126.34px)", bottom: "5%", display: "flex", gap: "20px", justifyContent: "center", alignItems: "center" }}
@@ -152,7 +151,6 @@ const VideoScreen = () => {
           style={{ background: `no-repeat center url(../assets/backward-icon.svg)`, width: "71.35px", height: "45.49px", opacity: "50%", transform: "rotate(180deg)" }}
         ></button>
       </div>
-
       <div //afbryd knap
         style={{
           position: "absolute",
@@ -190,35 +188,43 @@ const VideoScreen = () => {
           style={{
             position: "absolute",
             top: defaultSetting ? "80px" : "100px",
-            ...(visualSettings || defaultSetting ? { left: "30px" } : { right: "30px" }),
-            backgroundColor: "rgba(249, 247, 244, 0.6)",
-            padding: "5px 25px",
-            borderRadius: "8px",
-            zIndex: 1000,
-            opacity: 0.8,
           }}
         >
-          <h1 style={{ color: "#901A36", fontWeight: "600", fontSize: "28px" }}>Øvelse</h1>
-          <p style={{ fontWeight: "100", fontSize: "32px" }}>{program[currentIndex].name}</p>
-        </div>
-      )}
-      {videoText && program[currentIndex].totalRepetitions && (
-        <div
-          style={{
-            position: "absolute",
-            top: defaultSetting ? "210px" : "240px",
-            ...(visualSettings || defaultSetting ? { left: "30px" } : { right: "30px" }),
-            backgroundColor: "rgba(249, 247, 244, 0.6)",
-            padding: "5px 25px 0px 25px",
-            borderRadius: "8px",
-            zIndex: 1000,
-            opacity: 0.8,
-          }}
-        >
-          <h1 style={{ color: "#901A36", fontWeight: "600", fontSize: "28px" }}>Repetition</h1>
-          <p style={{ fontWeight: "100", fontSize: "30px" }}>
-            {program[currentIndex].currentRepetition + 1}/{program[currentIndex].totalRepetitions}
-          </p>
+          <div
+            style={{
+              position: "relative",
+              ...(visualSettings || defaultSetting ? { left: "30px" } : { right: "30px" }),
+              backgroundColor: "rgba(249, 247, 244, 0.6)",
+              padding: "5px 25px",
+              marginBottom: "15px",
+              borderRadius: "8px",
+              zIndex: 1000,
+              opacity: 0.8,
+            }}
+          >
+            <h1 style={{ color: "#901A36", fontWeight: "600", fontSize: "28px" }}>Øvelse</h1>
+            <p style={{ fontWeight: "100", fontSize: "32px", maxWidth: "350px" }}>{program[currentIndex].name}</p>
+          </div>
+
+          {program[currentIndex].totalRepetitions && (
+            <div
+              style={{
+                position: "relative",
+                ...(visualSettings || defaultSetting ? { left: "30px" } : { right: "30px" }),
+                backgroundColor: "rgba(249, 247, 244, 0.6)",
+                padding: "5px 25px 0px 25px",
+                borderRadius: "8px",
+                zIndex: 1000,
+                opacity: 0.8,
+                width: "200px",
+              }}
+            >
+              <h1 style={{ color: "#901A36", fontWeight: "600", fontSize: "28px" }}>Repetition</h1>
+              <p style={{ fontWeight: "100", fontSize: "30px" }}>
+                {program[currentIndex].currentRepetition + 1}/{program[currentIndex].totalRepetitions}
+              </p>
+            </div>
+          )}
         </div>
       )}
       <div
