@@ -40,6 +40,7 @@ const VideoPlayer = ({ filename, onEnded, index, playing=false}) => {
               attributes: {
                 preload: "auto",
                 playsInline: true,
+                crossOrigin: "anonymous",
               },
             },
           }}
