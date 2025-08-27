@@ -39,6 +39,7 @@ const VideoPlayer = ({ filename, onEnded, index, playing=false}) => {
               attributes: {
                 preload: true,
                 playsInLine: true,
+                autoplay: true,
               },
             },
           }}
