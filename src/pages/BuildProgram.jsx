@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import TaskList from "../components/TaskList";
 import Menu from "../components/Menu";
 import ProgramModal from "../components/modals/ProgramModal";
-//import Button from "../components/Button";
+import Button from "../components/Button";
 import TaskFiltering from "../components/TaskFiltering";
 import TaskCard from "../components/TaskCard";
 import ActionModal from "../components/modals/ActionModal";
@@ -149,7 +149,7 @@ const BuildProgram = () => {
           isRight ? "left-0 border-r-[5px] border-r-primary" : "right-0 border-l-[5px] border-l-primary"
         } w-[400px] py-10 h-screen bg-alt-color border-solid`}
       >
-        <h1 className="text-3xl font-bold text-center ">Dit program 2</h1>
+        <h1 className="text-3xl font-bold text-center ">Dit program</h1>
         {!tasks.length > 0 && (
           <div className="mx-8 text-center ">
             <h2 className="text-sm mt-2 ">Når du har valgt nogle øvelser, vil de blive vist her.</h2>
@@ -184,8 +184,16 @@ const BuildProgram = () => {
                 />
               ))}
             </div>
-            <div className="mt-auto">
-              <button type="button">Click Me!</button>
+            <div className="mt-0">
+              <Button
+                type="button"
+                variant="Primary"
+                onClick={() => setShowProgramModal(true)}
+                icon="Bookmark"
+                text="Gem mit program"
+                styling="mx-auto text-2xl gap-4 h-12 px-6"
+                iconStyling="w-5 h-5 mt-[4px]"
+              />
             </div>
           </div>
         )}
