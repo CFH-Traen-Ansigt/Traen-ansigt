@@ -184,7 +184,7 @@ const BuildProgram = () => {
                 />
               ))}
             </div>
-            <div className="mt-auto">
+            <div className="mt-auto pb-[env(safe-area-inset-bottom)]">
               <Button
                 type="button"
                 variant="Primary"
