@@ -275,16 +275,8 @@ const VideoScreen = () => {
               opacity: 0.8,
             }}
           >
-            <h1
-              style={{ color: "#901A36", fontWeight: "600", fontSize: "28px" }}
-            >
-              Øvelse
-            </h1>
-            <p
-              style={{ fontWeight: "100", fontSize: "32px", maxWidth: "350px" }}
-            >
-              {program[currentIndex].name}
-            </p>
+            <h1 style={{ color: "#901A36", fontWeight: "600", fontSize: "24px" }}>Øvelse</h1>
+            <p style={{ fontWeight: "100", fontSize: "26px", maxWidth: "350px" }}>{program[currentIndex].name}</p>
           </div>
 
           {program[currentIndex].totalRepetitions && (
@@ -297,18 +289,9 @@ const VideoScreen = () => {
                 width: "200px",
               }}
             >
-              <h1
-                style={{
-                  color: "#901A36",
-                  fontWeight: "600",
-                  fontSize: "28px",
-                }}
-              >
-                Repetition
-              </h1>
-              <p style={{ fontWeight: "100", fontSize: "30px" }}>
-                {program[currentIndex].currentRepetition + 1}/
-                {program[currentIndex].totalRepetitions}
+              <h1 style={{ color: "#901A36", fontWeight: "600", fontSize: "24px" }}>Repetition</h1>
+              <p style={{ fontWeight: "100", fontSize: "26px" }}>
+                {program[currentIndex].currentRepetition + 1}/{program[currentIndex].totalRepetitions}
               </p>
             </div>
           )}

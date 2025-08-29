@@ -9,7 +9,7 @@ function App() {
       <BackgroundImage />
       <div className="mb-14 mt-2">
         <img src="assets/logo.svg" className="w-[268px] mb-9" alt="logo" />
-        <h1 className="font-manjari text-center text-5xl text-primary font-bold">Aktivt Ansigt</h1>
+        <h1 className="font-manjari text-center text-5xl text-primary font-bold">Træn Ansigt</h1>
       </div>
       <div className="flex w-[393px] gap-5">
         <Button text="Registrer" variant="Inverted" href="/opret-bruger" styling="text-3xl h-12" fullWidth />
