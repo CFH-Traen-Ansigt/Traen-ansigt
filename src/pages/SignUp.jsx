@@ -56,6 +56,10 @@ const SignUp = () => {
       setMessage("Bruger oprettet. Tjek din email for at bekræfte din konto.");
       localStorage.setItem("userEmail", email); // Store user email
       localStorage.setItem("userFullName", "Ukendt"); // Store default full name
+      localStorage.setItem("isAdmin", false); // Store default admin status
+      localStorage.setItem("userId", data.user.id); // Store user ID
+      localStorage.setItem("visualNeglect", "Standard"); // Store default visual settings
+      localStorage.setItem("videoText", true); // Store default video text settings
       insertSetting(data.user.id); // Insert default settings for the user
       window.location.href = "/log-ind"; // Redirect user after signup
     }
@@ -77,6 +81,26 @@ const SignUp = () => {
           console.error("Error inserting setting:", error);
         } else {
           console.log("Setting inserted successfully");
+        }
+      });
+
+    supabase.from("Settings")
+      .insert({ user_id: id, video_text: true })
+      .then(({ error }) => {
+        if (error) {
+          console.error("Error inserting setting:", error);
+        } else {
+          console.log("Setting inserted successfully");
+        }
+      });
+
+      supabase.from("UserInfo")
+      .insert({ id: id, full_name: "Ukendt", profile_picture: "1" })
+      .then(({ error }) => {
+        if (error) {
+          console.error("Error inserting user info:", error);
+        } else {
+          console.log("User info inserted successfully");
         }
       });
   }

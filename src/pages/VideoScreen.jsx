@@ -13,9 +13,15 @@ const VideoScreen = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [isEnded, setIsEnded] = useState(false);
-  const [visualSettings] = useState(localStorage.getItem("visualNeglect") === "Højre" || false);
-  const [defaultSetting] = useState(localStorage.getItem("visualNeglect") === "Standard" || false);
-  const [videoText] = useState(JSON.parse(localStorage.getItem("videoText")) || false);
+  const [visualSettings] = useState(
+    localStorage.getItem("visualNeglect") === "Højre" || false
+  );
+  const [defaultSetting] = useState(
+    localStorage.getItem("visualNeglect") === "Standard" || false
+  );
+  const [videoText] = useState(
+    JSON.parse(localStorage.getItem("videoText")) || false
+  );
 
   useEffect(() => {
     async function getProgram() {
@@ -83,6 +89,32 @@ const VideoScreen = () => {
     }
   };
 
+  const nextExercise = () => {
+    let nextIndex = currentIndex + 1;
+    while (
+      nextIndex < program.length &&
+      program[nextIndex].id === program[currentIndex].id
+    ) {
+      nextIndex++;
+    }
+    if (nextIndex < program.length) {
+      setCurrentIndex(nextIndex);
+    }
+  };
+  
+  const prevExercise = () => {
+    let prevIndex = currentIndex - 1;
+    while (
+      prevIndex >= 0 &&
+      program[prevIndex].id === program[currentIndex].id
+    ) {
+      prevIndex--;
+    }
+    if (prevIndex >= 0) {
+      setCurrentIndex(prevIndex);
+    }
+  };
+
   const handleExit = () => {
     // Logic to handle exit, e.g., navigate back to the previous screen
     console.log("Exit button clicked");
@@ -102,7 +134,8 @@ const VideoScreen = () => {
     }
   };
 
-  const currentVideo = program.length > 0 ? `${program[currentIndex].id}.mp4` : null;
+  const currentVideo =
+    program.length > 0 ? `${program[currentIndex].id}.mp4` : null;
 
   //aspect ratio 4:3
   const videoConstraints = {
@@ -115,19 +148,44 @@ const VideoScreen = () => {
     height: "100%",
     borderRadius: "15px",
   };
-  const WebcamComponent = <Webcam audio={false} mirrored={true} videoConstraints={videoConstraints} style={videoStyle} />;
+  const WebcamComponent = (
+    <Webcam
+      audio={false}
+      mirrored={true}
+      videoConstraints={videoConstraints}
+      style={videoStyle}
+    />
+  );
 
   return (
     <main style={{ backgroundColor: "black" }}>
-      <VideoPlayer filename={currentVideo} onEnded={handeVideoEnd} index={currentIndex} playing={playing} />
+      <VideoPlayer
+        filename={currentVideo}
+        onEnded={handeVideoEnd}
+        index={currentIndex}
+        playing={playing}
+      />
       <div
         className="video-controls"
-        style={{ position: "absolute", left: "calc(50% - 126.34px)", bottom: "5%", display: "flex", gap: "20px", justifyContent: "center", alignItems: "center" }}
+        style={{
+          position: "absolute",
+          left: "calc(50% - 126.34px)",
+          bottom: "5%",
+          display: "flex",
+          gap: "20px",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
         <button
-          onClick={prevVideo}
+          onClick={prevExercise}
           disabled={currentIndex === 0}
-          style={{ background: `no-repeat center url(../assets/backward-icon.svg)`, width: "71.35px", height: "45.49px", opacity: "50%" }}
+          style={{
+            background: `no-repeat center url(../assets/backward-icon.svg)`,
+            width: "71.35px",
+            height: "45.49px",
+            opacity: "50%",
+          }}
         ></button>
         <div>
           <button
@@ -142,13 +200,25 @@ const VideoScreen = () => {
               cursor: "pointer",
             }}
           >
-            {isEnded ? <IoMdPlay size={40} /> : playing ? <FaPause size={40} /> : <IoMdPlay size={40} />}
+            {isEnded ? (
+              <IoMdPlay size={40} />
+            ) : playing ? (
+              <FaPause size={40} />
+            ) : (
+              <IoMdPlay size={40} />
+            )}
           </button>
         </div>
         <button
-          onClick={nextVideo}
+          onClick={nextExercise}
           disabled={currentIndex === program.length - 1}
-          style={{ background: `no-repeat center url(../assets/backward-icon.svg)`, width: "71.35px", height: "45.49px", opacity: "50%", transform: "rotate(180deg)" }}
+          style={{
+            background: `no-repeat center url(../assets/backward-icon.svg)`,
+            width: "71.35px",
+            height: "45.49px",
+            opacity: "50%",
+            transform: "rotate(180deg)",
+          }}
         ></button>
       </div>
       <div //afbryd knap
@@ -187,48 +257,67 @@ const VideoScreen = () => {
         <div
           style={{
             position: "absolute",
-            top: defaultSetting ? "80px" : "100px",
+            top: defaultSetting ? "20px" : "100px",
+            ...(visualSettings || defaultSetting
+              ? { left: "30px" }
+              : { right: "30px" }),
+            display: "flex",
+            flexDirection: "column",
+            gap: "15px", // spacing between the boxes
+            zIndex: 1000,
           }}
         >
           <div
             style={{
-              position: "relative",
-              ...(visualSettings || defaultSetting ? { left: "30px" } : { right: "30px" }),
               backgroundColor: "rgba(249, 247, 244, 0.6)",
               padding: "10px 25px 0px 25px",
-              marginBottom: "15px",
               borderRadius: "8px",
-              zIndex: 1000,
               opacity: 0.8,
             }}
           >
-            <h1 style={{ color: "#901A36", fontWeight: "600", fontSize: "28px" }}>Øvelse</h1>
-            <p style={{ fontWeight: "100", fontSize: "32px", maxWidth: "350px" }}>{program[currentIndex].name}</p>
+            <h1
+              style={{ color: "#901A36", fontWeight: "600", fontSize: "28px" }}
+            >
+              Øvelse
+            </h1>
+            <p
+              style={{ fontWeight: "100", fontSize: "32px", maxWidth: "350px" }}
+            >
+              {program[currentIndex].name}
+            </p>
           </div>
 
           {program[currentIndex].totalRepetitions && (
             <div
               style={{
-                position: "relative",
-                ...(visualSettings || defaultSetting ? { left: "30px" } : { right: "30px" }),
                 backgroundColor: "rgba(249, 247, 244, 0.6)",
                 padding: "5px 25px 0px 25px",
                 borderRadius: "8px",
-                zIndex: 1000,
                 opacity: 0.8,
                 width: "200px",
               }}
             >
-              <h1 style={{ color: "#901A36", fontWeight: "600", fontSize: "28px" }}>Repetition</h1>
+              <h1
+                style={{
+                  color: "#901A36",
+                  fontWeight: "600",
+                  fontSize: "28px",
+                }}
+              >
+                Repetition
+              </h1>
               <p style={{ fontWeight: "100", fontSize: "30px" }}>
-                {program[currentIndex].currentRepetition + 1}/{program[currentIndex].totalRepetitions}
+                {program[currentIndex].currentRepetition + 1}/
+                {program[currentIndex].totalRepetitions}
               </p>
             </div>
           )}
         </div>
       )}
       <div
-        className={`absolute bottom-5 ${visualSettings ? "left-5" : "right-5"} border-radius-5 overflow-hidden`}
+        className={`absolute bottom-5 ${
+          visualSettings ? "left-5" : "right-5"
+        } border-radius-5 overflow-hidden`}
         style={{
           height: "auto",
           width: "25%",
