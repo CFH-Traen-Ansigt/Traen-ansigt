@@ -45,7 +45,7 @@ const Settings = () => {
           onClick={() => setShowmodal(true)}
         />
         <SettingItem
-          text="Videotekst: "
+          text="Hjælpetekst: "
           icon="/assets/text-icon.svg"
           iconOnHover="/assets/text-icon-filled.svg"
           settingIsOn={videoText}

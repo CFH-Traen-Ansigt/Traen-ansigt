@@ -13,6 +13,9 @@ const Home = () => {
   const selectedIcon = localStorage.getItem("userIcon") ||1; // Default icon if not set
   const email = localStorage.getItem("userEmail") || "";
   const fullName = localStorage.getItem("userFullName") || "";
+   const [videoText] = useState(
+      JSON.parse(localStorage.getItem("videoText")) || false
+    );
 
   return (
     <main className="mx-14 max-w-full overflow-hidden">
@@ -45,10 +48,10 @@ const Home = () => {
         <div className="grid grid-cols-2 w-full gap-x-0 gap-y-10 col-span-2 my-auto min-w-[650px]">
           {localStorage.getItem("isAdmin") === "false" && (
           <>
-          <OptionCard icon="/assets/bookmark-red-outline.svg" option="Mit program" text="Her finder du dine gemte programmer med udvalgte øvelser." href="/mit-program" />
-          <OptionCard icon="/assets/build-red.svg" option="Opsæt mit program" text="Tryk for at komme i gang med at lave dit program." href="/opsæt-mit-program" />
-          <OptionCard icon="/assets/about-us-red.svg" option="Om os" text="Her kan du finde information om organisationen og kontaktpersoner." href="/om-os" />
-          <OptionCard icon="/assets/settings-red.svg" option="Indstillinger" text="Under indstillinger kan du justere dine præferencer" href="/indstillinger" />
+          <OptionCard icon="/assets/bookmark-red-outline.svg" option="Mit program" text={videoText ? "Her finder du dine gemte programmer med udvalgte øvelser." : ""} href="/mit-program" />
+          <OptionCard icon="/assets/build-red.svg" option="Opsæt mit program" text={videoText ? "Tryk for at komme i gang med at lave dit program." : ""} href="/opsæt-mit-program" />
+          <OptionCard icon="/assets/about-us-red.svg" option="Om os" text={videoText ? "Her kan du finde information om organisationen og kontaktpersoner.": ""} href="/om-os" />
+          <OptionCard icon="/assets/settings-red.svg" option="Indstillinger" text= {videoText ? "Under indstillinger kan du justere dine præferencer" : ""} href="/indstillinger" />
           </>
           )}
           {localStorage.getItem("isAdmin") === "true" && (  
