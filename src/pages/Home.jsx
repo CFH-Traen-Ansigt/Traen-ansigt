@@ -20,8 +20,8 @@ const Home = () => {
       <Menu visualSetting={localStorage.getItem("visualNeglect")} />
       <PersonalInfoModal setShowModal={setShowPersonalInfoModal} showModal={showPersonalInfoModal} /*onDeleteUserClick={() => setShowDeleteUserModal(true)}*/ />
       {/* <DeleteUserModal setShowModal={setShowDeleteUserModal} showModal={showDeleteUserModal} /> */}
-      <div className={`grid grid-cols-[minmax(250px,_400px)_1fr_1fr] mt-20 `}>
-        <article className="flex flex-col border-r-solid border-r-alt-color border-r-4 h-[80vh] px-12">
+      <div className={`grid grid-cols-[minmax(220px,_200px)_1fr_1fr] mt-20 `}>
+        <article className="flex flex-col border-r-solid border-r-alt-color border-r-4 h-[80vh] pr-6 pl-0">
           <div className="flex flex-col items-center gap-8 text-center mt-8">
             <img src={`/assets/person-${selectedIcon}.svg`} alt="profile icon" />
             <div>
