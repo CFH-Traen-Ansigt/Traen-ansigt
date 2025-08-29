@@ -83,11 +83,11 @@ const VideoScreen = () => {
       setCurrentIndex(currentIndex + 1);
     }
   };
-  const prevVideo = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-    }
-  };
+  // const prevVideo = () => {
+  //   if (currentIndex > 0) {
+  //     setCurrentIndex(currentIndex - 1);
+  //   }
+  // };
 
   const nextExercise = () => {
     let nextIndex = currentIndex + 1;
