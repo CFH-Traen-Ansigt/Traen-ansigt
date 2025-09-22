@@ -27,9 +27,9 @@ const SignUp = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [password, setPassword] = useState("");
   const [passwordRepeat, setPasswordRepeat] = useState("");
-  const lowerCaseLetters = /[a-z]/g;
-  const upperCaseLetters = /[A-Z]/g;
-  const numbers = /[0-9]/g;
+  //const lowerCaseLetters = /[a-z]/g;
+  //const upperCaseLetters = /[A-Z]/g;
+  //const numbers = /[0-9]/g;
 
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -109,7 +109,7 @@ const SignUp = () => {
     if (password !== passwordRepeat) {
       setErrorDisplayed(true);
       setErrorMessage("Adgangskoder matcher ikke");
-    } else if (
+    }/* else if (
       !password.match(lowerCaseLetters) ||
       !password.match(upperCaseLetters)
     ) {
@@ -118,7 +118,7 @@ const SignUp = () => {
     } else if (!password.match(numbers)) {
       setErrorDisplayed(true);
       setErrorMessage("Adgangskoden skal indeholde tal");
-    } else if (password.length < 8) {
+    }*/ else if (password.length < 6) {
       setErrorDisplayed(true);
       setErrorMessage("Adgangskoden skal indeholde mindst 8 tegn");
     } else {
@@ -159,10 +159,10 @@ const SignUp = () => {
         </div>
         <p className="text-lg mb-2">Din adgangskode skal bestå af:</p>
         <ul className="text-lg list-disc ml-6">
-          <li>Mindst 8 tegn</li>
-          <li>Mindst et lille bogstav</li>
+          <li>Mindst 6 tegn</li>
+          {/* <li>Mindst et lille bogstav</li>
           <li>Mindst et stort bogstav</li>
-          <li>Mindst et tal</li>
+          <li>Mindst et tal</li> */}
         </ul>
       </dialog>
       <BackgroundImage />
@@ -182,7 +182,7 @@ const SignUp = () => {
             id="user-password"
             type="password"
             icon="info-icon"
-            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            pattern="{6,}"
             required
             value={password}
             setValue={setPassword}
@@ -194,7 +194,7 @@ const SignUp = () => {
             label="Gentag adgangskode"
             id="repeatPassword"
             type="password"
-            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            pattern="{6,}"
             required
             value={passwordRepeat}
             setValue={setPasswordRepeat}
