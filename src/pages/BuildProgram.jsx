@@ -139,7 +139,7 @@ const BuildProgram = () => {
   console.log(tasks);
   return (
     <main>
-      <Menu visualSetting={localStorage.getItem("visualNeglect")} />
+      <Menu visualSetting={localStorage.getItem("visualNeglect")} topPosition="top-5" />
       <TaskFiltering isRight={isRight} />
       <ProgramModal showModal={showProgramModal} setShowModal={setShowProgramModal} onSubmit={saveProgram} />
       <ActionModal

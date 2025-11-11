@@ -44,8 +44,8 @@ const AboutUs = () => {
           </TextSection>
           <div>
             <p className="font-thin text-lg">Udviklet i samarbejde med:</p>
-            <div className="flex justify-between h-[80px]">
-              <img src="assets/logo-text.svg" alt="Center for Hjerneskade logo" className="max-h-full py-2" />
+            <div className="flex flex-wrap justify-between items-center h-[80px]">
+              <img src="assets/logo-text.svg" alt="Center for Hjerneskade logo" className="max-h-full py-2" flex-shrink />
               <img src="assets/kea-logo.svg" alt="København Erhvervsakademi logo" className="max-h-full py-2" />
               <img src="assets/ouh-logo.svg" alt="Odense Universitetshospital logo" className="max-h-full" />
             </div>

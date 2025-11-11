@@ -12,15 +12,22 @@ export default function VisualNeglectSettingModal({ isModalOpen, setIsModalOpen 
       if (!modalItem.current) {
         return;
       }
-      // if (!modalItem.current.contains(event.target)) {
-      //   setIsModalOpen(false);
-      // }
+       if (!modalItem.current.contains(event.target)) {
+         setIsModalOpen(false);
+       }
     };
     document.addEventListener("click", handler, true);
     return () => {
       document.removeEventListener("click", handler);
     };
   }, [setIsModalOpen]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsModalOpen(false);
+    }, 200);
+  }, [setIsModalOpen, visualNeglectOption]);
+
 
   return (
     <dialog className="fixed mt-[6%] bg-white rounded-xl z-10 w-[800px] h-[60vh]" open={isModalOpen} ref={modalItem}>
