@@ -70,6 +70,7 @@ const BuildProgram = () => {
       name: formData.title,
       description: formData.description,
       duration: durationMin,
+      image:tasks[0].image,
       exercises: tasks.map((task) => ({
         id: task.exerciseNo,
         repetitions: task.repititions,
@@ -103,6 +104,7 @@ const BuildProgram = () => {
             name: program.name,
             description: program.description,
             duration: program.duration,
+            image: program.image,
           },
         ])
         .select();

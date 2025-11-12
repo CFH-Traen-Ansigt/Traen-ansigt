@@ -22,6 +22,27 @@ const VideoScreen = () => {
   const [videoText] = useState(
     JSON.parse(localStorage.getItem("videoText")) || false
   );
+  const [fade, setFade] = useState(true);
+  const [currentVideo, setCurrentVideo] = useState(null);
+
+  useEffect(() => {
+    if (!program || program.length === 0) return;
+
+    const newVideo = `${program[currentIndex].id}.mp4`;
+
+    setCurrentVideo(newVideo);
+  }, [program, currentIndex]);
+
+  // useEffect(() => {
+  //   if (!currentVideo) return; // Prevent running before the first video loads
+
+  //   setFade(false); // start fade-out
+  //   const timeout = setTimeout(() => {
+  //     setFade(true); // fade-in after short delay
+  //   }, 1000); // fade duration in ms
+
+  //   return () => clearTimeout(timeout);
+  // }, [currentVideo]);
 
   useEffect(() => {
     async function getProgram() {
@@ -101,7 +122,7 @@ const VideoScreen = () => {
       setCurrentIndex(nextIndex);
     }
   };
-  
+
   const prevExercise = () => {
     let prevIndex = currentIndex - 1;
     while (
@@ -123,8 +144,14 @@ const VideoScreen = () => {
 
   const handeVideoEnd = () => {
     setPlaying(false);
+
+    setFade(false);
+
+    setTimeout(() => {
     nextVideo();
-    setPlaying(true); // Set playing to true when moving to the next video
+    setFade(true);
+    setPlaying(true);
+    }, 1000);
   };
 
   const togglePlayPause = () => {
@@ -133,9 +160,6 @@ const VideoScreen = () => {
       setIsEnded(false);
     }
   };
-
-  const currentVideo =
-    program.length > 0 ? `${program[currentIndex].id}.mp4` : null;
 
   //aspect ratio 4:3
   const videoConstraints = {
@@ -159,12 +183,18 @@ const VideoScreen = () => {
 
   return (
     <main style={{ backgroundColor: "black" }}>
-      <VideoPlayer
-        filename={currentVideo}
-        onEnded={handeVideoEnd}
-        index={currentIndex}
-        playing={playing}
-      />
+      <div
+        className={`transition-opacity duration-700 ease-in-out ${
+          fade ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        <VideoPlayer
+          filename={currentVideo}
+          onEnded={handeVideoEnd}
+          index={currentIndex}
+          playing={playing}
+        />
+      </div>
       <div
         className="video-controls"
         style={{
@@ -275,8 +305,16 @@ const VideoScreen = () => {
               opacity: 0.8,
             }}
           >
-            <h1 style={{ color: "#901A36", fontWeight: "600", fontSize: "24px" }}>Øvelse</h1>
-            <p style={{ fontWeight: "100", fontSize: "26px", maxWidth: "350px" }}>{program[currentIndex].name}</p>
+            <h1
+              style={{ color: "#901A36", fontWeight: "600", fontSize: "24px" }}
+            >
+              Øvelse
+            </h1>
+            <p
+              style={{ fontWeight: "100", fontSize: "26px", maxWidth: "350px" }}
+            >
+              {program[currentIndex].name}
+            </p>
           </div>
 
           {program[currentIndex].totalRepetitions && (
@@ -289,9 +327,18 @@ const VideoScreen = () => {
                 width: "200px",
               }}
             >
-              <h1 style={{ color: "#901A36", fontWeight: "600", fontSize: "24px" }}>Repetition</h1>
+              <h1
+                style={{
+                  color: "#901A36",
+                  fontWeight: "600",
+                  fontSize: "24px",
+                }}
+              >
+                Repetition
+              </h1>
               <p style={{ fontWeight: "100", fontSize: "26px" }}>
-                {program[currentIndex].currentRepetition + 1}/{program[currentIndex].totalRepetitions}
+                {program[currentIndex].currentRepetition + 1}/
+                {program[currentIndex].totalRepetitions}
               </p>
             </div>
           )}

@@ -22,7 +22,7 @@ const MyPrograms = () => {
       console.error("Failed to get user", error);
       return;
     }
-    const { data, error: fetchError } = await supabase.from("programs_with_exercise_count").select("name, description, id, duration, exercise_count").eq("user_id", user.id).order("created_at", { ascending: false });
+    const { data, error: fetchError } = await supabase.from("programs_with_exercise_count").select("name, description, id, duration, exercise_count, image").eq("user_id", user.id).order("created_at", { ascending: false });
 
     if (fetchError) {
       console.error("Error fetching programs:", fetchError);
@@ -93,6 +93,7 @@ const MyPrograms = () => {
               onEdit={() => {
                 navigate(`/rediger-program/${program.id}`);
               }}
+              image={program.image}
             />
           ))}
         </div>

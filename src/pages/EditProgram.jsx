@@ -10,6 +10,13 @@ import { supabase } from "../DB/supabaseClient";
 import { useEffect } from "react";
 import { useCallback } from "react";
 import { useParams } from "react-router-dom";
+import { DndContext, closestCenter } from "@dnd-kit/core";
+import {
+  SortableContext,
+  useSortable,
+  arrayMove,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 
 // Get Tasks From API
@@ -78,7 +85,8 @@ const EditProgram = () => {
         duration: item.Exercises.duration,
         title: item.Exercises.name,
         withHelp: item.Exercises.help,
-        order: item.order
+        order: item.order,
+        image: `/assets/images/0${item.exercise_id}.webp`
       });
     });
 
@@ -117,6 +125,7 @@ const EditProgram = () => {
       name: formData.title,
       description: formData.description,
       duration: durationMin,
+      image:tasks[0].image,
       exercises: tasks.map((task) => ({
         id: task.exerciseNo,
         repetitions: task.repititions,
@@ -136,6 +145,7 @@ const EditProgram = () => {
             name: program.name,
             description: program.description,
             duration: program.duration,
+            image: program.image,
           },
         ])
         .eq("id", id)
@@ -194,6 +204,33 @@ const EditProgram = () => {
       console.error("Error saving program:", error);
     }
   }
+
+  function SortableTask({ task, index }) {
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: task.exerciseNo });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    touchAction: "none", // Important for touch devices
+  };
+
+  return (
+    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+      <TaskCard
+        exerciseNo={task.exerciseNo}
+        title={task.title}
+        image={`/assets/images/0${task.exerciseNo}.webp`}
+        withHelp={task.withHelp}
+        variant="small"
+        repititions={task.repititions}
+        setTasks={() => {}} // not needed for sorting
+      />
+    </div>
+  );
+}
+
+
+
   console.log(tasks);
   return (
     <main>
@@ -242,22 +279,24 @@ const EditProgram = () => {
         {tasks.length > 0 && (
           <div className="flex flex-col items-center gap-2 h-dvh pt-2 ">
             <div className="flex flex-col px-8 items-center gap-2 h-[72dvh] overflow-scroll">
-              {tasks.map((task, index) => (
-                <TaskCard
-                  exerciseNo={task.exerciseNo}
-                  title={task.title}
-                  image={`/assets/images/0${task.exerciseNo}.webp`}
-                  withHelp={task.withHelp}
-                  variant="small"
-                  repititions={task.repititions}
-                  setTasks={setTasks}
-                  draggable
-                  onDragStart={() => (dragTask.current = index)}
-                  onDragEnter={() => (draggedOverTask.current = index)}
-                  onDragEnd={handleSort}
-                  onDragOver={(e) => e.preventDefault()}
-                />
-              ))}
+              <DndContext
+                collisionDetection={closestCenter}
+                onDragEnd={({ active, over }) => {
+                  if (!over || active.id === over.id) return;
+                  setTasks((items) => {
+                    const oldIndex = items.findIndex((i) => i.exerciseNo === active.id);
+                    const newIndex = items.findIndex((i) => i.exerciseNo === over.id);
+                    return arrayMove(items, oldIndex, newIndex);
+                  });
+                  setIsSaved(false);
+                }}
+              >
+                <SortableContext items={tasks.map((t) => t.exerciseNo)}>
+                  {tasks.map((task) => (
+                    <SortableTask key={task.exerciseNo} task={task} />
+                  ))}
+                </SortableContext>
+              </DndContext>
             </div>
             <div className="mt-5">
               <Button
