@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import VideoPlayer from "../components/VideoPlayer";
+import ProgramCompletedModal from "../components/modals/ProgramCompletedModal";
 import { useParams } from "react-router-dom";
 import { supabase } from "../DB/supabaseClient";
 import Webcam from "react-webcam";
@@ -24,6 +25,7 @@ const VideoScreen = () => {
   );
   const [fade, setFade] = useState(true);
   const [currentVideo, setCurrentVideo] = useState(null);
+  const [showCompletedModal, setShowCompletedModal] = useState(false);
 
   useEffect(() => {
     if (!program || program.length === 0) return;
@@ -120,6 +122,10 @@ const VideoScreen = () => {
     }
     if (nextIndex < program.length) {
       setCurrentIndex(nextIndex);
+    } if(nextIndex >= program.length){
+      setIsEnded(true);
+      setShowCompletedModal(true);
+      setPlaying(false);
     }
   };
 
@@ -145,8 +151,14 @@ const VideoScreen = () => {
   const handeVideoEnd = () => {
     setPlaying(false);
 
-    setFade(false);
+ 
 
+    if(currentIndex >= program.length - 1){
+      setShowCompletedModal(true);
+      setIsEnded(true);
+      return;
+    }
+    setFade(false);
     setTimeout(() => {
     nextVideo();
     setFade(true);
@@ -188,6 +200,19 @@ const VideoScreen = () => {
           fade ? "opacity-100" : "opacity-0"
         }`}
       >
+        <ProgramCompletedModal
+          title="Gennemført program"
+          primaryButtonText="Færdig"
+          icon="/assets/ballons.svg"
+          showModal={showCompletedModal}
+          setShowModal={setShowCompletedModal}
+          onAccept={() => {
+            window.location.href = "/forside";
+          }}
+          onExit={() => {
+            setShowCompletedModal(false);
+          }}
+        />
         <VideoPlayer
           filename={currentVideo}
           onEnded={handeVideoEnd}
