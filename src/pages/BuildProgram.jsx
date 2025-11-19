@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import TaskList from "../components/TaskList";
 import Menu from "../components/Menu";
 import ProgramModal from "../components/modals/ProgramModal";
