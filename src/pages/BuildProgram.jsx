@@ -7,11 +7,22 @@ import TaskFiltering from "../components/TaskFiltering";
 import TaskCard from "../components/TaskCard";
 import ActionModal from "../components/modals/ActionModal";
 import { supabase } from "../DB/supabaseClient";
-import { DndContext, closestCenter } from "@dnd-kit/core";
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  MouseSensor,
+  TouchSensor,
+  KeyboardSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
 import {
   SortableContext,
   useSortable,
   arrayMove,
+  verticalListSortingStrategy,
+  sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
@@ -30,9 +41,22 @@ const BuildProgram = () => {
   const [showProgramModal, setShowProgramModal] = useState(false);
   const [showCompletedModal, setShowCompletedModal] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
- 
+
   const [isRight] = useState(
     localStorage.getItem("visualNeglect") !== "Venstre" ? true : false
+  );
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: { delay: 50, tolerance: 5 },
+    }),
+    useSensor(MouseSensor, {
+      activationConstraint: { delay: 50, tolerance: 5 },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: { delay: 50, tolerance: 5 },
+    }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   );
 
   useEffect(() => {
@@ -47,7 +71,6 @@ const BuildProgram = () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [isSaved, tasks]);
-
 
   async function saveProgram(formData) {
     //console.log(formData);
@@ -140,18 +163,18 @@ const BuildProgram = () => {
     }
   }
 
-  function SortableTask({ task, index }) {
+  function SortableTask({ task }) {
     const { attributes, listeners, setNodeRef, transform, transition } =
       useSortable({ id: task.exerciseNo });
 
     const style = {
       transform: CSS.Transform.toString(transform),
       transition,
-      touchAction: "none", // Important for touch devices
+      touchAction: "none",
     };
 
     return (
-      <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+      <div ref={setNodeRef} style={style}>
         <TaskCard
           exerciseNo={task.exerciseNo}
           title={task.title}
@@ -159,7 +182,10 @@ const BuildProgram = () => {
           withHelp={task.withHelp}
           variant="small"
           repititions={task.repititions}
-          setTasks={() => {}} // not needed for sorting
+          tasks={tasks}
+          setTasks={setTasks}
+          dragHandleProps={listeners} // Pass listeners to handle
+          dragHandleAttributes={attributes} // Pass attributes to handle
         />
       </div>
     );
@@ -229,6 +255,7 @@ const BuildProgram = () => {
           <div className="flex flex-col items-center gap-2 h-dvh pt-2 ">
             <div className="flex flex-col px-8 items-center gap-2 h-[72dvh] overflow-scroll">
               <DndContext
+                sensors={sensors}
                 collisionDetection={closestCenter}
                 onDragEnd={({ active, over }) => {
                   if (!over || active.id === over.id) return;
@@ -244,7 +271,10 @@ const BuildProgram = () => {
                   setIsSaved(false);
                 }}
               >
-                <SortableContext items={tasks.map((t) => t.exerciseNo)}>
+                <SortableContext
+                  items={tasks.map((t) => t.exerciseNo)}
+                  strategy={verticalListSortingStrategy}
+                >
                   {tasks.map((task) => (
                     <SortableTask key={task.exerciseNo} task={task} />
                   ))}

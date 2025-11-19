@@ -15,10 +15,8 @@ export default function TaskCard({
   tasks,
   setTasks,
   repititions,
-  onDragStart,
-  onDragEnter,
-  onDragOver,
-  onDragEnd,
+  dragHandleProps,
+  dragHandleAttributes,
 }) {
   const [numberOfRepititions, setNumberOfRepititions] = useState(
     repititions || 5
@@ -34,12 +32,22 @@ export default function TaskCard({
             image: image,
             withHelp: withHelp,
             repititions: numberOfRepititions,
-            duration: duration,          
+            duration: duration,
           },
         ])
       );
     }
   }
+
+  const removeTask = () => {
+    setTasks((old) => old.filter((e) => e.exerciseNo !== exerciseNo));
+  };
+
+  const handleButtonClick = (e) => {
+    e.stopPropagation(); // prevent drag interference
+    variant === "small" ? removeTask() : addTask();
+  };
+
   useEffect(() => {
     setIsSelected(tasks && tasks.some((e) => e.exerciseNo === exerciseNo));
   }, [tasks, exerciseNo]);
@@ -49,13 +57,11 @@ export default function TaskCard({
         variant === "small" ? "flex gap-2 h-[125px]" : "flex gap-2"
       }`}
       draggable={variant === "small"}
-      onDragStart={onDragStart}
-      onDragEnter={onDragEnter}
-      onDragEnd={onDragEnd}
-      onDragOver={onDragOver}
     >
       {variant === "small" && (
         <img
+          {...dragHandleProps}
+          {...dragHandleAttributes}
           draggable={false}
           src="/assets/three-dots.svg"
           alt="dots icon"
@@ -110,18 +116,7 @@ export default function TaskCard({
             <Button
               key={isSelected}
               type="button"
-              onClick={() => {
-                if (variant === "small") {
-                  setTasks((old) => {
-                    const updatedTasks = old.filter(
-                      (item) => item.exerciseNo !== exerciseNo
-                    );
-                    return [...updatedTasks];
-                  });
-                } else {
-                  addTask();
-                }
-              }}
+              onClick={handleButtonClick}
               text={variant === "small" ? "Fjern" : "Tilføj"}
               variant={
                 variant === "small"
@@ -145,7 +140,7 @@ export default function TaskCard({
               iconStyling={`w-[20px] h-[20px] ${
                 variant === "small" && "mt-0 w-[16px]  h-[16px]"
               }`}
-              disabled={isSelected}
+              disabled={variant === "small" ? false : isSelected}
             />
           </div>
         </div>

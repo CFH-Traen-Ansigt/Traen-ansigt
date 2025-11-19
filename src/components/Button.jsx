@@ -74,11 +74,11 @@ export default function Button({ text, href, variant, styling, type = "button", 
   const configuration = getConfiguration(variant);
   return (
     <button
-      onClick={() => {
+      onClick={(e) => {
         if (href) {
           window.location.href = `${href}`;
         } else if (onClick) {
-          onClick();
+          onClick(e);
         }
       }}
       onMouseOver={() => icon && !disabled && setDisplayedIcon(iconType.hover)}
