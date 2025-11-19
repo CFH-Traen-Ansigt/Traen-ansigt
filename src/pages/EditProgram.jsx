@@ -29,8 +29,6 @@ const EditProgram = () => {
   const [showProgramModal, setShowProgramModal] = useState(false);
   const [showCompletedModal, setShowCompletedModal] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-  const dragTask = useRef(null);
-  const draggedOverTask = useRef(null);
   const [isRight] = useState(localStorage.getItem("visualNeglect") !== "Venstre" ? true : false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -49,17 +47,6 @@ const EditProgram = () => {
 
   }, [isSaved, tasks]);
 
-  function handleSort() {
-    if (dragTask.current === null || draggedOverTask.current === null) return;
-
-    const tasksClone = [...tasks];
-    const draggedItem = tasksClone[dragTask.current];
-    tasksClone.splice(dragTask.current, 1);
-    tasksClone.splice(draggedOverTask.current, 0, draggedItem);
-
-    setTasks(tasksClone);
-    setIsSaved(false);
-  }
 
   
   const getProgram = useCallback(async (id) => {

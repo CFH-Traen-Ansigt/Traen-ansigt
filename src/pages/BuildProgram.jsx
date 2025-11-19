@@ -7,10 +7,20 @@ import TaskFiltering from "../components/TaskFiltering";
 import TaskCard from "../components/TaskCard";
 import ActionModal from "../components/modals/ActionModal";
 import { supabase } from "../DB/supabaseClient";
+import { DndContext, closestCenter } from "@dnd-kit/core";
+import {
+  SortableContext,
+  useSortable,
+  arrayMove,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 // Get Tasks From API
 //move this to a function so it does not run on every render
-let { data: Exercises /*error*/ } = await supabase.from("Exercises").select("id, name, type, duration, help").order("id", { ascending: true });
+let { data: Exercises /*error*/ } = await supabase
+  .from("Exercises")
+  .select("id, name, type, duration, help")
+  .order("id", { ascending: true });
 
 //console.log(Exercises);
 //console.log(error);
@@ -20,9 +30,10 @@ const BuildProgram = () => {
   const [showProgramModal, setShowProgramModal] = useState(false);
   const [showCompletedModal, setShowCompletedModal] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-  const dragTask = useRef(null);
-  const draggedOverTask = useRef(null);
-  const [isRight] = useState(localStorage.getItem("visualNeglect") !== "Venstre" ? true : false);
+ 
+  const [isRight] = useState(
+    localStorage.getItem("visualNeglect") !== "Venstre" ? true : false
+  );
 
   useEffect(() => {
     const handleBeforeUnload = (e) => {
@@ -34,21 +45,9 @@ const BuildProgram = () => {
     window.addEventListener("beforeunload", handleBeforeUnload);
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
-    }
-
+    };
   }, [isSaved, tasks]);
 
-  function handleSort() {
-    if (dragTask.current === null || draggedOverTask.current === null) return;
-
-    const tasksClone = [...tasks];
-    const draggedItem = tasksClone[dragTask.current];
-    tasksClone.splice(dragTask.current, 1);
-    tasksClone.splice(draggedOverTask.current, 0, draggedItem);
-
-    setTasks(tasksClone);
-    setIsSaved(false);
-  }
 
   async function saveProgram(formData) {
     //console.log(formData);
@@ -59,10 +58,10 @@ const BuildProgram = () => {
       let taskRep = parseInt(task.repititions);
       let taskDuration = parseInt(task.duration);
       duration += taskRep * taskDuration + taskDuration;
-    })
+    });
 
     let durationMin = Math.floor(duration / 60);
-    if( durationMin < 1) {
+    if (durationMin < 1) {
       durationMin = 1;
     }
 
@@ -70,7 +69,7 @@ const BuildProgram = () => {
       name: formData.title,
       description: formData.description,
       duration: durationMin,
-      image:tasks[0].image,
+      image: tasks[0].image,
       exercises: tasks.map((task) => ({
         id: task.exerciseNo,
         repetitions: task.repititions,
@@ -125,7 +124,9 @@ const BuildProgram = () => {
         repetitions: exercise.repetitions,
         order: program.exercises.indexOf(exercise) + 1,
       }));
-      const { error: exerciseError } = await supabase.from("ExercisesOnPrograms").insert(exercisesToInsert);
+      const { error: exerciseError } = await supabase
+        .from("ExercisesOnPrograms")
+        .insert(exercisesToInsert);
       if (exerciseError) {
         setShowProgramModal(true);
         console.error("Error saving exercises:", exerciseError);
@@ -138,12 +139,44 @@ const BuildProgram = () => {
       console.error("Error saving program:", error);
     }
   }
+
+  function SortableTask({ task, index }) {
+    const { attributes, listeners, setNodeRef, transform, transition } =
+      useSortable({ id: task.exerciseNo });
+
+    const style = {
+      transform: CSS.Transform.toString(transform),
+      transition,
+      touchAction: "none", // Important for touch devices
+    };
+
+    return (
+      <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+        <TaskCard
+          exerciseNo={task.exerciseNo}
+          title={task.title}
+          image={`/assets/images/0${task.exerciseNo}.webp`}
+          withHelp={task.withHelp}
+          variant="small"
+          repititions={task.repititions}
+          setTasks={() => {}} // not needed for sorting
+        />
+      </div>
+    );
+  }
   console.log(tasks);
   return (
     <main>
-      <Menu visualSetting={localStorage.getItem("visualNeglect")} topPosition="top-5" />
+      <Menu
+        visualSetting={localStorage.getItem("visualNeglect")}
+        topPosition="top-5"
+      />
       <TaskFiltering isRight={isRight} />
-      <ProgramModal showModal={showProgramModal} setShowModal={setShowProgramModal} onSubmit={saveProgram} />
+      <ProgramModal
+        showModal={showProgramModal}
+        setShowModal={setShowProgramModal}
+        onSubmit={saveProgram}
+      />
       <ActionModal
         title="Dit program er nu gemt!"
         cancelButtonText="Nej"
@@ -160,23 +193,32 @@ const BuildProgram = () => {
           setShowCompletedModal(false);
         }}
       >
-        <p className="text-lg">Du kan finde dine gemte programmer under "Mine programmer".</p>
+        <p className="text-lg">
+          Du kan finde dine gemte programmer under "Mine programmer".
+        </p>
         <p className="text-lg">Vil du fortsætte til siden?</p>
       </ActionModal>
       <div
         className={`fixed flex flex-col top-0 ${
-          isRight ? "left-0 border-r-[5px] border-r-primary" : "right-0 border-l-[5px] border-l-primary"
+          isRight
+            ? "left-0 border-r-[5px] border-r-primary"
+            : "right-0 border-l-[5px] border-l-primary"
         } w-[400px] py-10 h-screen bg-alt-color border-solid`}
       >
         <h1 className="text-3xl font-bold text-center ">Dit program</h1>
         {!tasks.length > 0 && (
           <div className="mx-8 text-center ">
-            <h2 className="text-sm mt-2 ">Når du har valgt nogle øvelser, vil de blive vist her.</h2>
+            <h2 className="text-sm mt-2 ">
+              Når du har valgt nogle øvelser, vil de blive vist her.
+            </h2>
             <div className="text-start mt-12">
               <p className="text-primary font-light mb-2">Sådan gør du:</p>
               <ol className="flex flex-col gap-2 list-decimal mx-4 font-light text-sm">
                 <li>Udvælg de øvelser du gerne vil have i dit program</li>
-                <li>Vælg hvor mange repetitioner du gerne vil have af den pågældende øvelse</li>
+                <li>
+                  Vælg hvor mange repetitioner du gerne vil have af den
+                  pågældende øvelse
+                </li>
                 <li>Tilføj øvelsen ved at trykke på "tilføj"-knappen</li>
                 <li>Gem eller afspil dit program</li>
               </ol>
@@ -186,22 +228,28 @@ const BuildProgram = () => {
         {tasks.length > 0 && (
           <div className="flex flex-col items-center gap-2 h-dvh pt-2 ">
             <div className="flex flex-col px-8 items-center gap-2 h-[72dvh] overflow-scroll">
-              {tasks.map((task, index) => (
-                <TaskCard
-                  exerciseNo={task.exerciseNo}
-                  title={task.title}
-                  image={`/assets/images/0${task.exerciseNo}.webp`}
-                  withHelp={task.withHelp}
-                  variant="small"
-                  repititions={task.repititions}
-                  setTasks={setTasks}
-                  draggable
-                  onDragStart={() => (dragTask.current = index)}
-                  onDragEnter={() => (draggedOverTask.current = index)}
-                  onDragEnd={handleSort}
-                  onDragOver={(e) => e.preventDefault()}
-                />
-              ))}
+              <DndContext
+                collisionDetection={closestCenter}
+                onDragEnd={({ active, over }) => {
+                  if (!over || active.id === over.id) return;
+                  setTasks((items) => {
+                    const oldIndex = items.findIndex(
+                      (i) => i.exerciseNo === active.id
+                    );
+                    const newIndex = items.findIndex(
+                      (i) => i.exerciseNo === over.id
+                    );
+                    return arrayMove(items, oldIndex, newIndex);
+                  });
+                  setIsSaved(false);
+                }}
+              >
+                <SortableContext items={tasks.map((t) => t.exerciseNo)}>
+                  {tasks.map((task) => (
+                    <SortableTask key={task.exerciseNo} task={task} />
+                  ))}
+                </SortableContext>
+              </DndContext>
             </div>
             <div className="mt-5">
               <Button
