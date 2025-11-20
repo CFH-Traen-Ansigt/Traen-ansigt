@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import VideoPlayer from "../components/VideoPlayer";
 import ProgramCompletedModal from "../components/modals/ProgramCompletedModal";
+import ExitProgramModal from "../components/modals/ExitProgramModal";
 import { useParams } from "react-router-dom";
 import { supabase } from "../DB/supabaseClient";
 import Webcam from "react-webcam";
@@ -26,6 +27,7 @@ const VideoScreen = () => {
   const [fade, setFade] = useState(true);
   const [currentVideo, setCurrentVideo] = useState(null);
   const [showCompletedModal, setShowCompletedModal] = useState(false);
+  const [showExitModal, setShowExitModal] = useState(false);
 
   useEffect(() => {
     if (!program || program.length === 0) return;
@@ -173,6 +175,11 @@ const VideoScreen = () => {
     }
   };
 
+  const exitModal = () => {
+    setPlaying(false);
+    setShowExitModal(true);
+  }
+
   //aspect ratio 4:3
   const videoConstraints = {
     width: 500,
@@ -200,6 +207,21 @@ const VideoScreen = () => {
           fade ? "opacity-100" : "opacity-0"
         }`}
       >
+        <ExitProgramModal
+          title="Afbryd program"
+          primaryButtonText="Fortsæt"
+          secondaryButtonText="Afbryd"
+          icon="/assets/exit-program-icon.svg"
+          showModal={showExitModal}
+          setShowModal={setShowExitModal}
+          onAccept={() => {
+            setShowExitModal(false);
+            window.location.href = "/forside";
+          }}
+          onExit={() => {
+            setShowExitModal(false);
+          }}
+        />
         <ProgramCompletedModal
           title="Gennemført program"
           primaryButtonText="Færdig"
@@ -290,7 +312,7 @@ const VideoScreen = () => {
         }}
       >
         <button
-          onClick={handleExit}
+          onClick={exitModal}
           style={{
             background: "none",
             border: "none",
