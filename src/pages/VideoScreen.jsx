@@ -143,13 +143,7 @@ const VideoScreen = () => {
       setCurrentIndex(prevIndex);
     }
   };
-
-  const handleExit = () => {
-    // Logic to handle exit, e.g., navigate back to the previous screen
-    console.log("Exit button clicked");
-    window.location.href = "/forside";
-  };
-
+  
   const handeVideoEnd = () => {
     setPlaying(false);
 
