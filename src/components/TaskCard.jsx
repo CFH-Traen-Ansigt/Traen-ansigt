@@ -108,10 +108,27 @@ export default function TaskCard({
           <div className="flex items-center mt-auto justify-between w-full">
             <RepititionButton
               variant={variant}
-              numberOfRepititions={
-                repititions ? repititions : numberOfRepititions
-              }
-              setNumberOfRepititions={setNumberOfRepititions}
+              numberOfRepititions={repititions ?? numberOfRepititions}
+              setNumberOfRepititions={(updateFn) => {
+                // Update local state
+                setNumberOfRepititions((old) => {
+                  const newValue =
+                    typeof updateFn === "function" ? updateFn(old) : updateFn;
+
+                  // Also update the task list if small variant (drag list)
+                  if (variant === "small") {
+                    setTasks((tasks) =>
+                      tasks.map((t) =>
+                        t.exerciseNo === exerciseNo
+                          ? { ...t, repititions: newValue }
+                          : t
+                      )
+                    );
+                  }
+
+                  return newValue;
+                });
+              }}
             />
             <Button
               key={isSelected}

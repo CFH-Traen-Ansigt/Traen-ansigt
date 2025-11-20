@@ -190,7 +190,7 @@ const BuildProgram = () => {
       </div>
     );
   }
-  console.log(tasks);
+  //console.log(tasks);
   return (
     <main>
       <Menu
