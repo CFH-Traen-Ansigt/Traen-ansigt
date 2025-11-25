@@ -3,9 +3,11 @@ import { supabase } from "../DB/supabaseClient";
 import Menu from "../components/Menu";
 import SettingItem from "../components/SettingItem";
 import VisualNeglectSettingModal from "../components/modals/VisualNeglectSettingModal";
+import TextSizeSettingModal from "../components/modals/TextSizeSettingModal";
 
 const Settings = () => {
   const [showModal, setShowmodal] = useState(false);
+  const [showTextSizeModal, setShowTextSizeModal] = useState(false);
   const [videoText, setVideoText] = useState(JSON.parse(localStorage.getItem("videoText")) || false);
 
   async function videoTextSetting(setSetting) {
@@ -19,7 +21,6 @@ const Settings = () => {
       return;
     }
     const userId = user.id;
-    console.log("Setting to save:", setSetting);
     try {
       const { error1 } = await supabase.from("Settings").update({ video_text: setSetting }).eq("user_id", userId);
       localStorage.setItem("videoText", setSetting);
@@ -34,8 +35,9 @@ const Settings = () => {
     <main className="bg-alt-color h-screen">
       <Menu visualSetting={localStorage.getItem("visualNeglect")} />
       <VisualNeglectSettingModal setIsModalOpen={setShowmodal} isModalOpen={showModal} />
+      <TextSizeSettingModal setIsModalOpen={setShowTextSizeModal} isModalOpen={showTextSizeModal} />
       <h1 className="text-font-color font-bold text-3xl text-center py-16">Indstillinger</h1>
-      <div className="flex justify-center gap-6">
+      <div className="flex justify-center gap-6 flex-wrap">
         <SettingItem
           text="Synsvanskeligheder"
           icon="/assets/eye-icon.svg"
@@ -46,8 +48,8 @@ const Settings = () => {
         />
         <SettingItem
           text="Hjælpetekst: "
-          icon="/assets/text-icon.svg"
-          iconOnHover="/assets/text-icon-filled.svg"
+          icon="/assets/video-text-icon.svg"
+          iconOnHover="/assets/video-text-icon-filled.svg"
           settingIsOn={videoText}
           altText="eye icon"
           type="pop-up"
@@ -55,6 +57,13 @@ const Settings = () => {
             videoTextSetting(!videoText);
             setVideoText((old) => !old);
           }}
+        />
+        <SettingItem
+          text="Tekst størrelse"
+          icon="/assets/text-icon.svg"
+          iconOnHover="/assets/text-icon-filled.svg"
+          altText="Text size icon"
+          onClick={() => setShowTextSizeModal(true)}
         />
       </div>
     </main>
