@@ -29,6 +29,7 @@ const VideoPlayer = ({ filename, onEnded, index, playing=false}) => {
           url={videoUrl}
           playing={playing}
           controls={false}
+          playsInline={true}
           onEnded={() => {
             onEnded && onEnded();
           }}
