@@ -231,7 +231,7 @@ const VideoScreen = () => {
         />
         <VideoPlayer
           filename={currentVideo}
-          onEnded={handeVideoEnd}
+          onEnded={() => handeVideoEnd()}
           index={currentIndex}
           playing={playing}
           onVideoStarted={()=> console.log("Video started")}

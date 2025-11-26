@@ -26,7 +26,7 @@ const VideoPlayer = ({
       if (internal) {
         setTimeout(() => {
           internal.muted = false; // unmute after Safari-allowed autoplay
-        }, 400);
+        }, 300);
       }
     }
   }, [playing]);
