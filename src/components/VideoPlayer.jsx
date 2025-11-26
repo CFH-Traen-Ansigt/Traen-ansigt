@@ -30,6 +30,7 @@ const VideoPlayer = ({ filename, onEnded, index, playing=false}) => {
           playing={playing}
           controls={false}
           playsInline={true}
+          muted={true}
           onEnded={() => {
             onEnded && onEnded();
           }}
