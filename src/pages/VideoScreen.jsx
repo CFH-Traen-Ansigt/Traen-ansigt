@@ -28,6 +28,9 @@ const VideoScreen = () => {
   const [currentVideo, setCurrentVideo] = useState(null);
   const [showCompletedModal, setShowCompletedModal] = useState(false);
   const [showExitModal, setShowExitModal] = useState(false);
+  const [userPaused, setUserPaused] = useState(true);
+  const [videoMuted, setVideoMuted] = useState(false);
+  const [manualPlay, setManuelPlay] = useState(false);
 
   useEffect(() => {
     if (!program || program.length === 0) return;
@@ -108,6 +111,7 @@ const VideoScreen = () => {
       setCurrentIndex(currentIndex + 1);
     }
   };
+
   // const prevVideo = () => {
   //   if (currentIndex > 0) {
   //     setCurrentIndex(currentIndex - 1);
@@ -124,10 +128,13 @@ const VideoScreen = () => {
     }
     if (nextIndex < program.length) {
       setCurrentIndex(nextIndex);
-    } if(nextIndex >= program.length){
+      setManuelPlay(true);
+    }
+    if (nextIndex >= program.length) {
       setIsEnded(true);
       setShowCompletedModal(true);
       setPlaying(false);
+      manualPlay(true);
     }
   };
 
@@ -141,38 +148,47 @@ const VideoScreen = () => {
     }
     if (prevIndex >= 0) {
       setCurrentIndex(prevIndex);
+      setManuelPlay(true);
     }
   };
-  
+
   const handeVideoEnd = () => {
     setPlaying(false);
+    setUserPaused(false);
+    setVideoMuted(true);
+    setManuelPlay(false);
 
- 
-
-    if(currentIndex >= program.length - 1){
+    if (currentIndex >= program.length - 1) {
       setShowCompletedModal(true);
       setIsEnded(true);
       return;
     }
+
+    setFade(false);
+
     setFade(false);
     setTimeout(() => {
-    nextVideo();
-    setFade(true);
-    setPlaying(true);
-    }, 1000);
+      nextVideo(); // new video loads paused & muted
+      setFade(true);
+    }, 400); // you can still keep 1s fade if you want
   };
 
   const togglePlayPause = () => {
-    setPlaying(!playing);
-    if (isEnded) {
-      setIsEnded(false);
+    if (playing) {
+      setUserPaused(true); // user paused manually
+      setPlaying(false);
+      setManuelPlay(false);
+    } else {
+      setUserPaused(false); // user resumed
+      setPlaying(true);
+      setManuelPlay(true);
     }
   };
 
   const exitModal = () => {
     setPlaying(false);
     setShowExitModal(true);
-  }
+  };
 
   //aspect ratio 4:3
   const videoConstraints = {
@@ -234,7 +250,14 @@ const VideoScreen = () => {
           onEnded={() => handeVideoEnd()}
           index={currentIndex}
           playing={playing}
-          onVideoStarted={()=> console.log("Video started")}
+          userPaused={userPaused}
+          onCanPlay={() => {
+            if (!userPaused) {
+              setPlaying(true);
+            }
+          }}
+          videoMuted={videoMuted}
+          manualPlay={manualPlay}
         />
       </div>
       <div

@@ -1,57 +1,56 @@
-// src/components/VideoPlayer.jsx
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 
 const VideoPlayer = ({
   filename,
-  onEnded,
   index,
-  playing = false,
-  onVideoStarted,
+  playing,
+  onCanPlay,
+  onEnded,
+  userPaused,
+  manualPlay,
 }) => {
   const playerRef = useRef(null);
+  const [ready, setReady] = useState(false);
 
-  const videoUrl = `${filename}`;
-
+  // Reset ready when video changes
   useEffect(() => {
-    if (playerRef.current) {
-      playerRef.current.seekTo(0);
-    }
+    setReady(false);
   }, [index]);
 
-  // When playback begins -> unmute video again
-  useEffect(() => {
-    if (playing && playerRef.current) {
-      const internal = playerRef.current.getInternalPlayer();
-      if (internal) {
-        setTimeout(() => {
-          internal.muted = false; // unmute after Safari-allowed autoplay
-        }, 300);
-      }
+ useEffect(() => {
+    if (ready && !userPaused && !manualPlay) {
+      const timer = setTimeout(() => {
+        const internal = playerRef.current?.getInternalPlayer();
+        if (!internal) return;
+        internal.muted = false;
+        if (onCanPlay) onCanPlay();
+      }, 1600);
+
+      return () => clearTimeout(timer);
+    } else if (ready && !userPaused && manualPlay) {
+      // immediately unmute for manual play
+      const internal = playerRef.current?.getInternalPlayer();
+      if (internal) internal.muted = false;
+      if (onCanPlay) onCanPlay();
     }
-  }, [playing]);
+  }, [ready, userPaused, manualPlay, onCanPlay]);
 
   return (
     <div
       className="w-screen h-screen bg-black flex items-center justify-center"
       style={{ position: "relative" }}
     >
-      {/* Video player */}
       <div style={{ position: "absolute", inset: 0 }}>
         <ReactPlayer
           key={index}
           ref={playerRef}
-          url={videoUrl}
-          playing={playing}
+          url={filename}
+          playing={playing && !userPaused}
+          muted={true} // always start muted
           controls={false}
-          playsInline={true}
-          muted={true}
-          onStart={() => {
-            if(onVideoStarted) onVideoStarted();
-          }}
-          onEnded={() => {
-            onEnded && onEnded();
-          }}
+          onReady={() => setReady(true)}
+          onEnded={() => onEnded && onEnded()}
           width="100%"
           height="100%"
           style={{ position: "absolute", top: 0, left: 0 }}
@@ -60,8 +59,7 @@ const VideoPlayer = ({
               attributes: {
                 preload: "auto",
                 playsInline: true,
-                crossOrigin: "anonymous",
-                muted: true
+                muted: true,
               },
             },
           }}
