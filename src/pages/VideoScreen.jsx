@@ -234,6 +234,7 @@ const VideoScreen = () => {
           onEnded={handeVideoEnd}
           index={currentIndex}
           playing={playing}
+          onVideoStarted={()=> console.log("Video started")}
         />
       </div>
       <div
