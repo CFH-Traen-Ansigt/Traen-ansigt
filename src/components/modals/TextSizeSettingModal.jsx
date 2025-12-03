@@ -37,8 +37,8 @@ export default function TextSizeSettingModal({ isModalOpen, setIsModalOpen }) {
   // When slider is adjusted
   const handleRangeChange = (e) => {
     const value = Number(e.target.value);
-    setTextSize(12 + value * 2); // scale text size nicely
-    localStorage.setItem("textSize", 12 + value * 2);
+    setTextSize(6 + value * 2); // scale text size nicely
+    localStorage.setItem("textSize", 6 + value * 2);
   };
 
   // Function to save to DB
@@ -135,7 +135,7 @@ export default function TextSizeSettingModal({ isModalOpen, setIsModalOpen }) {
             min="0"
             max="10"
             className="w-3/4"
-            value={(textSize - 12) / 2}
+            value={(textSize - 6) / 2}
             onChange={handleRangeChange}
           />
         </div>

@@ -39,14 +39,23 @@ const EditProgram = () => {
   const [showProgramModal, setShowProgramModal] = useState(false);
   const [showCompletedModal, setShowCompletedModal] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-  const [isRight] = useState(localStorage.getItem("visualNeglect") !== "Venstre");
+  const [isRight] = useState(
+    localStorage.getItem("visualNeglect") !== "Venstre"
+  );
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [textSize] = useState(Number(localStorage.getItem("textSize")) || 16);
 
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { delay: 50, tolerance: 5 } }),
-    useSensor(MouseSensor, { activationConstraint: { delay: 50, tolerance: 5 } }),
-    useSensor(TouchSensor, { activationConstraint: { delay: 50, tolerance: 5 } }),
+    useSensor(PointerSensor, {
+      activationConstraint: { delay: 50, tolerance: 5 },
+    }),
+    useSensor(MouseSensor, {
+      activationConstraint: { delay: 50, tolerance: 5 },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: { delay: 50, tolerance: 5 },
+    }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   );
 
@@ -62,7 +71,10 @@ const EditProgram = () => {
   }, [tasks, isSaved]);
 
   const getProgram = useCallback(async (id) => {
-    const res = await supabase.from("Programs").select("name, description").eq("id", id);
+    const res = await supabase
+      .from("Programs")
+      .select("name, description")
+      .eq("id", id);
     setTitle(res.data[0].name);
     setDescription(res.data[0].description);
 
@@ -85,12 +97,16 @@ const EditProgram = () => {
     setTasks(programData);
   }, []);
 
-  useEffect(() => { if (id) getProgram(id); }, [id, getProgram]);
+  useEffect(() => {
+    if (id) getProgram(id);
+  }, [id, getProgram]);
 
   async function updateProgram(formData) {
     let duration = 11;
     tasks.forEach((task) => {
-      duration += parseInt(task.repititions) * parseInt(task.duration) + parseInt(task.duration);
+      duration +=
+        parseInt(task.repititions) * parseInt(task.duration) +
+        parseInt(task.duration);
     });
     const durationMin = Math.max(1, Math.floor(duration / 60));
 
@@ -99,7 +115,10 @@ const EditProgram = () => {
       description: formData.description || "Ingen beskrivelse.",
       duration: durationMin,
       image: tasks[0]?.image,
-      exercises: tasks.map((t) => ({ id: t.exerciseNo, repetitions: t.repititions })),
+      exercises: tasks.map((t) => ({
+        id: t.exerciseNo,
+        repetitions: t.repititions,
+      })),
     };
 
     try {
@@ -125,7 +144,8 @@ const EditProgram = () => {
         .select("*")
         .eq("program_id", id);
 
-      if (oldProgram.error) console.error("Error fetching old program:", oldProgram.error);
+      if (oldProgram.error)
+        console.error("Error fetching old program:", oldProgram.error);
 
       const exercisesToInsert = program.exercises.map((exercise) => ({
         program_id: id,
@@ -135,18 +155,28 @@ const EditProgram = () => {
       }));
 
       const exercisesToDelete = oldProgram.data.filter(
-        (oldEx) => !exercisesToInsert.some((newEx) => newEx.exercise_id === oldEx.exercise_id)
+        (oldEx) =>
+          !exercisesToInsert.some(
+            (newEx) => newEx.exercise_id === oldEx.exercise_id
+          )
       );
 
       if (exercisesToDelete.length > 0) {
         await supabase
           .from("ExercisesOnPrograms")
           .delete()
-          .in("exercise_id", exercisesToDelete.map((e) => e.exercise_id))
+          .in(
+            "exercise_id",
+            exercisesToDelete.map((e) => e.exercise_id)
+          )
           .eq("program_id", id);
       }
 
-      await supabase.from("ExercisesOnPrograms").upsert(exercisesToInsert, { onConflict: ["program_id", "exercise_id"] });
+      await supabase
+        .from("ExercisesOnPrograms")
+        .upsert(exercisesToInsert, {
+          onConflict: ["program_id", "exercise_id"],
+        });
 
       setIsSaved(true);
       setShowProgramModal(false);
@@ -157,8 +187,13 @@ const EditProgram = () => {
   }
 
   function SortableTask({ task }) {
-    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: task.exerciseNo });
-    const style = { transform: CSS.Transform.toString(transform), transition, touchAction: "none" };
+    const { attributes, listeners, setNodeRef, transform, transition } =
+      useSortable({ id: task.exerciseNo });
+    const style = {
+      transform: CSS.Transform.toString(transform),
+      transition,
+      touchAction: "none",
+    };
 
     return (
       <div ref={setNodeRef} style={style}>
@@ -180,9 +215,18 @@ const EditProgram = () => {
 
   return (
     <main>
-      <Menu visualSetting={localStorage.getItem("visualNeglect")} topPosition="top-5" />
+      <Menu
+        visualSetting={localStorage.getItem("visualNeglect")}
+        topPosition="top-5"
+      />
       <TaskFiltering isRight={isRight} />
-      <ProgramModal showModal={showProgramModal} setShowModal={setShowProgramModal} onSubmit={updateProgram} editTitle={title} editDescription={description} />
+      <ProgramModal
+        showModal={showProgramModal}
+        setShowModal={setShowProgramModal}
+        onSubmit={updateProgram}
+        editTitle={title}
+        editDescription={description}
+      />
       <ActionModal
         title="Dit program er nu gemt!"
         cancelButtonText="Nej"
@@ -190,23 +234,52 @@ const EditProgram = () => {
         icon="/assets/bookmark-red.svg"
         showModal={showCompletedModal}
         setShowModal={setShowCompletedModal}
-        onAccept={() => { window.location.href = "/mit-program"; setShowCompletedModal(false); }}
-        onCancel={() => { window.location.href = "/forside"; setShowCompletedModal(false); }}
+        onAccept={() => {
+          window.location.href = "/mit-program";
+          setShowCompletedModal(false);
+        }}
+        onCancel={() => {
+          window.location.href = "/forside";
+          setShowCompletedModal(false);
+        }}
       >
-        <p className="text-lg">Du kan finde dine gemte programmer under "Mine programmer".</p>
+        <p className="text-lg">
+          Du kan finde dine gemte programmer under "Mine programmer".
+        </p>
         <p className="text-lg">Vil du fortsætte til siden?</p>
       </ActionModal>
 
-      <div className={`fixed flex flex-col top-0 ${isRight ? "left-0 border-r-[5px] border-r-primary" : "right-0 border-l-[5px] border-l-primary"} w-[400px] py-10 h-screen bg-alt-color border-solid`}>
+      <div
+        className={`fixed flex flex-col top-0 ${
+          isRight
+            ? "left-0 border-r-[5px] border-r-primary"
+            : "right-0 border-l-[5px] border-l-primary"
+        } w-[400px] py-10 h-screen bg-alt-color border-solid`}
+      >
         <h1 className="text-3xl font-bold text-center ">Dit program</h1>
         {!tasks.length > 0 && (
           <div className="mx-8 text-center">
-            <h2 className="text-sm mt-2">Når du har valgt nogle øvelser, vil de blive vist her.</h2>
+            <h2
+              className="mt-2 font-bold"
+              style={{ fontSize: `${textSize}px` }}
+            >
+              Når du har valgt nogle øvelser, vil de blive vist her.
+            </h2>
+
             <div className="text-start mt-12">
-              <p className="text-primary font-light mb-2">Sådan gør du:</p>
-              <ol className="flex flex-col gap-2 list-decimal mx-4 font-light text-sm">
+              <p
+                className="text-primary font-bold mb-2"
+                style={{ fontSize: `${textSize}px` }}
+              >
+                Sådan gør du:
+              </p>
+
+              <ol
+                className="flex flex-col gap-2 list-decimal mx-4 font-bold"
+                style={{ fontSize: `${textSize}px` }}
+              >
                 <li>Udvælg de øvelser du gerne vil have i dit program</li>
-                <li>Vælg hvor mange repetitioner du gerne vil have af den pågældende øvelse</li>
+                <li>Vælg hvor mange repetitioner du gerne vil …</li>
                 <li>Tilføj øvelsen ved at trykke på "tilføj"-knappen</li>
                 <li>Gem eller afspil dit program</li>
               </ol>
@@ -216,33 +289,56 @@ const EditProgram = () => {
         {tasks.length > 0 && (
           <div className="flex flex-col items-center gap-2 h-dvh pt-2">
             <div className="flex flex-col px-8 items-center gap-2 h-[72dvh] overflow-scroll">
-              <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={({ active, over }) => {
-                if (!over || active.id === over.id) return;
-                setTasks((items) => {
-                  const oldIndex = items.findIndex((i) => i.exerciseNo === active.id);
-                  const newIndex = items.findIndex((i) => i.exerciseNo === over.id);
-                  return arrayMove(items, oldIndex, newIndex);
-                });
-                setIsSaved(false);
-              }}>
-                <SortableContext items={tasks.map((t) => t.exerciseNo)} strategy={verticalListSortingStrategy}>
-                  {tasks.map((task) => <SortableTask key={task.exerciseNo} task={task} />)}
+              <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragEnd={({ active, over }) => {
+                  if (!over || active.id === over.id) return;
+                  setTasks((items) => {
+                    const oldIndex = items.findIndex(
+                      (i) => i.exerciseNo === active.id
+                    );
+                    const newIndex = items.findIndex(
+                      (i) => i.exerciseNo === over.id
+                    );
+                    return arrayMove(items, oldIndex, newIndex);
+                  });
+                  setIsSaved(false);
+                }}
+              >
+                <SortableContext
+                  items={tasks.map((t) => t.exerciseNo)}
+                  strategy={verticalListSortingStrategy}
+                >
+                  {tasks.map((task) => (
+                    <SortableTask key={task.exerciseNo} task={task} />
+                  ))}
                 </SortableContext>
               </DndContext>
             </div>
             <div className="mt-5">
-              <Button type="button" variant="Primary" onClick={() => setShowProgramModal(true)} icon="Bookmark" text="Gem mit program" styling="mx-auto text-2xl gap-4 h-12 px-6" iconStyling="w-5 h-5 mt-[4px]" />
+              <Button
+                type="button"
+                variant="Primary"
+                onClick={() => setShowProgramModal(true)}
+                icon="Bookmark"
+                text="Gem mit program"
+                styling="mx-auto text-2xl gap-4 h-12 px-6"
+                iconStyling="w-5 h-5 mt-[4px]"
+              />
             </div>
           </div>
         )}
       </div>
 
       <div className="pt-3">
-        {["Pande","Øjne","Næse","Mund","Tunge"].map((type) => (
+        {["Pande", "Øjne", "Næse", "Mund", "Tunge"].map((type) => (
           <TaskList
             key={type}
             headline={type === "Mund" ? "Kinder og mund" : type}
-            description={`Disse øvelser fokuserer på området omkring ${type === "Mund" ? "kinderne og munden" : type.toLowerCase()}`}
+            description={`Disse øvelser fokuserer på området omkring ${
+              type === "Mund" ? "kinderne og munden" : type.toLowerCase()
+            }`}
             setTasks={setTasks}
             tasks={tasks}
             exercises={Exercises.filter((task) => task.type === type)}

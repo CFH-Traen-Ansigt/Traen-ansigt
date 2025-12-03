@@ -31,6 +31,7 @@ const VideoScreen = () => {
   const [userPaused, setUserPaused] = useState(true);
   const [videoMuted, setVideoMuted] = useState(false);
   const [manualPlay, setManuelPlay] = useState(false);
+  const [textSize] = useState(Number(localStorage.getItem("textSize")) + 6 || 20);
 
   useEffect(() => {
     if (!program || program.length === 0) return;
@@ -134,7 +135,7 @@ const VideoScreen = () => {
       setIsEnded(true);
       setShowCompletedModal(true);
       setPlaying(false);
-      manualPlay(true);
+      setManuelPlay(true)
     }
   };
 
@@ -226,7 +227,7 @@ const VideoScreen = () => {
           setShowModal={setShowExitModal}
           onAccept={() => {
             setShowExitModal(false);
-            window.location.href = "/forside";
+            window.location.href = "/mit-program";
           }}
           onExit={() => {
             setShowExitModal(false);
@@ -239,7 +240,7 @@ const VideoScreen = () => {
           showModal={showCompletedModal}
           setShowModal={setShowCompletedModal}
           onAccept={() => {
-            window.location.href = "/forside";
+            window.location.href = "/mit-program";
           }}
           onExit={() => {
             setShowCompletedModal(false);
@@ -358,10 +359,11 @@ const VideoScreen = () => {
               : { right: "30px" }),
             display: "flex",
             flexDirection: "column",
-            gap: "15px", // spacing between the boxes
+            gap: "15px",
             zIndex: 1000,
           }}
         >
+          {/* Exercise Box */}
           <div
             style={{
               backgroundColor: "rgba(249, 247, 244, 0.6)",
@@ -371,17 +373,27 @@ const VideoScreen = () => {
             }}
           >
             <h1
-              style={{ color: "#901A36", fontWeight: "600", fontSize: "24px" }}
+              style={{
+                color: "#901A36",
+                fontWeight: "600",
+                fontSize: `${textSize}px`, // dynamic
+              }}
             >
               Øvelse
             </h1>
+
             <p
-              style={{ fontWeight: "100", fontSize: "26px", maxWidth: "350px" }}
+              style={{
+                fontWeight: "100",
+                fontSize: `${textSize + 2}px`, // optional: slightly larger
+                maxWidth: "350px",
+              }}
             >
               {program[currentIndex].name}
             </p>
           </div>
 
+          {/* Repetition Box */}
           {program[currentIndex].totalRepetitions && (
             <div
               style={{
@@ -396,12 +408,18 @@ const VideoScreen = () => {
                 style={{
                   color: "#901A36",
                   fontWeight: "600",
-                  fontSize: "24px",
+                  fontSize: `${textSize}px`, // dynamic
                 }}
               >
                 Repetition
               </h1>
-              <p style={{ fontWeight: "100", fontSize: "26px" }}>
+
+              <p
+                style={{
+                  fontWeight: "100",
+                  fontSize: `${textSize + 2}px`, // optional: match the name size
+                }}
+              >
                 {program[currentIndex].currentRepetition + 1}/
                 {program[currentIndex].totalRepetitions}
               </p>

@@ -38,13 +38,13 @@ export default function ProgramCard({
         {!addShadow && (
           <>
             {/* Grey overlay */}
-            <div className="absolute inset-0 bg-black/5 z-4" onClick={onPlay} />
+            <div className="absolute inset-0 z-4" onClick={onPlay} />
 
             {/* Play button */}
             <img
               src="/assets/play-btn-icon.svg"
               alt="Play button"
-              className="absolute inset-0 m-auto w-12 h-12 z-5 filter brightness-0 invert-[50%] opacity-40 group-hover:opacity-100 transition"
+              className="absolute inset-0 m-auto w-12 h-12 z-5 filter brightness-0 invert-[50%] opacity-0 group-hover:opacity-30 transition"
               onClick={onPlay}
             />
           </>

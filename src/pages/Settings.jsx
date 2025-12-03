@@ -32,12 +32,13 @@ const Settings = () => {
     }
   }
   return (
-    <main className="bg-alt-color h-screen">
+    <main className="bg-alt-color h-screen flex flex-col">
       <Menu visualSetting={localStorage.getItem("visualNeglect")} />
       <VisualNeglectSettingModal setIsModalOpen={setShowmodal} isModalOpen={showModal} />
       <TextSizeSettingModal setIsModalOpen={setShowTextSizeModal} isModalOpen={showTextSizeModal} />
       <h1 className="text-font-color font-bold text-3xl text-center py-16">Indstillinger</h1>
-      <div className="flex justify-center gap-6 flex-wrap">
+      <div className="flex flex-1 justify-center items-center gap-6 flex-wrap pb-40">
+        <div className="flex justify-center gap-6 flex-wrap">
         <SettingItem
           text="Synsvanskeligheder"
           icon="/assets/eye-icon.svg"
@@ -65,6 +66,7 @@ const Settings = () => {
           altText="Text size icon"
           onClick={() => setShowTextSizeModal(true)}
         />
+        </div>
       </div>
     </main>
   );

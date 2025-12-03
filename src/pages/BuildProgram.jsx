@@ -45,6 +45,7 @@ const BuildProgram = () => {
   const [isRight] = useState(
     localStorage.getItem("visualNeglect") !== "Venstre" ? true : false
   );
+  const [textSize] = useState(Number(localStorage.getItem("textSize")) || 16);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -233,18 +234,28 @@ const BuildProgram = () => {
       >
         <h1 className="text-3xl font-bold text-center ">Dit program</h1>
         {!tasks.length > 0 && (
-          <div className="mx-8 text-center ">
-            <h2 className="text-sm mt-2 ">
+          <div className="mx-8 text-center">
+            <h2
+              className="mt-2 font-bold"
+              style={{ fontSize: `${textSize}px` }}
+            >
               Når du har valgt nogle øvelser, vil de blive vist her.
             </h2>
+
             <div className="text-start mt-12">
-              <p className="text-primary font-light mb-2">Sådan gør du:</p>
-              <ol className="flex flex-col gap-2 list-decimal mx-4 font-light text-sm">
+              <p
+                className="text-primary font-bold mb-2"
+                style={{ fontSize: `${textSize}px` }}
+              >
+                Sådan gør du:
+              </p>
+
+              <ol
+                className="flex flex-col gap-2 list-decimal mx-4 font-bold"
+                style={{ fontSize: `${textSize}px` }}
+              >
                 <li>Udvælg de øvelser du gerne vil have i dit program</li>
-                <li>
-                  Vælg hvor mange repetitioner du gerne vil have af den
-                  pågældende øvelse
-                </li>
+                <li>Vælg hvor mange repetitioner du gerne vil …</li>
                 <li>Tilføj øvelsen ved at trykke på "tilføj"-knappen</li>
                 <li>Gem eller afspil dit program</li>
               </ol>
