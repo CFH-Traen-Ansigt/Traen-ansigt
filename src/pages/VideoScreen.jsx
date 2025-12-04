@@ -153,7 +153,7 @@ const VideoScreen = () => {
     }
   };
 
-  const handeVideoEnd = () => {
+  const handleVideoEnd = () => {
     setPlaying(false);
     setUserPaused(false);
     setVideoMuted(true);
@@ -186,7 +186,14 @@ const VideoScreen = () => {
     }
   };
 
+  const pauseVideo = () => {
+    setPlaying(false);
+    setUserPaused(true);
+    setManuelPlay(false);
+  }
+
   const exitModal = () => {
+    pauseVideo();
     setPlaying(false);
     setShowExitModal(true);
   };
@@ -248,7 +255,7 @@ const VideoScreen = () => {
         />
         <VideoPlayer
           filename={currentVideo}
-          onEnded={() => handeVideoEnd()}
+          onEnded={() => handleVideoEnd()}
           index={currentIndex}
           playing={playing}
           userPaused={userPaused}
@@ -375,8 +382,8 @@ const VideoScreen = () => {
             <h1
               style={{
                 color: "#901A36",
-                fontWeight: "600",
-                fontSize: `${textSize}px`, // dynamic
+                fontWeight: "700",
+                fontSize: `${textSize + 4}px`, // dynamic
               }}
             >
               Øvelse
@@ -384,8 +391,8 @@ const VideoScreen = () => {
 
             <p
               style={{
-                fontWeight: "100",
-                fontSize: `${textSize + 2}px`, // optional: slightly larger
+                fontWeight: "400",
+                fontSize: `${textSize + 4}px`, // optional: slightly larger
                 maxWidth: "350px",
               }}
             >
@@ -407,8 +414,8 @@ const VideoScreen = () => {
               <h1
                 style={{
                   color: "#901A36",
-                  fontWeight: "600",
-                  fontSize: `${textSize}px`, // dynamic
+                  fontWeight: "700",
+                  fontSize: `${textSize + 4}px`, // dynamic
                 }}
               >
                 Repetition
@@ -416,8 +423,8 @@ const VideoScreen = () => {
 
               <p
                 style={{
-                  fontWeight: "100",
-                  fontSize: `${textSize + 2}px`, // optional: match the name size
+                  fontWeight: "400",
+                  fontSize: `${textSize + 4}px`, // optional: match the name size
                 }}
               >
                 {program[currentIndex].currentRepetition + 1}/

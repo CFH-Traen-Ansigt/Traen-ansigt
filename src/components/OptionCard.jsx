@@ -11,7 +11,7 @@ export default function OptionCard({ icon, option, text, href }) {
 
   return (
     <a className="relative ml-3 cursor-pointer" href={href}>
-      <p className="max-w-80 text-lg mx-auto font-medium" style={{ fontSize: `${textSize}px` }}>{text}</p>
+      <p className="max-w-80 text-lg mx-auto font-semibold" style={{ fontSize: `${textSize + 2}px` }}>{text}</p>
       {videoText && (
         <img
           className="absolute mx-auto left-8 w-12"

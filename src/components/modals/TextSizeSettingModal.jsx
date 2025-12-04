@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { supabase } from "../../DB/supabaseClient";
 
 export default function TextSizeSettingModal({ isModalOpen, setIsModalOpen }) {
   const modalItem = useRef();
@@ -43,15 +44,29 @@ export default function TextSizeSettingModal({ isModalOpen, setIsModalOpen }) {
 
   // Function to save to DB
   const saveTextSizeToDB = async (size) => {
-    // Replace with your actual DB update logic, e.g., Supabase or fetch API
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser();
+
+    if (error) {
+      console.error("Failed to get user", error);
+      return;
+    }
+
+    const userId = user.id;
     try {
       console.log("Saving to DB:", size);
-      // await supabase.from("settings").update({ textSize: size }).eq("userId", userId);
+      const { error: dbError } = await supabase.from("Settings").update({ text_size: size }).eq("user_id", userId);
+      if (dbError) {
+        console.error("Failed to save text size to DB", dbError);
+      }
     } catch (error) {
       console.error("Failed to save text size to DB", error);
     }
   };
 
+  
   // Handle modal close
   const handleClose = () => {
     setIsModalOpen(false);
