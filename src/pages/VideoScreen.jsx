@@ -31,7 +31,7 @@ const VideoScreen = () => {
   const [userPaused, setUserPaused] = useState(true);
   const [videoMuted, setVideoMuted] = useState(false);
   const [manualPlay, setManuelPlay] = useState(false);
-  const [textSize] = useState(Number(localStorage.getItem("textSize")) + 6 || 20);
+  const [textSize] = useState(Number(localStorage.getItem("textSize")) + 6 || 22);
 
   useEffect(() => {
     if (!program || program.length === 0) return;
