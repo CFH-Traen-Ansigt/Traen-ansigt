@@ -237,7 +237,7 @@ export default function AdminPage() {
               </button>
 
               <button
-                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                className="px-4 py-2 bg-secondary text-white rounded hover:bg-green-700"
                 onClick={async () => {
                   const { email, password, passwordRepeat } = newUser;
 
@@ -374,7 +374,7 @@ export default function AdminPage() {
 
       {showDeleteModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-xl shadow-xl w-96">
+          <div className="p-6 rounded-xl shadow-xl w-96" style={{ backgroundColor: "#f9f7f4" }}>
             <h3 className="text-xl font-bold mb-4">Confirm Delete</h3>
 
             <p className="mb-6">
@@ -394,7 +394,7 @@ export default function AdminPage() {
               </button>
 
               <button
-                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                className="px-4 py-2 bg-primary text-white rounded hover:bg-red-700"
                 onClick={confirmDelete}
               >
                 Delete
@@ -407,22 +407,22 @@ export default function AdminPage() {
       {/* PAGE CONTENT */}
       <div className="p-4">
         <h2 className="text-2xl font-bold mb-4">All Users</h2>
-
-        <h3 className="text-2xl font-bold mb-4">
-          <span
-            className="cursor-pointer inline text-blue-600 hover:underline"
-            onClick={() => navigate("/forside")}
-          >
-            ← Back
-          </span>
-        </h3>
+          
+        <div className="flex gap-2">
+        <button
+          className="mb-3 px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-800"
+          onClick={() => navigate("/forside")}
+        >
+          ← back
+        </button>
 
         <button
-          className="mb-3 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+          className="mb-3 px-4 py-2 bg-secondary text-white rounded hover:bg-green-700"
           onClick={() => setShowCreateModal(true)}
         >
           + Create User
         </button>
+        </div>
 
         <div className="overflow-x-auto">
           <table className="min-w-full border border-gray-300">
@@ -443,7 +443,7 @@ export default function AdminPage() {
                   <td className="p-2 border">{u.email}</td>
                   <td className="p-2 border flex gap-2">
                     <button
-                      className="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700"
+                      className="px-2 py-1 bg-primary text-white rounded hover:bg-red-700"
                       onClick={() => {
                         setUserToDelete(u);
                         setShowDeleteModal(true);
@@ -453,7 +453,7 @@ export default function AdminPage() {
                     </button>
 
                     <button
-                      className="px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+                      className="px-2 py-1 bg-gray-600 text-white rounded hover:bg-blue-700"
                       onClick={() => {
                         setUserToEdit(u);
                         setEditData({
