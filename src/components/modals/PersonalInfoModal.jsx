@@ -14,10 +14,10 @@ export default function PersonalInfoModal({
   const [fullName, setFullName] = useState(
     localStorage.getItem("userFullName") || ""
   );
-  const [email, setEmail] = useState(localStorage.getItem("userEmail") || "");
+  //const [email, setEmail] = useState(localStorage.getItem("userEmail") || "");
 
   async function saveInfo() {
-    if (fullName.trim() === "" || email.trim() === "") {
+    if (fullName.trim() === "") {
       alert("Udfyld venligst alle felter.");
       return;
     }
@@ -63,14 +63,14 @@ export default function PersonalInfoModal({
             value={fullName}
             setValue={setFullName}
           />
-          <InputField
+          {/* <InputField
             label="Brugernavn (mail)"
             id="email"
             type="text"
             required
             value={email}
             setValue={setEmail}
-          />
+          /> */}
           <div className="flex gap-5 justify-center mb-3">
             <Button
               fullWidth
